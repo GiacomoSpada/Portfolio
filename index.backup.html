@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jack Spada — Product Engineer</title>
+  <meta name="description" content="Product Engineer. I build, design and ship digital products from idea to implementation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       DESIGN SYSTEM
+       ============================================ */
+    :root {
+      --bg: #F8F8F6;
+      --surface: #FFFFFF;
+      --surface-hover: #FAFAF8;
+      --border: rgba(0, 0, 0, 0.06);
+      --border-hover: rgba(0, 0, 0, 0.10);
+      --text-primary: #1A1A1A;
+      --text-secondary: #6B6B6B;
+      --text-tertiary: #999999;
+      --accent: #2563EB;
+      --accent-soft: rgba(37, 99, 235, 0.08);
+      --radius: 20px;
+      --radius-sm: 12px;
+      --gap: 14px;
+      --page-padding: 48px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.03), 0 4px 16px rgba(0,0,0,0.03);
+      --shadow-hover: 0 2px 8px rgba(0,0,0,0.05), 0 8px 24px rgba(0,0,0,0.05);
+      --shadow-expanded: 0 4px 16px rgba(0,0,0,0.06), 0 16px 48px rgba(0,0,0,0.08);
+      --transition-fast: 150ms ease;
+      --transition-medium: 300ms ease;
+      --transition-flip: 500ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* ============================================
+       RESET & BASE
+       ============================================ */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: clamp(16px, 1vw + 6px, 20px);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #ff5e00 0%, #e01e5a 40%, #0055ff 100%);
+      background-attachment: fixed;
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      padding: var(--page-padding);
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+
+    /* ============================================
+       PAGE CONTAINER & HEADER
+       ============================================ */
+    .page-container {
+      width: 100%;
+      max-width: 1280px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .page-header {
+      font-size: clamp(1.5rem, 2vw + 1rem, 2.5rem);
+      font-weight: 400;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      margin-left: 8px;
+    }
+
+    .page-header strong {
+      font-weight: 700;
+    }
+
+    /* ============================================
+       BENTO GRID
+       ============================================ */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(4, minmax(min-content, 1fr));
+      gap: var(--gap);
+      width: 100%;
+      position: relative;
+      flex: 1;
+    }
+
+    /* Grid placements — revised layout */
+    .card--projects    { grid-column: 1 / 5; grid-row: 1 / 3; }
+    .card--now         { grid-column: 5 / 7; grid-row: 1 / 3; }
+    .card--about       { grid-column: 1 / 3; grid-row: 3 / 5; }
+    .card--experience  { grid-column: 3 / 7; grid-row: 3 / 4; }
+    .card--principles  { grid-column: 3 / 6; grid-row: 4 / 5; }
+    .contact-dock      { grid-column: 6 / 7; grid-row: 4 / 5; }
+
+    /* ============================================
+       CARD BASE
+       ============================================ */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px;
+      cursor: pointer;
+      transition: 
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        border-color var(--transition-fast),
+        opacity var(--transition-medium);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border-hover);
+    }
+
+    .card:active {
+      transform: translateY(0px);
+      transition-duration: 80ms;
+    }
+
+    /* Card label (top-left section name) */
+    .card__label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-tertiary);
+      margin-bottom: 20px;
+    }
+
+    .card__title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .card__subtitle {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .card__footer {
+      margin-top: auto;
+      padding-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card__action {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap var(--transition-fast);
+    }
+
+    .card:hover .card__action {
+      gap: 10px;
+    }
+
+    .card__action-arrow {
+      transition: transform var(--transition-fast);
+      font-size: 1rem;
+    }
+
+    .card:hover .card__action-arrow {
+      transform: translateX(2px);
+    }
+
+    .card__count {
+      font-size: 0.8rem;
+      color: var(--text-tertiary);
+      font-weight: 400;
+    }
+
+    /* ============================================
+       PROJECTS CARD (Hero)
+       ============================================ */
+    .card--projects {
+      padding: 36px;
+      justify-content: space-between;
+    }
+
+    .card--projects:hover {
+      border-color: rgba(37, 99, 235, 0.15);
+    }
+
+    .card--projects .project-highlight {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .card--projects .project-name {
+      font-size: 2.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text-primary);
+    }
+
+    .card--projects .project-description {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      max-width: 420px;
+    }
+
+    .card--projects .project-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .project-tag {
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 100px;
+      background: var(--bg);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    /* ============================================
+       ABOUT CARD
+       ============================================ */
+    .card--about {
+      perspective: 800px;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .card--about:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .about-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+      transform-style: preserve-3d;
+    }
+
+    .card--about.flipped .about-inner {
+      transform: rotateY(180deg);
+    }
+
+    .about-front,
+    .about-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
+      transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .card--about:hover .about-front,
+    .card--about:hover .about-back {
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border-hover);
+    }
+
+    .about-back {
+      transform: rotateY(180deg);
+    }
+
+    .about-front .card__title {
+      font-size: 1.25rem;
+    }
+
+    .about-front .about-bio {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-top: 8px;
+      flex: 1;
+    }
+
+    .about-front .about-hint {
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+      margin-top: auto;
+      padding-top: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .about-back .back-title {
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-tertiary);
+      margin-bottom: 16px;
+    }
+
+    .about-back .back-detail {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .about-back .back-detail strong {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .about-back .about-hint {
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+      margin-top: auto;
+      padding-top: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ============================================
+       EXPERIENCE CARD
+       ============================================ */
+    .card--experience {
+      flex-direction: row;
+      align-items: center;
+      gap: 24px;
+      min-height: 120px;
+    }
+
+    .card--experience .experience-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      width: 100%;
+    }
+
+    .card--experience .experience-roles {
+      display: flex;
+      gap: 24px;
+      flex: 1;
+    }
+
+    .experience-role {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .experience-role__company {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .experience-role__title {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .experience-role__period {
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+      margin-top: 2px;
+    }
+
+    .experience-divider {
+      width: 1px;
+      height: 40px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    /* ============================================
+       NOW CARD
+       ============================================ */
+    .card--now {
+      justify-content: space-between;
+    }
+
+    .card--now .now-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .now-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22C55E;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.3); }
+      50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+    }
+
+    .now-status-text {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #22C55E;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .now-items {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      flex: 1;
+    }
+
+    .now-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .now-item__label {
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .now-item__value {
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    .now-updated {
+      font-size: 0.7rem;
+      color: var(--text-tertiary);
+      margin-top: auto;
+      padding-top: 16px;
+    }
+
+    /* ============================================
+       PRINCIPLES CARD
+       ============================================ */
+    .card--principles {
+      min-height: 120px;
+    }
+
+    .principles-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .principle-item {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .principle-item::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--text-tertiary);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    /* ============================================
+       CONTACT DOCK
+       ============================================ */
+    .contact-dock {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 12px;
+    }
+
+    .dock-icon {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: 
+        background var(--transition-fast),
+        color var(--transition-fast),
+        opacity 400ms ease, transform 400ms ease;
+      text-decoration: none;
+    }
+
+    .dock-icon:hover {
+      background: var(--bg);
+      color: var(--text-primary);
+      transform: translateY(-2px);
+    }
+
+    .dock-icon:active {
+      transform: translateY(0);
+    }
+
+    .dock-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* ============================================
+       EXPANDED STATE (Signature Interaction)
+       ============================================ */
+    .bento-grid.expanded .card--projects {
+      display: block;
+      grid-column: 1 / -1;
+      grid-row: 1 / -1;
+      width: 100%;
+      min-height: 80vh;
+      z-index: 10;
+    }
+
+    /* Hide all other cards with smooth fade in place */
+    .bento-grid.expanded .card:not(.card--projects),
+    .bento-grid.expanded .contact-dock {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.95);
+      z-index: 0;
+    }
+
+
+
+    /* Expanded projects content */
+    .expanded-content {
+      display: none;
+      flex-direction: column;
+      gap: 24px;
+      margin-top: 32px;
+      opacity: 0;
+      animation: fadeInContent 400ms ease 200ms forwards;
+    }
+
+    .bento-grid.expanded .expanded-content {
+      display: flex;
+    }
+
+    @keyframes fadeInContent {
+      to { opacity: 1; }
+    }
+
+    .expanded-content__section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .expanded-content__label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-tertiary);
+    }
+
+    .expanded-content__text {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 600px;
+    }
+
+    .expanded-content__image-placeholder {
+      width: 100%;
+      height: 320px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-tertiary);
+      font-size: 0.85rem;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      transition: 
+        background var(--transition-fast),
+        color var(--transition-fast),
+        border-color var(--transition-fast);
+      z-index: 10;
+    }
+
+    .close-btn:hover {
+      background: var(--bg);
+      color: var(--text-primary);
+      border-color: var(--border-hover);
+    }
+
+    .bento-grid.expanded .close-btn {
+      display: flex;
+    }
+
+    /* Hide non-expanded project content when expanded */
+    .bento-grid.expanded .card--projects .project-highlight .project-name {
+      font-size: 2.75rem;
+    }
+
+    /* ============================================
+       EXPERIENCE SLIDE-OUT PANEL
+       ============================================ */
+    .slide-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-medium);
+    }
+
+    .slide-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .slide-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 480px;
+      max-width: 90vw;
+      background: var(--surface);
+      box-shadow: var(--shadow-expanded);
+      z-index: 101;
+      transform: translateX(100%);
+      transition: transform var(--transition-flip);
+      padding: 48px 40px;
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .slide-panel.active {
+      transform: translateX(0);
+    }
+
+    .slide-panel__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .slide-panel__title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .slide-panel__close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: var(--text-secondary);
+      transition: background var(--transition-fast);
+    }
+
+    .slide-panel__close:hover {
+      background: var(--bg);
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .timeline-item:last-child {
+      border-bottom: none;
+    }
+
+    .timeline-year {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      min-width: 60px;
+      padding-top: 2px;
+    }
+
+    .timeline-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .timeline-company {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .timeline-role {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    .timeline-desc {
+      font-size: 0.82rem;
+      color: var(--text-tertiary);
+      line-height: 1.5;
+      margin-top: 4px;
+    }
+
+    /* ============================================
+       CONTACT MODAL
+       ============================================ */
+
+    /* ============================================
+       FLIP ANIMATION HELPERS
+       ============================================ */
+    .card.flipping {
+      transition: none !important;
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    /* Strict full-screen snap for desktops */
+    @media (min-width: 1025px) {
+      body {
+        height: 100vh;
+        overflow: hidden;
+      }
+      .page-container {
+        height: 100%;
+        max-height: calc(100vh - (var(--page-padding) * 2));
+      }
+      .bento-grid {
+        grid-template-rows: repeat(4, minmax(0, 1fr));
+        min-height: 0;
+      }
+      .card {
+        overflow-y: auto;
+        overscroll-behavior-y: contain;
+        min-height: 0;
+      }
+      .card--about {
+        overflow: visible;
+      }
+      .bento-grid.expanded .card--projects {
+        min-height: 0;
+      }
+      /* Hide scrollbar to preserve border radius but keep functionality */
+      .card, .about-front, .about-back {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .card::-webkit-scrollbar,
+      .about-front::-webkit-scrollbar,
+      .about-back::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    /* Laptop height compression (e.g. 16" screens) */
+    @media (min-width: 1025px) and (max-height: 850px) {
+      :root {
+        --page-padding: 24px;
+        --gap: 16px;
+      }
+      .card {
+        padding: 20px 24px;
+      }
+      .card--about {
+        padding: 0;
+      }
+      .about-front,
+      .about-back {
+        padding: 20px 24px;
+      }
+      .card__label {
+        margin-bottom: 8px;
+      }
+      .card__title {
+        font-size: 1.25rem;
+      }
+      .project-name {
+        font-size: 2rem;
+      }
+      .project-description {
+        font-size: 0.95rem;
+        margin-bottom: 12px;
+      }
+      .card__footer {
+        padding-top: 12px;
+      }
+      .page-container {
+        gap: 16px;
+      }
+      .page-header {
+        font-size: 1.5rem;
+      }
+      .principles-list {
+        gap: 6px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      :root {
+        --page-padding: 24px;
+        --gap: 12px;
+      }
+
+      .bento-grid {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: auto;
+      }
+
+      .card--projects    { grid-column: 1 / 4; grid-row: 1 / 3; }
+      .card--now         { grid-column: 4 / 5; grid-row: 1 / 3; }
+      .card--about       { grid-column: 1 / 3; grid-row: 3 / 5; }
+      .card--experience  { grid-column: 3 / 5; grid-row: 3 / 4; }
+      .card--principles  { grid-column: 3 / 5; grid-row: 4 / 5; }
+      .contact-dock      { grid-column: 1 / 5; grid-row: 5 / 6; }
+
+      .card--projects .project-name { font-size: 1.75rem; }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --page-padding: 16px;
+        --gap: 12px;
+        --radius: 16px;
+      }
+
+      body {
+        align-items: flex-start;
+        padding-top: 24px;
+        padding-bottom: 24px;
+      }
+
+      .bento-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+
+      .card--projects    { grid-column: 1 / 2; grid-row: 1 / 2; min-height: 280px; }
+      .card--now         { grid-column: 1 / 2; grid-row: 2 / 3; }
+      .card--about       { grid-column: 1 / 2; grid-row: 3 / 4; }
+      .card--experience  { grid-column: 1 / 2; grid-row: 4 / 5; flex-direction: column; align-items: flex-start; gap: 16px; min-height: unset; }
+      .card--experience .experience-content { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .card--experience .experience-roles { flex-direction: column; gap: 16px; width: 100%; }
+      .experience-divider { width: 100%; height: 1px; }
+      .card--principles  { grid-column: 1 / 2; grid-row: 5 / 6; }
+      .contact-dock      { grid-column: 1 / 2; grid-row: 6 / 7; }
+
+      .card { padding: 24px; }
+      .card--projects { padding: 28px; }
+      .card--projects .project-name { font-size: 1.5rem; }
+
+      /* About card adjustments */
+      .card--about {
+        padding: 0;
+      }
+      .about-front, .about-back {
+        position: relative;
+        padding: 24px;
+        width: 100%;
+      }
+      .about-back {
+        position: absolute;
+      }
+    }
+
+    /* ============================================
+       UTILS
+       ============================================ */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-container">
+    <header class="page-header">
+      Hey, I'm Giacomo an <strong>AI Product Engineer</strong>
+    </header>
+
+    <main class="bento-grid" id="bentoGrid">
+
+    <!-- ==========================================
+         PROJECTS CARD (4c × 2r)
+         ========================================== -->
+    <article class="card card--projects" id="cardProjects" role="button" tabindex="0" aria-label="View projects">
+      <span class="card__label">Projects</span>
+      <div class="project-highlight">
+        <h1 class="project-name">EMERALD</h1>
+        <p class="project-description">An intelligent healthcare assistant that transforms complex medical guidelines into accessible, conversational support.</p>
+        <div class="project-tags">
+          <span class="project-tag">RAG Pipeline</span>
+          <span class="project-tag">LLM</span>
+          <span class="project-tag">Python</span>
+          <span class="project-tag">Healthcare</span>
+        </div>
+      </div>
+      <!-- Expanded content (hidden by default) -->
+      <div class="expanded-content">
+        <div class="expanded-content__section">
+          <span class="expanded-content__label">Overview</span>
+          <p class="expanded-content__text">
+            EMERALD is a healthcare AI assistant designed to make complex medical guidelines accessible through natural conversation. 
+            Built with a sophisticated RAG pipeline, it retrieves relevant medical knowledge and generates accurate, contextual responses 
+            while maintaining strict clinical safety guardrails.
+          </p>
+        </div>
+        <div class="expanded-content__image-placeholder">
+          System Architecture Diagram
+        </div>
+        <div class="expanded-content__section">
+          <span class="expanded-content__label">Technical Stack</span>
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">LangChain</span>
+            <span class="project-tag">FastAPI</span>
+            <span class="project-tag">ChromaDB</span>
+            <span class="project-tag">GPT-4</span>
+            <span class="project-tag">React</span>
+          </div>
+        </div>
+        <div class="expanded-content__section">
+          <span class="expanded-content__label">Key Decisions</span>
+          <p class="expanded-content__text">
+            Chose a hybrid retrieval approach combining dense and sparse retrieval to handle both semantic and keyword-based medical queries. 
+            Implemented a traffic cop router to classify query intent before retrieval, reducing hallucination rates significantly.
+          </p>
+        </div>
+      </div>
+
+      <div class="card__footer">
+        <span class="card__action">
+          Open
+          <span class="card__action-arrow">→</span>
+        </span>
+        <span class="card__count">6 Projects</span>
+      </div>
+
+      <button class="close-btn" id="closeProject" aria-label="Close project">✕</button>
+    </article>
+
+    <!-- ==========================================
+         ABOUT CARD (2c × 2r) — Flip interaction
+         ========================================== -->
+    <div class="card card--about" id="cardAbout" role="button" tabindex="0" aria-label="About me — click to flip">
+      <div class="about-inner">
+        <div class="about-front">
+          <span class="card__label">About</span>
+          <h2 class="card__title">Product Engineer</h2>
+          <p class="about-bio">
+            I build digital products from idea to implementation. 
+            I care about engineering, design, UX and execution equally.
+          </p>
+          <span class="about-hint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+            Click to flip
+          </span>
+        </div>
+        <div class="about-back">
+          <span class="back-title">More About Me</span>
+          <p class="back-detail">
+            <strong>Based in</strong> the Netherlands<br><br>
+            <strong>Education</strong> — University of Twente<br><br>
+            <strong>Focus</strong> — Building products that solve real problems with thoughtful engineering and clean design.<br><br>
+            <strong>Philosophy</strong> — Ship early. Iterate with intention. Every pixel should earn its place.
+          </p>
+          <span class="about-hint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+            Click to flip back
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         EXPERIENCE CARD (4c × 1r) — Slide-out
+         ========================================== -->
+    <article class="card card--experience" id="cardExperience" role="button" tabindex="0" aria-label="View experience">
+      <div class="experience-content">
+        <div>
+          <span class="card__label" style="margin-bottom: 8px;">Experience</span>
+          <h2 class="card__title" style="font-size: 1.1rem; margin-bottom: 0;">3+ years building products</h2>
+        </div>
+        <div class="experience-divider"></div>
+        <div class="experience-roles">
+          <div class="experience-role">
+            <span class="experience-role__company">University of Twente</span>
+            <span class="experience-role__title">Research Engineer</span>
+            <span class="experience-role__period">2024 — Present</span>
+          </div>
+          <div class="experience-role">
+            <span class="experience-role__company">Freelance</span>
+            <span class="experience-role__title">Product Engineer</span>
+            <span class="experience-role__period">2022 — Present</span>
+          </div>
+        </div>
+        <span class="card__action" style="margin-left: auto; flex-shrink: 0;">
+          Full timeline
+          <span class="card__action-arrow">→</span>
+        </span>
+      </div>
+    </article>
+
+    <!-- ==========================================
+         NOW CARD (2c × 2r)
+         ========================================== -->
+    <article class="card card--now" id="cardNow" tabindex="0" aria-label="What I'm doing now">
+      <span class="card__label">Now</span>
+      <div class="now-status">
+        <span class="now-dot"></span>
+        <span class="now-status-text">Currently</span>
+      </div>
+      <div class="now-items">
+        <div class="now-item">
+          <span class="now-item__label">Building</span>
+          <span class="now-item__value">EMERALD — Healthcare AI</span>
+        </div>
+        <div class="now-item">
+          <span class="now-item__label">Exploring</span>
+          <span class="now-item__value">Advanced RAG architectures</span>
+        </div>
+        <div class="now-item">
+          <span class="now-item__label">Reading</span>
+          <span class="now-item__value">Designing Data-Intensive Applications</span>
+        </div>
+        <div class="now-item">
+          <span class="now-item__label">Location</span>
+          <span class="now-item__value">Enschede, NL</span>
+        </div>
+      </div>
+      <span class="now-updated">Updated July 2026</span>
+    </article>
+
+    <!-- ==========================================
+         PRINCIPLES CARD (3c × 1r)
+         ========================================== -->
+    <article class="card card--principles" id="cardPrinciples" tabindex="0" aria-label="How I build">
+      <span class="card__label">How I Build</span>
+      <div class="principles-list">
+        <div class="principle-item">Ship early, iterate with data</div>
+        <div class="principle-item">Design is how it works, not how it looks</div>
+        <div class="principle-item">Remove before you add</div>
+      </div>
+    </article>
+
+    <!-- ==========================================
+         CONTACT DOCK (1c × 1r)
+         ========================================== -->
+    <nav class="contact-dock" aria-label="Contact links">
+      <a href="#" class="dock-icon" aria-label="LinkedIn" title="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+          <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+        </svg>
+      </a>
+      <a href="#" class="dock-icon" aria-label="GitHub" title="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+      </a>
+      <a href="#" class="dock-icon" aria-label="Email" title="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+        </svg>
+      </a>
+      <a href="#" class="dock-icon" aria-label="Download CV" title="Download CV">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+      </a>
+    </nav>
+
+  </main>
+  </div>
+
+  <!-- ==========================================
+       EXPERIENCE SLIDE-OUT PANEL
+       ========================================== -->
+  <div class="slide-overlay" id="slideOverlay"></div>
+  <aside class="slide-panel" id="slidePanel" role="dialog" aria-label="Experience timeline">
+    <div class="slide-panel__header">
+      <h2 class="slide-panel__title">Experience</h2>
+      <button class="slide-panel__close" id="slidePanelClose" aria-label="Close panel">✕</button>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="timeline-year">2024 —</span>
+        <div class="timeline-detail">
+          <span class="timeline-company">University of Twente</span>
+          <span class="timeline-role">Research Engineer</span>
+          <span class="timeline-desc">Building EMERALD — an AI-powered healthcare assistant. Designing RAG pipelines, conversation routing, and clinical safety systems.</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2022 —</span>
+        <div class="timeline-detail">
+          <span class="timeline-company">Freelance</span>
+          <span class="timeline-role">Product Engineer</span>
+          <span class="timeline-desc">Designing and shipping digital products for clients across healthcare, education, and SaaS. Full-stack development with a focus on UX.</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <span class="timeline-year">2021</span>
+        <div class="timeline-detail">
+          <span class="timeline-company">Previous Role</span>
+          <span class="timeline-role">Software Engineer Intern</span>
+          <span class="timeline-desc">Placeholder for earlier experience. Built internal tools and contributed to product development.</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+    /* ============================================
+       FLIP ANIMATION ENGINE
+       ============================================ */
+    class FlipAnimator {
+      constructor(container, duration = 500, easing = 'cubic-bezier(0.22, 1, 0.36, 1)') {
+        this.container = container;
+        this.duration = duration;
+        this.easing = easing;
+      }
+
+      // Record positions of all animated elements
+      recordPositions(elements) {
+        const positions = new Map();
+        elements.forEach(el => {
+          const rect = el.getBoundingClientRect();
+          positions.set(el, {
+            left: rect.left,
+            top: rect.top,
+            width: rect.width,
+            height: rect.height,
+          });
+        });
+        return positions;
+      }
+
+      // Perform FLIP animation
+      animate(elements, firstPositions, staggerBase = 30) {
+        const lastPositions = this.recordPositions(elements);
+        const animations = [];
+
+        elements.forEach((el, index) => {
+          const first = firstPositions.get(el);
+          const last = lastPositions.get(el);
+          if (!first || !last) return;
+
+          const dx = first.left - last.left;
+          const dy = first.top - last.top;
+          const sw = first.width / last.width;
+          const sh = first.height / last.height;
+
+          if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5 && Math.abs(sw - 1) < 0.01 && Math.abs(sh - 1) < 0.01) {
+            return; // No meaningful change
+          }
+
+          const delay = index * staggerBase;
+
+          const anim = el.animate([
+            {
+              transform: `translate(${dx}px, ${dy}px) scale(${sw}, ${sh})`,
+              transformOrigin: 'top left',
+            },
+            {
+              transform: 'translate(0, 0) scale(1, 1)',
+              transformOrigin: 'top left',
+            }
+          ], {
+            duration: this.duration,
+            easing: this.easing,
+            delay: delay,
+            fill: 'none',
+          });
+
+          animations.push(anim);
+        });
+
+        return Promise.all(animations.map(a => a.finished));
+      }
+    }
+
+    /* ============================================
+       STATE & ELEMENTS
+       ============================================ */
+    const grid = document.getElementById('bentoGrid');
+    const cardProjects = document.getElementById('cardProjects');
+    const closeBtn = document.getElementById('closeProject');
+    const cardAbout = document.getElementById('cardAbout');
+    const cardExperience = document.getElementById('cardExperience');
+    const slideOverlay = document.getElementById('slideOverlay');
+    const slidePanel = document.getElementById('slidePanel');
+    const slidePanelClose = document.getElementById('slidePanelClose');
+
+    const flipAnimator = new FlipAnimator(grid);
+    let isExpanded = false;
+    let isAnimating = false;
+
+    // Get all cards for FLIP
+    function getAnimatableElements() {
+      // We only FLIP animate the projects card, the rest will fade smoothly via CSS
+      return [cardProjects];
+    }
+
+    /* ============================================
+       SIGNATURE INTERACTION — Project Expansion
+       ============================================ */
+    // Close button uses capture phase to fire BEFORE the card's click handler
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      if (!isExpanded || isAnimating) return;
+      collapseProject();
+    }, true);
+
+    cardProjects.addEventListener('click', (e) => {
+      // Ignore clicks on the close button or its children
+      if (e.target === closeBtn || e.target.closest('.close-btn')) return;
+      if (isExpanded || isAnimating) return;
+      expandProject();
+    });
+
+    async function expandProject() {
+      isAnimating = true;
+      const elements = getAnimatableElements();
+      const firstPositions = flipAnimator.recordPositions(elements);
+
+      grid.classList.add('expanded');
+      isExpanded = true;
+
+      // Wait for layout recalculation
+      requestAnimationFrame(() => {
+        requestAnimationFrame(async () => {
+          await flipAnimator.animate(elements, firstPositions, 30);
+          isAnimating = false;
+        });
+      });
+    }
+
+    async function collapseProject() {
+      isAnimating = true;
+      const elements = getAnimatableElements();
+      const firstPositions = flipAnimator.recordPositions(elements);
+
+      grid.classList.remove('expanded');
+      isExpanded = false;
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(async () => {
+          await flipAnimator.animate(elements, firstPositions, 20);
+          isAnimating = false;
+        });
+      });
+    }
+
+    // Escape key to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (isExpanded && !isAnimating) collapseProject();
+        if (slidePanel.classList.contains('active')) closeSlidePanel();
+      }
+    });
+
+    /* ============================================
+       ABOUT CARD — Flip
+       ============================================ */
+    cardAbout.addEventListener('click', () => {
+      if (isExpanded) return;
+      cardAbout.classList.toggle('flipped');
+    });
+
+    /* ============================================
+       EXPERIENCE CARD — Slide-out Panel
+       ============================================ */
+    cardExperience.addEventListener('click', () => {
+      if (isExpanded) return;
+      openSlidePanel();
+    });
+
+    function openSlidePanel() {
+      slideOverlay.classList.add('active');
+      slidePanel.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSlidePanel() {
+      slideOverlay.classList.remove('active');
+      slidePanel.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    slideOverlay.addEventListener('click', closeSlidePanel);
+    slidePanelClose.addEventListener('click', closeSlidePanel);
+
+    /* ============================================
+       KEYBOARD ACCESSIBILITY
+       ============================================ */
+    document.querySelectorAll('[role="button"][tabindex="0"]').forEach(el => {
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          el.click();
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
