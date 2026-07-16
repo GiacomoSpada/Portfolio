@@ -85,15 +85,15 @@ export default function ExperienceCard() {
 
   return (
     <article
-      className="card card--experience"
+      className="card card--experience card--showcase"
       style={{
         position: 'relative',
         overflow: 'hidden',
-        padding: '20px 24px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'stretch',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        gap: 0
       }}
       tabIndex="0"
       onKeyDown={handleKeyDown}
@@ -101,12 +101,7 @@ export default function ExperienceCard() {
       aria-label="Experience Carousel"
     >
       {/* Header Layer */}
-      <header style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        zIndex: 2
-      }}>
+      <header style={{ zIndex: 2 }}>
         <span className="card__label">Experience</span>
       </header>
 
@@ -154,7 +149,7 @@ export default function ExperienceCard() {
               }}
             >
               <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginBottom: '6px', flexShrink: 0 }}>
-                <h2 className="text-title" style={{ marginBottom: 0, textAlign: 'left' }}>{currentExperience.role}</h2>
+                <h2 className="text-title" style={{ marginTop: 0, marginBottom: 0, textAlign: 'left' }}>{currentExperience.role}</h2>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
                   <span className="text-subtitle" style={{ color: 'var(--text-primary)' }}>{currentExperience.company}</span>
                   <span className="text-subtitle" style={{ color: 'var(--border-muted)' }}>|</span>

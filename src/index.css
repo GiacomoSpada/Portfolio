@@ -4,6 +4,7 @@
 ::-webkit-scrollbar {
   display: none !important;
 }
+
 * {
   -ms-overflow-style: none !important;
   scrollbar-width: none !important;
@@ -26,8 +27,30 @@
   --text-secondary: #8D8D8D;
   --text-tertiary: #525252;
 
-  /* Accents */
+  /* --- CANVAS --- */
+  --bg-canvas: #0D0D0D;
+  /* Deep matte graphite canvas */
+
+  /* --- GROUP 1: THE CORE ENGINE (Projects & Experience) --- */
+  --surface-showcase: #14161A;
+  --border-showcase: #222630;
+
+  /* --- GROUP 2: THE PHILOSOPHY ENGINE (About, Now, How I Build) --- */
+  /* Visibly lighter warm Amber/Mocha tint that pops from the charcoal showcase cards */
+  --surface-philosophy: #331C0D;
+  /* Clean, harmonious warm copper structural border */
+  --border-philosophy: #542D16;
+
+  /* --- GROUP 3: THE CONTROL DOCK (Socials & Resume) --- */
+  --surface-cream: #EAE6DF;
+  /* Machined warm cream */
+  --border-cream: #D4CFC6;
+  --text-on-cream: #0D0D0D;
+  /* High-contrast matte black for cream buttons */
+
+  /* --- ACCENTS --- */
   --accent-primary: #FF6B00;
+  /* Anodized Orange remains primary accent */
   --accent-glow: rgba(255, 107, 0, 0.12);
   --accent-secondary: #D97706;
 
@@ -82,12 +105,12 @@
   --radius-sm: var(--radius-button);
   --gap: var(--gap-grid);
   --page-padding: 32px;
-  
+
   /* Shadows - Flattened for precision engineered look */
   --shadow: none;
   --shadow-hover: 0 0 20px var(--accent-glow);
   --shadow-expanded: none;
-  
+
   --transition-fast: 150ms ease;
   --transition-medium: 300ms ease;
   --transition-flip: 500ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -153,23 +176,93 @@
   font-weight: 600;
   text-transform: uppercase;
   color: var(--accent-primary);
-  margin-bottom: 1.5rem !important; /* Enforce exact 24px vertical rhythm */
+  margin-bottom: 1.5rem !important;
+  /* Enforce exact 24px vertical rhythm */
   display: block;
 }
 
 .tag-chip {
-  font-size: 0.6875rem; /* ~11px precision sizing */
-  font-weight: 400; /* Dropped from bold/600 to regular/400 for a cleaner look */
-  letter-spacing: 0.03em; /* Slightly tighter tracking */
+  font-size: 0.6875rem;
+  /* ~11px precision sizing */
+  font-weight: 400;
+  /* Dropped from bold/600 to regular/400 for a cleaner look */
+  letter-spacing: 0.03em;
+  /* Slightly tighter tracking */
   color: var(--accent-primary);
-  background-color: rgba(255, 107, 0, 0.06); /* Slightly subtler background tint */
-  border: 1px solid rgba(255, 107, 0, 0.4); /* Softer border opacity so it doesn't look like a hard button */
-  padding: 2px 10px; /* Reduced vertical padding from 4px down to 2px */
+  background-color: rgba(255, 107, 0, 0.06);
+  /* Slightly subtler background tint */
+  border: 1px solid rgba(255, 107, 0, 0.4);
+  /* Softer border opacity so it doesn't look like a hard button */
+  padding: 2px 10px;
+  /* Reduced vertical padding from 4px down to 2px */
   border-radius: 9999px;
   display: inline-flex;
   align-items: center;
   line-height: 1.4;
   white-space: nowrap;
+}
+
+/* Group 1: Projects & Experience */
+.card--showcase {
+  background-color: var(--surface-showcase) !important;
+  border: 1px solid var(--border-showcase) !important;
+}
+
+/* Group 2: About, Now, How I Build (The Philosophy Group) */
+.card--philosophy,
+.card--orange-group {
+  background-color: var(--surface-philosophy) !important;
+  border: 1px solid var(--border-philosophy) !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s ease !important;
+  overflow: hidden;
+}
+
+/* Ensure inner 3D faces inherit background cleanly without double borders */
+.card--orange-group .about-front,
+.card--orange-group .about-back,
+.card--philosophy .about-front,
+.card--philosophy .about-back {
+  background-color: var(--surface-philosophy) !important;
+}
+
+/* STRICT: Kill all background shifts and hover glowing */
+.card--philosophy:hover,
+.card--orange-group:hover {
+  background-color: var(--surface-philosophy) !important;
+  border: 1px solid var(--border-philosophy) !important;
+  border-color: var(--border-philosophy) !important;
+  box-shadow: none !important;
+}
+
+.card--orange-group:hover .about-front,
+.card--orange-group:hover .about-back,
+.card--philosophy:hover .about-front,
+.card--philosophy:hover .about-back {
+  background-color: var(--surface-philosophy) !important;
+}
+
+/* Group 3: Social & Action Dock (The Cream Group) */
+.dock-button--cream {
+  background-color: var(--surface-cream) !important;
+  border: 1px solid var(--border-cream) !important;
+  color: var(--text-on-cream) !important;
+  transition: all 0.2s ease;
+}
+
+.dock-button--cream svg,
+.dock-button--cream i,
+.dock-button--cream span {
+  color: var(--text-on-cream) !important;
+}
+
+.dock-button--cream:hover {
+  background-color: var(--accent-primary) !important;
+  /* Floods Anodized Orange on hover! */
+  border-color: var(--accent-primary) !important;
+  color: #0D0D0D !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(255, 107, 0, 0.35);
 }
 
 /* ============================================
@@ -292,8 +385,9 @@ body:has(.workspace-active) {
   border: none;
   border-radius: var(--radius);
   box-shadow: var(--shadow-expanded);
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   overflow: hidden;
 }
 
@@ -1380,10 +1474,205 @@ body:has(.workspace-active) {
   }
 }
 
+@media (max-width: 480px) {
+  :root {
+    --padding-card: 20px;
+    --gap-grid: 16px;
+  }
+}
+
+/* ============================================
+       RESPONSIVE OVERHAUL (TABLET & MOBILE)
+   ============================================ */
+
+/* 1. Stop Horizontal Overflow, Full-Bleed Fixes & Text Clipping */
+@media (max-width: 1024px) {
+
+  body,
+  #root {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    min-height: 100dvh !important;
+    max-width: none !important;
+    border-radius: 0 !important;
+    display: block !important;
+  }
+
+  .splash-screen {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+    background: var(--bg-base) !important;
+  }
+
+  .bento-grid,
+  .bento-grid>*,
+  .card {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    box-sizing: border-box !important;
+  }
+
+  body {
+    overflow-x: hidden !important;
+  }
+}
+
+/* 2. Balanced 2-Column Tablet Layout (768px–1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .bento-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: auto 180px 180px auto !important;
+    /* Force exact heights for Row 2 and 3 */
+    gap: var(--gap-grid) !important;
+    width: 100% !important;
+  }
+
+  /* MANDATORY RESET: Kill all desktop vertical row spans so cards breathe horizontally */
+  .bento-grid>*,
+  .card {
+    grid-row: auto !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* ROW 1: Projects (Left, 50% width) + Experience (Right, 50% width) */
+  .bento-grid>.card--projects {
+    grid-column: span 1 !important;
+    order: 1 !important;
+  }
+
+  .bento-grid>.card--experience {
+    grid-column: span 1 !important;
+    order: 2 !important;
+  }
+
+  /* Ensure card contents never clip or vanish vertically */
+  .card--showcase {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    overflow: visible !important;
+  }
+
+  /* ROW 2 & 3: About Me spans 2 rows on the left */
+  .bento-grid>.card--about {
+    grid-column: span 1 !important;
+    grid-row: span 2 !important;
+    order: 3 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    height: 100% !important;
+  }
+
+  /* ROW 2 (Right): Now Card */
+  .bento-grid>.card--now {
+    grid-column: span 1 !important;
+    order: 4 !important;
+    height: 100% !important;
+  }
+
+  /* ROW 3 (Right): How I Build (Stacked directly under Now) */
+  .bento-grid>.card--principles {
+    grid-column: span 1 !important;
+    order: 5 !important;
+    height: 100% !important;
+  }
+
+  /* ROW 4: Social dock spans full bottom width */
+  .bento-grid>.contact-dock {
+    grid-column: span 2 !important;
+    order: 6 !important;
+  }
+}
+
+/* 3. Strict 1-Column Mobile Hierarchy (< 767px) */
+@media (max-width: 767px) {
+  .bento-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: var(--gap-grid) !important;
+  }
+
+  /* Enforce logical professional ordering using exact component classes */
+  .bento-grid>.card--projects {
+    order: 1 !important;
+  }
+
+  .bento-grid>.card--experience {
+    order: 2 !important;
+  }
+
+  .bento-grid>.card--about {
+    order: 3 !important;
+  }
+
+  .bento-grid>.card--now {
+    order: 4 !important;
+  }
+
+  .bento-grid>.card--principles {
+    order: 5 !important;
+  }
+
+  .bento-grid>.contact-dock {
+    order: 6 !important;
+  }
+}
+
+/* 4. Convert Social Dock to 4-Column Horizontal Bar */
+@media (max-width: 1024px) {
+  .contact-dock {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .dock-button--cream {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 12px 4px !important;
+    height: 48px !important;
+    /* Uniform touch target height */
+    width: 100% !important;
+  }
+}
+
+/* Hide text labels on narrow mobile if space is tight */
+@media (max-width: 480px) {
+  .dock-button--cream span {
+    display: none !important;
+  }
+
+  .dock-button--cream svg,
+  .dock-button--cream i {
+    margin: 0 !important;
+    font-size: 1.25rem !important;
+  }
+}
+
 @media (max-width: 1024px) {
   :root {
     --page-padding: 24px;
     --gap: 12px;
+  }
+
+  .page-container {
+    align-items: flex-start !important;
+    padding-top: 32px !important;
+    padding-bottom: 32px !important;
   }
 
   .bento-grid {
@@ -1506,14 +1795,18 @@ body:has(.workspace-active) {
     width: 100%;
   }
 
-  /* Project Workspace Mobile */
-  .projects-workspace {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: calc(100dvh - 48px);
-    z-index: 100;
+  /* Project Workspace Mobile & Tablet Full-Bleed */
+  .bento-grid>.projects-workspace {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    z-index: 9999 !important;
+    max-width: none !important;
   }
 
   .workspace-split-view {
@@ -1555,9 +1848,12 @@ body:has(.workspace-active) {
   width: 1px;
   height: 1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip: rect(1px, 1px, 1px, 1px);
   white-space: nowrap;
+  border-width: 0;
 }
+
+
 
 /* Experience Carousel Scrollbar Hiding */
 .experience-scroll-container::-webkit-scrollbar {

@@ -15,6 +15,7 @@ const swipePower = (offset, velocity) => Math.abs(offset) * velocity;
 export default function ProjectsWorkspace({ initialProjectId, onClose }) {
   // 'grid' for Level 2, or project ID for Level 3
   const [activeProject, setActiveProject] = useState(initialProjectId || 'grid');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const selectedProjectData = projectsData.find(p => p.id === activeProject);
   const smoothTransition = {
     layout: {
@@ -24,7 +25,7 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
     },
     opacity: { duration: 0.2 }
   };
-  
+
   const contentRef = useRef(null);
 
   useEffect(() => {
@@ -35,10 +36,10 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
-  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 768 : false);
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 1024 : false);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    const handleResize = () => setIsMobile(window.innerWidth <= 1024);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -70,7 +71,7 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
           // LEVEL 2: Asymmetrical Gallery Grid
           <motion.div
             key="grid"
-            style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '16px', background: 'var(--bg-surface-hover)' }}
+            style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0, padding: '16px', background: 'var(--bg-surface-hover)' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -99,7 +100,7 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
                       transition={{ x: { type: "spring", stiffness: 300, damping: 30 }, opacity: { duration: 0.2 } }}
                       drag="x"
                       dragConstraints={{ left: 0, right: 0 }}
-                      dragElastic={1}
+                      dragElastic={0.2}
                       onDragEnd={handleDragEnd}
                       style={{ position: 'absolute', inset: 0, touchAction: 'pan-y', display: 'flex', flexDirection: 'column' }}
                     >
@@ -124,7 +125,7 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
                             </div>
                             <div className="project-content">
                               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                                <div style={{ display: 'flex', gap: '8px', alignItems: 'baseline' }}>
                                   <span className="card__label text-caption" style={{ marginBottom: 0 }}>{project.category}</span>
                                   <span className="card__count text-caption">{project.year}</span>
                                 </div>
@@ -196,7 +197,7 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
                         </div>
                         <div className="project-content">
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                            <div style={{ display: 'flex', gap: '8px', alignItems: 'baseline' }}>
                               <span className="card__label text-caption" style={{ marginBottom: 0 }}>{project.category}</span>
                               <span className="card__count text-caption">{project.year}</span>
                             </div>
@@ -231,91 +232,176 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={smoothTransition}
+            style={isMobile ? { display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 } : { display: 'flex', flex: 1, minHeight: 0 }}
           >
-            <motion.div
-              className="workspace-sidebar"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.1, ...smoothTransition }}
-            >
-              <div className="workspace-sidebar-nav">
-                <h3 className="workspace-sidebar-title">Projects</h3>
-                {projectsData.map(project => (
-                  <div
-                    key={project.id}
-                    className={`workspace-sidebar-item ${project.id === activeProject ? 'active' : ''}`}
-                    onClick={() => setActiveProject(project.id)}
-                  >
-                    {project.title}
-                  </div>
-                ))}
-              </div>
-
-              <div className="workspace-sidebar-nav" style={{ marginTop: '16px' }}>
-                <h3 className="workspace-sidebar-title">Sections</h3>
-                {selectedProjectData?.sections.map(section => (
-                  <div
-                    key={section.id}
-                    className="workspace-sidebar-item"
-                    onClick={() => {
-                      document.getElementById(`section-${section.id}`)?.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                  >
-                    {section.title}
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
-            <div
-              className="workspace-content"
-              ref={contentRef}
-            >
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', position: 'sticky', top: 0, zIndex: 100, background: 'var(--bg-surface)', padding: '24px 0 16px 0' }}>
-                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                  <span className="card__label text-caption" style={{ marginBottom: 0 }}>{selectedProjectData.category}</span>
-                  <span className="card__count text-caption">{selectedProjectData.year}</span>
-                </div>
+            {isMobile ? (
+              <div className="relative w-full mb-6" style={{ marginBottom: '24px', position: 'relative', zIndex: 200 }}>
+                {/* Active Item Trigger Button */}
                 <button
-                  className="nav-back-btn"
-                  onClick={() => setActiveProject('grid')}
-                  aria-label="Back to Projects"
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  className="w-full text-title"
+                  style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                    padding: '12px 16px', borderRadius: '12px',
+                    backgroundColor: 'var(--surface-showcase)',
+                    border: '1px solid var(--border-showcase)',
+                    color: 'var(--text-primary)', fontWeight: 600,
+                    transition: 'all 0.2s', width: '100%', cursor: 'pointer'
+                  }}
                 >
-                  <ArrowLeft size={20} />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
+                    <span style={{ color: 'var(--accent-primary)', fontFamily: 'monospace', fontSize: '0.75rem' }}>PROJECT //</span>
+                    <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {selectedProjectData?.title || "Select Project"}
+                    </span>
+                  </div>
+                  {/* Chevron indicator rotating on open */}
+                  <span style={{ color: 'var(--accent-primary)', transform: isMobileMenuOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
+                    ▼
+                  </span>
                 </button>
-              </div>
 
-              <h2
-                className="text-display"
-                style={{ marginBottom: '16px' }}
+                {/* Collapsible Overlay Menu Sheet */}
+                {isMobileMenuOpen && (
+                  <>
+                    {/* Backdrop to click-away and close */}
+                    <div
+                      style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.4)', zIndex: 210, backdropFilter: 'blur(4px)' }}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    />
+                    {/* Dropdown Options List */}
+                    <div style={{
+                      position: 'absolute', top: '100%', left: 0, right: 0, marginTop: '8px', padding: '8px',
+                      borderRadius: '12px', backgroundColor: 'var(--surface-showcase)',
+                      border: '1px solid var(--border-showcase)', boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
+                      zIndex: 220, display: 'flex', flexDirection: 'column', gap: '4px',
+                      maxHeight: '60vh', overflowY: 'auto'
+                    }}>
+                      {projectsData.map((project) => {
+                        const isSelected = activeProject === project.id;
+                        return (
+                          <button
+                            key={project.id}
+                            onClick={() => {
+                              setActiveProject(project.id);
+                              setIsMobileMenuOpen(false); /* Automatically close on select! */
+                            }}
+                            style={{
+                              width: '100%', textAlign: 'left', padding: '12px', borderRadius: '8px',
+                              display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer',
+                              border: 'none', transition: 'background 0.2s',
+                              backgroundColor: isSelected ? 'rgba(255,107,0,0.1)' : 'transparent',
+                              color: isSelected ? 'var(--accent-primary)' : 'var(--text-secondary)',
+                              fontWeight: isSelected ? 600 : 400
+                            }}
+                          >
+                            <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{project.title}</span>
+                            {isSelected && <span style={{ color: 'var(--accent-primary)' }}>●</span>}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
+              </div>
+            ) : (
+              <motion.div
+                className="workspace-sidebar"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1, ...smoothTransition }}
               >
-                {selectedProjectData.title}
-              </h2>
+                <div className="workspace-sidebar-nav">
+                  <h3 className="workspace-sidebar-title">Projects</h3>
+                  {projectsData.map(project => (
+                    <div
+                      key={project.id}
+                      className={`workspace-sidebar-item ${project.id === activeProject ? 'active' : ''}`}
+                      onClick={() => setActiveProject(project.id)}
+                    >
+                      {project.title}
+                    </div>
+                  ))}
+                </div>
 
-              <p className="text-body" style={{ marginBottom: '32px', maxWidth: '600px' }}>
-                {selectedProjectData.summary}
-              </p>
-
-              <div className="project-tags" style={{ marginBottom: '48px' }}>
-                {selectedProjectData.tags.map(t => (
-                  <span key={t} className="tag-chip">{t}</span>
-                ))}
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
-                {selectedProjectData.sections.map(section => (
-                  <section key={section.id} id={`section-${section.id}`}>
-                    <h3 className="text-title" style={{ marginBottom: '16px' }}>
+                <div className="workspace-sidebar-nav" style={{ marginTop: '16px' }}>
+                  <h3 className="workspace-sidebar-title">Sections</h3>
+                  {selectedProjectData?.sections.map(section => (
+                    <div
+                      key={section.id}
+                      className="workspace-sidebar-item"
+                      onClick={() => {
+                        document.getElementById(`section-${section.id}`)?.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                    >
                       {section.title}
-                    </h3>
-                    <p className="text-body" style={{ maxWidth: '650px', whiteSpace: 'pre-wrap' }}>
-                      {section.content}
-                    </p>
-                  </section>
-                ))}
-              </div>
-            </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeProject}
+                initial={{ opacity: 0, x: isMobile ? 20 : 0 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: isMobile ? -20 : 0 }}
+                transition={{ duration: 0.25, ease: 'easeInOut' }}
+                className="workspace-content"
+                ref={contentRef}
+              >
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', position: 'sticky', top: 0, zIndex: 100, background: 'var(--bg-surface)', padding: '24px 0 16px 0' }}>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                    <span style={{ color: 'var(--accent-primary)', fontFamily: 'monospace', fontWeight: 600, fontSize: '0.875rem', lineHeight: 1, whiteSpace: 'nowrap' }}>
+                      {selectedProjectData?.category?.toUpperCase()}
+                    </span>
+                    <span style={{ color: 'var(--text-tertiary)', fontSize: '0.875rem', lineHeight: 1, whiteSpace: 'nowrap' }}>
+                      {selectedProjectData?.year}
+                    </span>
+                  </div>
+                  <button
+                    className="nav-back-btn"
+                    onClick={() => setActiveProject('grid')}
+                    style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', lineHeight: 1, padding: 0 }}
+                  >
+                    {isMobile ? '' : 'Back to Projects'}
+                    <ArrowLeft size={isMobile ? 24 : 16} />
+                  </button>
+                </div>
+
+                <h2
+                  className="text-display"
+                  style={{ marginBottom: '16px' }}
+                >
+                  {selectedProjectData?.title}
+                </h2>
+
+                <p className="text-body" style={{ marginBottom: '32px', maxWidth: '600px' }}>
+                  {selectedProjectData?.summary}
+                </p>
+
+                <div className="project-tags" style={{ marginBottom: '48px' }}>
+                  {selectedProjectData?.tags?.map(t => (
+                    <span key={t} className="tag-chip">{t}</span>
+                  ))}
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
+                  {selectedProjectData?.sections?.map(section => (
+                    <section key={section.id} id={`section-${section.id}`}>
+                      <h3 className="text-title" style={{ marginBottom: '16px' }}>
+                        {section.title}
+                      </h3>
+                      <p className="text-body" style={{ maxWidth: '650px', whiteSpace: 'pre-wrap' }}>
+                        {section.content}
+                      </p>
+                    </section>
+                  ))}
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </motion.div>
         )}
       </AnimatePresence>

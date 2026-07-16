@@ -15,7 +15,7 @@ export default function ProjectCard({ onClick }) {
     <motion.article
       layoutId="projects-workspace-container"
       transition={transition}
-      className="card card--projects interactive"
+      className="card card--projects interactive card--showcase"
       onClick={onClick}
       role="button"
       tabIndex="0"
@@ -37,7 +37,7 @@ export default function ProjectCard({ onClick }) {
 
       <motion.div layout transition={transition} className="card__footer">
         <span className="card__action">
-          Open Workspace
+          Check
           <span className="card__action-arrow">→</span>
         </span>
         <span className="card__count text-caption">4 Projects</span>

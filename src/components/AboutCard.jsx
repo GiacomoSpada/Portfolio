@@ -6,7 +6,7 @@ export default function AboutCard() {
 
   return (
     <div
-      className="card card--about interactive"
+      className="card card--about interactive card--orange-group"
       onClick={() => setShowMore(!showMore)}
       role="button"
       tabIndex="0"
@@ -24,8 +24,8 @@ export default function AboutCard() {
             className="about-front"
             style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}
           >
-            <span className="card__label">About</span>
-            <h2 className="text-title">Product Engineer</h2>
+            <span className="card__label">About Me</span>
+            <h2 className="text-title" style={{ marginTop: 0, marginBottom: '12px' }}>AI Product Engineer</h2>
             <div style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
               <p className="text-body" style={{ margin: 0 }}>
                 I build digital products from idea to implementation.
@@ -49,7 +49,7 @@ export default function AboutCard() {
             className="about-back"
             style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0, transform: 'none' }}
           >
-            <span className="card__label">About</span>
+            <span className="card__label">About Me</span>
             <div style={{ flex: 1, overflowY: 'auto', minHeight: 0, paddingRight: '8px' }}>
               <div className="back-detail text-body" style={{ margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <div><strong>Based in</strong> the Netherlands</div>
