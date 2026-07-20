@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 
 export default function AboutCard() {
   const [showMore, setShowMore] = useState(false);
@@ -33,9 +34,9 @@ export default function AboutCard() {
               </p>
             </div>
             <div className="card__footer" style={{ marginTop: 'auto', paddingTop: '16px' }}>
-              <span className="card__action" style={{ whiteSpace: 'nowrap' }}>
+              <span className="card__action" style={{ display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
                 More
-                <span className="card__action-arrow">→</span>
+                <span className="card__action-arrow"><ArrowRight size={16} style={{ position: 'relative', top: '2px' }} /></span>
               </span>
             </div>
           </motion.div>

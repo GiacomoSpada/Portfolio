@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { projectsData } from '../data/projects';
 import { useEffect, useRef } from 'react';
 import { ArrowLeft } from 'lucide-react';
+import CaseStudyLayout from './CaseStudyLayout';
 
 const variants = {
   enter: (direction) => ({ x: direction > 0 ? 300 : -300, opacity: 0 }),
@@ -82,8 +83,10 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
                 className="nav-back-btn"
                 onClick={onClose}
                 aria-label="Go back to Portfolio"
+                style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', lineHeight: 1, padding: 0 }}
               >
-                <ArrowLeft size={20} />
+                {!isMobile && 'Back to home'}
+                <ArrowLeft size={isMobile ? 24 : 16} />
               </button>
             </div>
             {isMobile ? (
@@ -326,7 +329,17 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
 
                 <div className="workspace-sidebar-nav" style={{ marginTop: '16px' }}>
                   <h3 className="workspace-sidebar-title">Sections</h3>
-                  {selectedProjectData?.sections.map(section => (
+                  {selectedProjectData?.caseStudy && [
+                    { id: 'context', title: 'Context' },
+                    { id: 'problem', title: 'Problem Framing' },
+                    { id: 'beforeAfter', title: 'Before & After' },
+                    { id: 'users', title: 'User Needs' },
+                    { id: 'insights', title: 'Key Insights' },
+                    { id: 'solution', title: 'Implementation' },
+                    { id: 'visuals', title: 'Visuals' },
+                    { id: 'outcome', title: 'Outcome & Impact' },
+                    { id: 'reflection', title: 'Lessons Learned' }
+                  ].filter(s => selectedProjectData.caseStudy[s.id]).map(section => (
                     <div
                       key={section.id}
                       className="workspace-sidebar-item"
@@ -389,16 +402,7 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '48px' }}>
-                  {selectedProjectData?.sections?.map(section => (
-                    <section key={section.id} id={`section-${section.id}`}>
-                      <h3 className="text-title" style={{ marginBottom: '16px' }}>
-                        {section.title}
-                      </h3>
-                      <p className="text-body" style={{ maxWidth: '650px', whiteSpace: 'pre-wrap' }}>
-                        {section.content}
-                      </p>
-                    </section>
-                  ))}
+                  <CaseStudyLayout data={selectedProjectData?.caseStudy} />
                 </div>
               </motion.div>
             </AnimatePresence>

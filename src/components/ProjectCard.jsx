@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 
 export default function ProjectCard({ onClick }) {
   const transition = {
@@ -36,9 +37,9 @@ export default function ProjectCard({ onClick }) {
       </motion.div>
 
       <motion.div layout transition={transition} className="card__footer">
-        <span className="card__action">
+        <span className="card__action" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
           Check
-          <span className="card__action-arrow">→</span>
+          <span className="card__action-arrow"><ArrowRight size={16} style={{ position: 'relative', top: '2px' }} /></span>
         </span>
         <span className="card__count text-caption">4 Projects</span>
       </motion.div>
