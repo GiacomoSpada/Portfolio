@@ -413,16 +413,18 @@ body:has(.workspace-active) {
 .workspace-gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: minmax(0, 1.2fr) minmax(0, 1fr);
+  grid-template-rows: repeat(2, minmax(0, 1fr));
   gap: 12px;
   padding: 24px;
   height: 100%;
   background: var(--surface-hover);
 }
 
-.project-card-hero {
-  grid-column: 1 / -1;
-  grid-row: 1 / 2;
+@media (max-width: 1024px) {
+  .workspace-gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+  }
 }
 
 /* Base styles for the project cards in the gallery */
@@ -445,7 +447,7 @@ body:has(.workspace-active) {
 }
 
 .project-visual {
-  height: 100px;
+  height: 180px;
   width: 100%;
   background: var(--bg);
   position: relative;
@@ -453,8 +455,10 @@ body:has(.workspace-active) {
   border-bottom: 1px solid var(--border);
 }
 
-.project-card-hero .project-visual {
-  height: 180px;
+@media (max-width: 767px) {
+  .project-visual {
+    height: 260px;
+  }
 }
 
 .project-visual-emerald {
@@ -472,74 +476,24 @@ body:has(.workspace-active) {
   opacity: 0.5;
 }
 
-.project-visual-nexus {
-  background: linear-gradient(90deg, rgba(37, 99, 235, 0.05) 0%, rgba(37, 99, 235, 0.1) 50%, rgba(37, 99, 235, 0.05) 100%);
+.project-visual-nutrichat {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(21, 128, 61, 0.2));
 }
 
-.project-visual-nexus::before {
-  content: '';
-  position: absolute;
-  top: 20%;
-  left: -100%;
-  right: -100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.4), transparent);
-  animation: scanline 3s linear infinite;
+.project-visual-plantmonitor {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(4, 120, 87, 0.2));
 }
 
-.project-visual-aura {
-  background: var(--bg);
+.project-visual-money {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(29, 78, 216, 0.2));
 }
 
-.project-visual-aura::before,
-.project-visual-aura::after {
-  content: '';
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(20px);
-  opacity: 0.6;
+.project-visual-purchaseorder {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(109, 40, 217, 0.2));
 }
 
-.project-visual-aura::before {
-  width: 80px;
-  height: 80px;
-  background: #ff5e00;
-  top: 10%;
-  left: 20%;
-}
-
-.project-visual-aura::after {
-  width: 100px;
-  height: 100px;
-  background: #e01e5a;
-  bottom: 10%;
-  right: 20%;
-}
-
-.project-visual-lumina {
-  background: radial-gradient(circle at center, rgba(37, 99, 235, 0.2) 0%, transparent 70%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.project-visual-lumina::before {
-  content: '';
-  width: 40px;
-  height: 40px;
-  border: 2px solid rgba(37, 99, 235, 0.5);
-  border-radius: 8px;
-  transform: rotate(45deg);
-}
-
-@keyframes scanline {
-  0% {
-    transform: translateX(-50%);
-  }
-
-  100% {
-    transform: translateX(50%);
-  }
+.project-visual-titsystem {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(180, 83, 9, 0.2));
 }
 
 .project-content {
@@ -547,10 +501,6 @@ body:has(.workspace-active) {
   display: flex;
   flex-direction: column;
   flex: 1;
-}
-
-.project-card-hero .project-content {
-  padding: 20px 24px;
 }
 
 .workspace-split-view {

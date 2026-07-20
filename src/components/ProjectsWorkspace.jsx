@@ -37,10 +37,10 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
-  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 1024 : false);
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth <= 1024);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -117,14 +117,6 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
                             style={{ flex: 1, margin: 0 }}
                           >
                             <div className={`project-visual project-visual-${project.id}`}>
-                              {project.id === 'aura' && (
-                                <>
-                                  <div className="aura-orb aura-orb-1"></div>
-                                  <div className="aura-orb aura-orb-2"></div>
-                                </>
-                              )}
-                              {project.id === 'nexus' && <div className="nexus-line"></div>}
-                              {project.id === 'lumina' && <div className="lumina-ring"></div>}
                             </div>
                             <div className="project-content">
                               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
@@ -137,7 +129,7 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
                                 {project.title}
                               </h2>
                               <div style={{ flex: 1, marginBottom: '8px' }}>
-                                <p className="text-body" style={{ margin: 0, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                <p className="text-body" style={{ margin: 0, display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                   {project.summary}
                                 </p>
                               </div>
@@ -173,12 +165,10 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
               </div>
             ) : (
               <div className="workspace-gallery-grid" style={{ padding: 0, background: 'transparent', flex: 1, minHeight: 0 }}>
-                {projectsData.map((project, index) => {
-                  const isHero = index === 0;
+                {projectsData.map((project) => {
                   return (
                     <div
                       key={project.id}
-                      className={isHero ? 'project-card-hero' : ''}
                       style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}
                     >
                       <motion.div
@@ -189,14 +179,6 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
                         style={{ flex: 1, margin: 0 }}
                       >
                         <div className={`project-visual project-visual-${project.id}`}>
-                          {project.id === 'aura' && (
-                            <>
-                              <div className="aura-orb aura-orb-1"></div>
-                              <div className="aura-orb aura-orb-2"></div>
-                            </>
-                          )}
-                          {project.id === 'nexus' && <div className="nexus-line"></div>}
-                          {project.id === 'lumina' && <div className="lumina-ring"></div>}
                         </div>
                         <div className="project-content">
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
@@ -205,16 +187,16 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
                               <span className="card__count text-caption">{project.year}</span>
                             </div>
                           </div>
-                          <h2 className="text-title" style={{ margin: '0 0 8px 0' }}>
+                          <h2 className="text-title" style={{ margin: '0 0 8px 0', fontSize: '1.25rem' }}>
                             {project.title}
                           </h2>
                           <div style={{ flex: 1, marginBottom: '8px' }}>
-                            <p className="text-body" style={{ margin: 0, display: '-webkit-box', WebkitLineClamp: isHero ? 3 : 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            <p className="text-body" style={{ margin: 0, display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                               {project.summary}
                             </p>
                           </div>
                           <div className="project-tags">
-                            {project.tags.slice(0, isHero ? 4 : 2).map(t => (
+                            {project.tags.slice(0, 3).map(t => (
                               <span key={t} className="tag-chip">{t}</span>
                             ))}
                           </div>

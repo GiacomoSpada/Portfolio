@@ -55,143 +55,262 @@ export const projectsData = [
     }
   },
   {
-    id: 'nexus',
-    title: 'Nexus Data Platform',
-    summary: 'A high-throughput, low-latency streaming analytics platform for real-time financial data.',
-    tags: ['Kafka', 'Go', 'ClickHouse', 'FinTech'],
-    category: 'Data Infrastructure',
+    id: 'nutrichat',
+    title: 'NutriChat',
+    summary: 'Designing a Nutrition Assessment AI Chatbot.',
+    tags: ['UX/UI', 'AI', 'Healthcare'],
+    category: 'Product Design',
     year: '2025',
     caseStudy: {
       introduction: {
-        summary: "Nexus is a streaming data platform capable of processing millions of events per second with sub-10ms latency.",
-        metadata: { role: "Backend Engineer", context: "Fintech Startup", timeline: "4 Months", team: "3 Engineers" },
-        credibilityTag: "Scales to handle 2M+ events/sec on peak trading days with zero downtime."
+        summary: "NutriChat focuses on simplifying nutrition assessment through conversational AI.",
+        metadata: { role: "Product Designer", context: "Healthcare Application", timeline: "3 Months", team: "Design Team" },
+        credibilityTag: "Streamlined the assessment process reducing user friction by 40%."
       },
       context: {
-        description: "The previous system relied on batch processing, which resulted in stale data for high-frequency trading algorithms.",
-        constraints: ["Zero message loss", "Sub-10ms latency", "High availability"]
+        description: "Dietary tracking and nutrition assessments are traditionally tedious, causing high user drop-off rates. This project reimagines the flow using a conversational AI interface.",
+        constraints: ["Mobile-first approach", "HIPAA compliance considerations"]
       },
       problem: {
-        howMightWe: "How might we rebuild the entire data pipeline to support true real-time streaming without dropping messages?",
-        observations: ["Batch processing causes unacceptable delays", "Trading algorithms require millisecond accuracy"],
-        impact: "Enables real-time algorithmic trading decisions based on live market data."
+        howMightWe: "How might we design a frictionless nutrition assessment flow that feels like a natural conversation?",
+        observations: ["Users abandon long form-based assessments", "Static tracking apps lack personalization"],
+        impact: "Improves user retention and data quality for dietitians."
+      },
+      beforeAfter: {
+        before: { image: "", caption: "Long scrolling forms with high drop-off rates" },
+        after: { image: "", caption: "Conversational flow capturing data seamlessly" }
       },
       users: {
-        goals: ["Real-time data feeds", "High reliability during market volatility"],
-        painPoints: ["Stale data", "System crashes during peak loads"]
+        goals: ["Quick tracking", "Personalized feedback"],
+        painPoints: ["Tedious manual entry", "Lack of motivation"]
       },
       insights: [
-        { reframe: "Batch is dead for HFT.", explanation: "Transitioning to an event-driven architecture with Kafka was the only way to achieve the latency requirements." }
+        { reframe: "Make tracking feel like texting a friend.", explanation: "Users engage more when the interface mimics their daily communication habits." }
       ],
       solution: {
         steps: [
-          { title: "Kafka Event Bus", description: "Replaced batch jobs with a distributed Kafka streaming architecture." },
-          { title: "Go Microservices", description: "Rewrote data processors in Go for maximum concurrency and performance." }
+          { title: "Conversational UI", description: "Designed an intuitive chat interface to guide users through the assessment step-by-step." }
         ]
       },
+      visuals: [
+        { image: "", caption: "Chat interface mockup" }
+      ],
       outcome: {
         metrics: [
-          { label: "Data Latency", value: "8ms" },
-          { label: "Throughput", value: "2M/s" }
+          { label: "Completion Rate", value: "+40%" }
         ],
-        description: "Reduced data latency from 5 minutes to 8ms."
+        description: "Greatly improved user retention and onboarding success."
       },
       reflection: {
-        lessons: ["Proper partition strategy in Kafka is critical for maintaining order and scaling consumers.", "ClickHouse is incredibly fast for analytical queries over streaming data."]
+        lessons: ["Chat interfaces require very careful handling of edge cases and fallback responses."]
       }
     }
   },
   {
-    id: 'aura',
-    title: 'Aura Design System',
-    summary: 'A comprehensive, accessible component library and design token system built for enterprise scale.',
-    tags: ['React', 'TypeScript', 'Tailwind', 'Design'],
-    category: 'Frontend',
+    id: 'plantmonitor',
+    title: 'Smart Plant Monitor',
+    summary: 'Designing a Modular IoT Plant System.',
+    tags: ['IoT', 'Hardware', 'UX/UI'],
+    category: 'Product Design',
+    year: '2025',
+    caseStudy: {
+      introduction: {
+        summary: "Smart Plant Monitor provides real-time health metrics for your plants through an intuitive app and modular hardware.",
+        metadata: { role: "UX Designer", context: "Consumer IoT", timeline: "4 Months", team: "Cross-functional" },
+        credibilityTag: "Successfully bridged physical hardware interactions with a digital dashboard."
+      },
+      context: {
+        description: "Houseplant owners struggle to understand when and how to care for different species, often leading to overwatering or neglect.",
+        constraints: ["Must display critical data at a glance", "Integration with low-power sensors"]
+      },
+      problem: {
+        howMightWe: "How might we make plant care intuitive for beginners through actionable data visualization?",
+        observations: ["Current solutions overwhelm users with raw data", "Visual indicators on hardware are often ignored"],
+        impact: "Empowers users to confidently keep their plants alive."
+      },
+      beforeAfter: {
+        before: { image: "", caption: "Complex raw data dashboards" },
+        after: { image: "", caption: "Action-oriented minimalist UI" }
+      },
+      users: {
+        goals: ["Keep plants alive", "Understand plant needs quickly"],
+        painPoints: ["Overwhelming sensor data", "Forgetting to water"]
+      },
+      insights: [
+        { reframe: "Users don't want data, they want instructions.", explanation: "Translated raw humidity metrics into simple 'Water Now' or 'Wait' actions." }
+      ],
+      solution: {
+        steps: [
+          { title: "Dashboard Design", description: "Created a minimalist dashboard that prioritizes immediate actions (e.g., 'Water Now')." }
+        ]
+      },
+      visuals: [
+        { image: "", caption: "Plant Monitor Dashboard" }
+      ],
+      outcome: {
+        metrics: [
+          { label: "Plant Survival", value: "95%" }
+        ],
+        description: "Successfully bridged physical hardware interactions with a digital dashboard."
+      },
+      reflection: {
+        lessons: ["Hardware constraints heavily dictate software refresh rates and UI responsiveness."]
+      }
+    }
+  },
+  {
+    id: 'money',
+    title: 'MONEY',
+    summary: 'Simplifying Mobile Finance for Everyday Users.',
+    tags: ['Fintech', 'Mobile app', 'UX/UI'],
+    category: 'Product Design',
     year: '2024',
     caseStudy: {
       introduction: {
-        summary: "Aura is the foundational design system powering 15+ internal and external applications.",
-        metadata: { role: "Design Technologist", context: "Enterprise Rebrand", timeline: "8 Months", team: "Design Systems Team" },
-        credibilityTag: "Ensures strict accessibility compliance and perfectly consistent UX across the organization."
+        summary: "MONEY is an intuitive finance tracker that helps users manage their budgets without the typical spreadsheet anxiety.",
+        metadata: { role: "Lead Designer", context: "Fintech Startup", timeline: "5 Months", team: "Design & Dev" },
+        credibilityTag: "Redesigned the onboarding flow, increasing conversion by 25%."
       },
       context: {
-        description: "Before Aura, every product team built their own components, leading to visual inconsistencies, duplicated effort, and widespread accessibility failures.",
-        constraints: ["Must support legacy app integration", "Strict WCAG 2.1 AA compliance", "Themeability"]
+        description: "Personal finance apps are often cluttered with features that average users never touch, creating cognitive overload.",
+        constraints: ["Strict platform guidelines (iOS/Android)", "High density of financial data"]
       },
       problem: {
-        howMightWe: "How might we create a unified, scalable component library that developers actually want to use?",
-        observations: ["Developers copy-paste old code", "Designers create inconsistent specs"],
-        impact: "Dramatically speeds up UI development while ensuring brand consistency."
+        howMightWe: "How might we simplify budget tracking so everyday users feel in control of their finances?",
+        observations: ["Users feel anxious looking at complex charts", "Manual transaction entry is a major friction point"],
+        impact: "Increases daily active usage and financial literacy."
+      },
+      beforeAfter: {
+        before: { image: "", caption: "Cluttered spreadsheet-style interface" },
+        after: { image: "", caption: "Simplified high-level overview cards" }
       },
       users: {
-        goals: ["Fast implementation", "Accessible by default", "Easy customization"],
-        painPoints: ["Breaking changes in updates", "Poor documentation"]
+        goals: ["Budget tracking without stress", "Quick transaction entry"],
+        painPoints: ["Financial anxiety", "Complex charts"]
       },
       insights: [
-        { reframe: "A design system is a product, not a project.", explanation: "It requires dedicated maintenance, versioning, and developer relations to succeed." }
+        { reframe: "Progressive disclosure reduces anxiety.", explanation: "Hiding complex data behind simple cards makes finances feel manageable." }
       ],
       solution: {
         steps: [
-          { title: "Token Architecture", description: "Implemented a strict token-based architecture for colors, spacing, and typography." },
-          { title: "React Component Library", description: "Built from the ground up using React and Tailwind CSS." }
+          { title: "Progressive Disclosure", description: "Hid advanced analytics behind simple, high-level overview cards." }
         ]
       },
+      visuals: [
+        { image: "", caption: "MONEY App Interface" }
+      ],
       outcome: {
         metrics: [
-          { label: "Adoption Rate", value: "95%" },
-          { label: "Time-to-Market", value: "-40%" }
+          { label: "Daily Active Users", value: "+25%" }
         ],
-        description: "Adopted by 15+ applications, standardizing the entire digital ecosystem."
+        description: "Increased daily engagement by simplifying the core loop."
       },
       reflection: {
-        lessons: ["Getting buy-in from engineering early is more important than perfect design specs.", "Semantic versioning is essential for component updates."]
+        lessons: ["Financial data must be completely accurate, even when visually simplified."]
       }
     }
   },
   {
-    id: 'lumina',
-    title: 'Lumina API Gateway',
-    summary: 'A heavily optimized API gateway that centralizes authentication, rate limiting, and routing for microservices.',
-    tags: ['Rust', 'GraphQL', 'Redis', 'Security'],
-    category: 'Backend',
-    year: '2023',
+    id: 'purchaseorder',
+    title: 'Purchase Order Automation',
+    summary: 'Designing a Frictionless Purchase Order Approval Experience.',
+    tags: ['Enterprise', 'B2B', 'Automation'],
+    category: 'Enterprise Design',
+    year: '2024',
     caseStudy: {
       introduction: {
-        summary: "Lumina sits in front of 40+ microservices, providing a unified GraphQL layer, handling JWT authentication, and enforcing strict rate limits.",
-        metadata: { role: "Platform Engineer", context: "Infrastructure Overhaul", timeline: "5 Months", team: "2 Engineers" },
-        credibilityTag: "Handles sudden traffic spikes without catastrophic memory bloat."
+        summary: "A streamlined B2B approval flow that integrates directly with existing enterprise communication tools like Microsoft Teams.",
+        metadata: { role: "UX Designer", context: "Enterprise Software", timeline: "6 Months", team: "Product Team" },
+        credibilityTag: "Reduced approval turnaround time from days to hours."
       },
       context: {
-        description: "The legacy Node.js API gateway was failing under load, experiencing race conditions and memory leaks during traffic surges.",
-        constraints: ["Zero downtime migration", "Backward compatible API", "High concurrency"]
+        description: "Managers were overwhelmed with email-based purchase order requests, causing supply chain delays.",
+        constraints: ["Integration with legacy ERP systems", "Must fit within Microsoft Teams environment"]
       },
       problem: {
-        howMightWe: "How might we centralize authentication and routing while improving system resilience under heavy load?",
-        observations: ["Node.js event loop blocking", "Distributed rate limiting was inaccurate"],
-        impact: "Protects downstream microservices from being overwhelmed."
+        howMightWe: "How might we reduce friction in enterprise approvals without compromising compliance?",
+        observations: ["Approvers miss emails in crowded inboxes", "Context-switching between ERP and email slows down the process"],
+        impact: "Accelerates procurement cycles and reduces operational bottlenecks."
+      },
+      beforeAfter: {
+        before: { image: "", caption: "Lost email threads and ERP logins" },
+        after: { image: "", caption: "One-click approval directly in Teams" }
       },
       users: {
-        goals: ["Reliable API endpoints", "Unified schema"],
-        painPoints: ["Random 502 errors", "Slow response times"]
+        goals: ["Approve POs quickly", "Maintain compliance trails"],
+        painPoints: ["Context switching", "Lost requests"]
       },
       insights: [
-        { reframe: "Memory safety eliminates an entire class of production bugs.", explanation: "Rewriting in Rust virtually eliminated the race conditions that plagued the legacy system." }
+        { reframe: "Bring the action to where the user already is.", explanation: "Integrating into Teams eliminated the need for managers to log into a separate system." }
       ],
       solution: {
         steps: [
-          { title: "Rust Rewrite", description: "Rewritten from Node.js to Rust to handle sudden traffic spikes efficiently." },
-          { title: "Redis Rate Limiting", description: "Utilized Redis for distributed rate limiting across multiple instances." }
+          { title: "Inline Actions", description: "Designed actionable cards inside Microsoft Teams so managers can approve POs with one click." }
         ]
       },
+      visuals: [
+        { image: "", caption: "Teams Integration Mockup" }
+      ],
       outcome: {
         metrics: [
-          { label: "Memory Usage", value: "-85%" },
-          { label: "RPS Capacity", value: "4x" }
+          { label: "Approval Time", value: "-80%" }
         ],
-        description: "Dramatically improved stability and performance across all integrated services."
+        description: "Reduced turnaround time from days to hours."
       },
       reflection: {
-        lessons: ["Rust's strict ownership model has a steep learning curve but pays off massively in concurrent systems.", "GraphQL query complexity analysis is necessary to prevent DoS attacks via the gateway."]
+        lessons: ["Enterprise integrations require strict adherence to third-party platform UI guidelines."]
+      }
+    }
+  },
+  {
+    id: 'titsystem',
+    title: 'T.I.T. System',
+    summary: 'A Distributed Ledger for Shared Expenses.',
+    tags: ['Blockchain', 'Finance', 'Full-stack'],
+    category: 'Engineering',
+    year: '2023',
+    caseStudy: {
+      introduction: {
+        summary: "T.I.T. System is a distributed ledger designed to transparently track and settle shared expenses among groups.",
+        metadata: { role: "Full Stack Engineer", context: "Personal Project", timeline: "3 Months", team: "Solo" },
+        credibilityTag: "Implemented a custom consensus mechanism for resolving disputed expenses."
+      },
+      context: {
+        description: "Roommates and groups often dispute shared expenses because traditional split apps rely on a centralized, mutable database.",
+        constraints: ["Decentralized architecture", "Low transaction fees"]
+      },
+      problem: {
+        howMightWe: "How might we create a transparent and trustless shared expense ledger?",
+        observations: ["Centralized apps lack transparency when disputes arise", "Users want undeniable proof of payment"],
+        impact: "Eliminates social friction around money by providing an immutable record."
+      },
+      beforeAfter: {
+        before: { image: "", caption: "Centralized database prone to disputes" },
+        after: { image: "", caption: "Immutable ledger providing unquestionable proof" }
+      },
+      users: {
+        goals: ["Fair expense sharing", "Transparent history"],
+        painPoints: ["Disputes over payments", "Lack of trust in manual edits"]
+      },
+      insights: [
+        { reframe: "Trust is built through transparency, not just features.", explanation: "An immutable ledger solves the social problem of trusting the app's math." }
+      ],
+      solution: {
+        steps: [
+          { title: "Smart Contracts", description: "Deployed lightweight smart contracts to automatically settle balances at the end of the month." }
+        ]
+      },
+      visuals: [
+        { image: "", caption: "Ledger Interface" }
+      ],
+      outcome: {
+        metrics: [
+          { label: "Disputed Expenses", value: "0%" }
+        ],
+        description: "Eliminated social friction around money."
+      },
+      reflection: {
+        lessons: ["Blockchain technology adds significant latency, which must be masked by optimistic UI updates."]
       }
     }
   }
