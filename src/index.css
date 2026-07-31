@@ -445,6 +445,19 @@ body {
   grid-row: 4 / 5;
 }
 
+/* Splash screen always fills the true viewport, independent of the
+   padded/height-capped page-container, so its corner status labels
+   stay pinned to the real screen edges at every screen size.
+   !important needed to beat the component's own inline layout styles. */
+.splash-screen {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  margin: 0 !important;
+  background: var(--bg-base);
+}
+
 /* ============================================
        PROJECTS WORKSPACE (Full Screen)
        ============================================ */
