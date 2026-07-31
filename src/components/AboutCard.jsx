@@ -8,7 +8,7 @@ const MODAL_TRANSITION_MS = 220;
 const INTRO_TEXT = "Half engineer, half designer, fully allergic to good ideas that never ship. Currently working as an AI Product Engineer at the University of Twente.";
 
 const DETAIL_PARAGRAPHS = [
-  "Based in Enschede, Netherlands, Italian by background, currently plotting my next move. Studied Interaction Technology at the University of Twente.",
+  "Based in the Netherlands, Italian by background, currently plotting my next move. Studied Interaction Technology at the University of Twente.",
   "Outside of building, I'm a bit of a car and motorsport enthusiast, always into interior design and style, and I probably spend more time than I'd admit thinking about ETF allocations and what to wear for the day.",
   "I build because I want to create the next thing for people, not just ship features, but make something someone actually reaches for."
 ];
@@ -120,7 +120,7 @@ export default function AboutCard() {
         <span className="card__label">About Me</span>
 
         <div className="about-avatar-row">
-          <img src="/Avatar.png" alt="Portrait of Giacomo" className="about-avatar" />
+          <img src="/Avatar.png" alt="Portrait of Giacomo" className="about-avatar" decoding="async" />
           <p className="text-body about-intro-text" style={{ margin: 0 }}>{INTRO_TEXT}</p>
         </div>
 

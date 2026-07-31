@@ -58,7 +58,7 @@ export default function SplashScreen({ onEnter }) {
           marginBottom: '24px'
         }}
       >
-        SYSTEM INITIALIZED // AI PRODUCT ENGINEERING
+        SYSTEM INITIALIZED // PRODUCT ENGINEERING
       </motion.div>
 
       <motion.h1

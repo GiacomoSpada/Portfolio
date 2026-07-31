@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Download } from 'lucide-react';
+import { Download } from 'lucide-react';
 
 const EXPERIENCES = [
   {
@@ -88,7 +88,7 @@ export default function ExperienceCard() {
     }
   };
 
-  const handleDragEnd = (e, { offset, velocity }) => {
+  const handleDragEnd = (e, { offset }) => {
     const swipeThreshold = 50;
     if (offset.x < -swipeThreshold) {
       paginate(1);

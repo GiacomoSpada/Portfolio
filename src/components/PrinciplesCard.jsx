@@ -20,7 +20,7 @@ export default function PrinciplesCard() {
       </header>
       <div className="outside-work-icons">
         <a href="https://strava.app.link/tHr19Xodc5b" target="_blank" rel="noopener noreferrer" title="Strava" aria-label="Strava">
-          <img src="/strava_icon_130820.svg" alt="Strava" className="outside-work-icon" />
+          <img src="/strava_icon_130820.svg" alt="Strava" className="outside-work-icon" decoding="async" />
         </a>
         <a
           href="https://www.formula1.com"
@@ -30,10 +30,10 @@ export default function PrinciplesCard() {
           aria-label="Formula 1"
           className="outside-work-icon outside-work-icon-badge"
         >
-          <img src={f1Logo} alt="Formula 1" className="outside-work-icon-badge-img" />
+          <img src={f1Logo} alt="Formula 1" className="outside-work-icon-badge-img" decoding="async" />
         </a>
         <a href="https://www.polarsteps.com" target="_blank" rel="noopener noreferrer" title="Polarsteps" aria-label="Polarsteps">
-          <img src="/polarsteps.jpeg" alt="Polarsteps" className="outside-work-icon outside-work-icon-rounded" />
+          <img src="/polarsteps.jpeg" alt="Polarsteps" className="outside-work-icon outside-work-icon-rounded" decoding="async" />
         </a>
       </div>
     </article>

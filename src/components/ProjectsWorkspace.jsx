@@ -77,7 +77,7 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
                     style={{ flex: 1, margin: 0 }}
                   >
                     <div className={`project-visual project-visual-${project.id}`}>
-                      {project.image && <img src={project.image} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+                      {project.image && <img src={project.image} alt={project.title} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
                     </div>
                     <div className="project-content">
                       <h2 className="text-title" style={{ margin: 0 }}>

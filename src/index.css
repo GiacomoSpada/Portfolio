@@ -293,8 +293,7 @@
   transition: background-color var(--theme-transition), border-color var(--theme-transition) !important;
 }
 
-/* Group 2: About, Now, How I Build (The Philosophy Group) */
-.card--philosophy,
+/* Group 2: About, Now, Outside Work (The Philosophy Group) */
 .card--orange-group {
   background-color: var(--surface-philosophy) !important;
   border: 1px solid var(--border-philosophy) !important;
@@ -304,7 +303,6 @@
 }
 
 /* STRICT: Kill all background shifts and hover glowing */
-.card--philosophy:hover,
 .card--orange-group:hover {
   background-color: var(--surface-philosophy) !important;
   border: 1px solid var(--border-philosophy) !important;
@@ -402,25 +400,13 @@ body {
   gap: 24px;
 }
 
-.page-header {
-  font-size: clamp(1.5rem, 2vw + 1rem, 2.5rem);
-  font-weight: 400;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
-  margin-left: 8px;
-}
-
-.page-header strong {
-  font-weight: 700;
-}
-
 /* ============================================
        BENTO GRID
        ============================================ */
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: 1.15fr 1.15fr 0.85fr 0.85fr;
   gap: var(--gap-grid);
   width: 100%;
   min-width: 0;
@@ -734,21 +720,6 @@ body:has(.workspace-active) {
   margin-bottom: 24px;
 }
 
-.card__title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 1.2;
-  color: var(--text-primary);
-  margin-bottom: 8px;
-}
-
-.card__subtitle {
-  font-size: 0.95rem;
-  font-weight: 400;
-  color: var(--text-secondary);
-  line-height: 1.5;
-}
-
 .card__footer {
   margin-top: auto;
   padding-top: 20px;
@@ -821,12 +792,6 @@ body:has(.workspace-active) {
 
 .card.interactive:hover .card__action-arrow {
   transform: translateX(2px);
-}
-
-.card__count {
-  font-size: 0.8rem;
-  color: var(--text-tertiary);
-  font-weight: 400;
 }
 
 /* ============================================
@@ -921,40 +886,11 @@ body:has(.workspace-active) {
   margin-top: 0;
 }
 
-.card--projects .project-name {
-  font-size: 2.25rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  color: var(--text-primary);
-}
-
-.card--projects .project-description {
-  font-size: 1.05rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  max-width: 420px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
 .project-tags {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
   margin-top: 4px;
-}
-
-.project-tag {
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 5px 12px;
-  border-radius: 100px;
-  background-color: var(--accent-soft);
-  color: var(--accent-primary);
-  border: 1px solid var(--accent-primary);
 }
 
 /* ============================================
@@ -1086,14 +1022,14 @@ body:has(.workspace-active) {
 
 @media (max-width: 480px) {
   .about-modal-backdrop {
-    padding: 0;
-    align-items: flex-end;
+    padding: 16px;
+    align-items: center;
   }
 
   .about-modal {
     width: 100%;
-    max-height: 88vh;
-    border-radius: var(--radius) var(--radius) 0 0;
+    max-height: 85vh;
+    border-radius: var(--radius);
   }
 
   .skills-detail-row {
@@ -1144,50 +1080,6 @@ body:has(.workspace-active) {
   transform: scale(1.1);
 }
 
-.card--experience .experience-content {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  width: 100%;
-}
-
-.card--experience .experience-roles {
-  display: flex;
-  gap: 24px;
-  flex: 1;
-}
-
-.experience-role {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.experience-role__company {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.experience-role__title {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-}
-
-.experience-role__period {
-  font-size: 0.75rem;
-  color: var(--text-tertiary);
-  margin-top: 2px;
-}
-
-.experience-divider {
-  width: 1px;
-  height: 40px;
-  background: var(--border);
-  flex-shrink: 0;
-}
-
 /* ============================================
        NOW CARD
        ============================================ */
@@ -1195,18 +1087,11 @@ body:has(.workspace-active) {
   justify-content: space-between;
 }
 
-.card--now .now-status {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
 .now-items {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 16px;
   flex: 1;
 }
@@ -1294,12 +1179,6 @@ body:has(.workspace-active) {
   object-fit: contain;
 }
 
-.outside-work-icon-glyph {
-  color: var(--text-secondary);
-  flex-shrink: 0;
-  transition: color var(--transition-fast);
-}
-
 /* ============================================
        CONTACT DOCK
        ============================================ */
@@ -1357,248 +1236,6 @@ body:has(.workspace-active) {
 }
 
 /* ============================================
-       EXPANDED STATE (Signature Interaction)
-       ============================================ */
-.bento-grid.expanded .card--projects {
-  display: block;
-  grid-column: 1 / -1;
-  grid-row: 1 / -1;
-  width: 100%;
-  min-height: 80vh;
-  z-index: 10;
-}
-
-/* Hide all other cards with smooth fade in place */
-.bento-grid.expanded .card:not(.card--projects),
-.bento-grid.expanded .contact-dock {
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.95);
-  z-index: 0;
-}
-
-
-
-/* Expanded projects content */
-.expanded-content {
-  display: none;
-  flex-direction: column;
-  gap: 24px;
-  margin-top: 32px;
-  opacity: 0;
-  animation: fadeInContent 400ms ease 200ms forwards;
-}
-
-.bento-grid.expanded .expanded-content {
-  display: flex;
-}
-
-@keyframes fadeInContent {
-  to {
-    opacity: 1;
-  }
-}
-
-.expanded-content__section {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.expanded-content__label {
-  font-size: 0.75rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-tertiary);
-}
-
-.expanded-content__text {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-  max-width: 600px;
-}
-
-.expanded-content__image-placeholder {
-  width: 100%;
-  height: 320px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-tertiary);
-  font-size: 0.85rem;
-}
-
-.close-btn {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  cursor: pointer;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  transition:
-    background var(--transition-fast),
-    color var(--transition-fast),
-    border-color var(--transition-fast);
-  z-index: 10;
-}
-
-.close-btn:hover {
-  background: var(--bg);
-  color: var(--text-primary);
-  border-color: var(--border-hover);
-}
-
-.bento-grid.expanded .close-btn {
-  display: flex;
-}
-
-/* Hide non-expanded project content when expanded */
-.bento-grid.expanded .card--projects .project-highlight .project-name {
-  font-size: 2.75rem;
-}
-
-/* ============================================
-       EXPERIENCE SLIDE-OUT PANEL
-       ============================================ */
-.slide-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  z-index: 100;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--transition-medium);
-}
-
-.slide-overlay.active {
-  opacity: 1;
-  pointer-events: all;
-}
-
-.slide-panel {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 480px;
-  max-width: 90vw;
-  background: var(--surface);
-  box-shadow: var(--shadow-expanded);
-  z-index: 101;
-  transform: translateX(100%);
-  transition: transform var(--transition-flip);
-  padding: 48px 40px;
-  overflow-y: auto;
-  overscroll-behavior-y: contain;
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-.slide-panel.active {
-  transform: translateX(0);
-}
-
-.slide-panel__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.slide-panel__title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.slide-panel__close {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background: transparent;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  color: var(--text-secondary);
-  transition: background var(--transition-fast);
-}
-
-.slide-panel__close:hover {
-  background: var(--bg);
-}
-
-.timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.timeline-item {
-  display: flex;
-  gap: 20px;
-  padding: 24px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.timeline-item:last-child {
-  border-bottom: none;
-}
-
-.timeline-year {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--text-tertiary);
-  min-width: 60px;
-  padding-top: 2px;
-}
-
-.timeline-detail {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.timeline-company {
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.timeline-role {
-  font-size: 0.88rem;
-  color: var(--text-secondary);
-}
-
-.timeline-desc {
-  font-size: 0.82rem;
-  color: var(--text-tertiary);
-  line-height: 1.5;
-  margin-top: 4px;
-}
-
-/* ============================================
-       CONTACT MODAL
-       ============================================ */
-
-/* ============================================
        RESPONSIVE
        ============================================ */
 /* Strict full-screen snap for desktops */
@@ -1606,15 +1243,16 @@ body:has(.workspace-active) {
   body {
     height: 100vh;
     overflow: hidden;
+    align-items: center;
   }
 
   .page-container {
     height: 100%;
-    max-height: calc(100vh - (var(--page-padding) * 2));
+    max-height: min(calc(100vh - (var(--page-padding) * 2)), 1000px);
   }
 
   .bento-grid {
-    grid-template-rows: repeat(4, minmax(0, 1fr));
+    grid-template-rows: minmax(0, 1.15fr) minmax(0, 1.15fr) minmax(0, 0.85fr) minmax(0, 0.85fr);
     min-height: 0;
   }
 
@@ -1650,13 +1288,6 @@ body:has(.workspace-active) {
     padding: min(20px, 3.2vh) 24px;
   }
 
-  .card__title {
-    font-size: 1.25rem;
-  }
-
-  .project-name {
-    font-size: 2rem;
-  }
 
   .project-description {
     font-size: 0.95rem;
@@ -1669,14 +1300,6 @@ body:has(.workspace-active) {
 
   .page-container {
     gap: 16px;
-  }
-
-  .page-header {
-    font-size: 1.5rem;
-  }
-
-  .principles-list {
-    gap: 6px;
   }
 }
 
@@ -1940,9 +1563,6 @@ body:has(.workspace-active) {
     grid-row: 5 / 6;
   }
 
-  .card--projects .project-name {
-    font-size: 1.75rem;
-  }
 }
 
 .outcome-metrics-grid {
@@ -2016,9 +1636,6 @@ body:has(.workspace-active) {
     padding: 24px;
   }
 
-  .card--projects .project-name {
-    font-size: 1.5rem;
-  }
 
   .workspace-split-view {
     flex-direction: column;

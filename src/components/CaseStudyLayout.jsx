@@ -239,7 +239,7 @@ export default function CaseStudyLayout({ data }) {
                   onClick={() => beforeAfter.before.image && setLightbox({ src: beforeAfter.before.image, alt: beforeAfter.before.caption })}
                   style={{ aspectRatio: '16/9', background: 'var(--bg-surface-hover)', borderRadius: 'var(--radius-card)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-subtle)', overflow: 'hidden', cursor: beforeAfter.before.image ? 'zoom-in' : 'default' }}
                 >
-                  {beforeAfter.before.image ? <img src={beforeAfter.before.image} alt="Before" style={{ width: '100%', height: '100%', objectFit: 'contain' }} /> : <span className="text-caption">No Image</span>}
+                  {beforeAfter.before.image ? <img src={beforeAfter.before.image} alt="Before" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'contain' }} /> : <span className="text-caption">No Image</span>}
                 </div>
                 <span className="text-caption" style={imageCaptionStyle}>Before: {beforeAfter.before.caption}</span>
               </div>
@@ -250,7 +250,7 @@ export default function CaseStudyLayout({ data }) {
                   onClick={() => beforeAfter.after.image && setLightbox({ src: beforeAfter.after.image, alt: beforeAfter.after.caption })}
                   style={{ aspectRatio: '16/9', background: 'var(--bg-surface-hover)', borderRadius: 'var(--radius-card)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-subtle)', overflow: 'hidden', cursor: beforeAfter.after.image ? 'zoom-in' : 'default' }}
                 >
-                  {beforeAfter.after.image ? <img src={beforeAfter.after.image} alt="After" style={{ width: '100%', height: '100%', objectFit: 'contain' }} /> : <span className="text-caption">No Image</span>}
+                  {beforeAfter.after.image ? <img src={beforeAfter.after.image} alt="After" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'contain' }} /> : <span className="text-caption">No Image</span>}
                 </div>
                 <span className="text-caption" style={imageCaptionStyle}>After: {beforeAfter.after.caption}</span>
               </div>
@@ -335,7 +335,7 @@ export default function CaseStudyLayout({ data }) {
                 onClick={() => solution.diagram.image && setLightbox({ src: solution.diagram.image, alt: solution.diagram.caption })}
                 style={{ width: '100%', maxWidth: '480px', background: 'var(--bg-surface-hover)', borderRadius: 'var(--radius-card)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', border: '1px solid var(--border-subtle)', cursor: solution.diagram.image ? 'zoom-in' : 'default' }}
               >
-                {solution.diagram.image ? <img src={solution.diagram.image} alt={solution.diagram.caption} style={{ width: '100%', height: 'auto', objectFit: 'contain' }} /> : <span className="text-caption">No Image Available</span>}
+                {solution.diagram.image ? <img src={solution.diagram.image} alt={solution.diagram.caption} loading="lazy" decoding="async" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} /> : <span className="text-caption">No Image Available</span>}
               </div>
               {solution.diagram.caption && <p className="text-caption" style={imageCaptionStyle}>{solution.diagram.caption}</p>}
             </div>
@@ -360,7 +360,7 @@ export default function CaseStudyLayout({ data }) {
                     onClick={() => v.image && setLightbox({ src: v.image, alt: v.caption })}
                     style={{ width: '100%', aspectRatio: '16/9', background: 'var(--bg-surface-hover)', borderRadius: 'var(--radius-card)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', border: '1px solid var(--border-subtle)', cursor: v.image ? 'zoom-in' : 'default' }}
                   >
-                    {v.image ? <img src={v.image} alt={v.caption} style={{ width: '100%', height: '100%', objectFit: 'contain' }} /> : <span className="text-caption">No Image Available</span>}
+                    {v.image ? <img src={v.image} alt={v.caption} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'contain' }} /> : <span className="text-caption">No Image Available</span>}
                   </div>
                   {v.caption && <p className="text-caption" style={imageCaptionStyle}>{v.caption}</p>}
                 </div>
@@ -387,7 +387,7 @@ export default function CaseStudyLayout({ data }) {
                     onClick={() => deeperArchitecture.image && setLightbox({ src: deeperArchitecture.image, alt: deeperArchitecture.caption })}
                     style={{ width: '100%', background: 'var(--bg-surface-hover)', borderRadius: 'var(--radius-card)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', border: '1px solid var(--border-subtle)', cursor: deeperArchitecture.image ? 'zoom-in' : 'default' }}
                   >
-                    {deeperArchitecture.image ? <img src={deeperArchitecture.image} alt={deeperArchitecture.caption} style={{ width: '100%', height: 'auto', objectFit: 'contain' }} /> : <span className="text-caption">No Image Available</span>}
+                    {deeperArchitecture.image ? <img src={deeperArchitecture.image} alt={deeperArchitecture.caption} loading="lazy" decoding="async" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} /> : <span className="text-caption">No Image Available</span>}
                   </div>
                   {deeperArchitecture.caption && <p className="text-caption" style={imageCaptionStyle}>{deeperArchitecture.caption}</p>}
                 </div>

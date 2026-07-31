@@ -26,14 +26,13 @@ export default function AmbientBackground() {
           background: 'radial-gradient(circle at 30% 30%, var(--accent-primary) 0%, #FF8533 40%, transparent 80%)',
           filter: 'blur(110px)',
           opacity: 0.35,
-          mixBlendMode: 'screen'
+          mixBlendMode: 'screen',
+          borderRadius: '50%'
         }}
         animate={{
           x: ["-10vw", "25vw", "-15vw", "-10vw"],
           y: ["-5vh", "20vh", "-15vh", "-5vh"],
-          scale: [1, 1.25, 0.85, 1],
-          rotate: [0, 180, 360],
-          borderRadius: ["50%", "30% 70% 70% 30% / 30% 30% 70% 70%", "60% 40% 30% 70% / 60% 30% 70% 40%", "50%"]
+          scale: [1, 1.25, 0.85, 1]
         }}
         transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
       />
@@ -51,14 +50,13 @@ export default function AmbientBackground() {
           background: 'radial-gradient(circle at 70% 60%, #D97706 0%, #F59E0B 50%, transparent 85%)',
           filter: 'blur(130px)',
           opacity: 0.28,
-          mixBlendMode: 'screen'
+          mixBlendMode: 'screen',
+          borderRadius: '50%'
         }}
         animate={{
           x: ["15vw", "-25vw", "10vw", "15vw"],
           y: ["10vh", "-20vh", "25vh", "10vh"],
-          scale: [1, 0.8, 1.3, 1],
-          rotate: [360, 180, 0],
-          borderRadius: ["50%", "70% 30% 30% 70% / 70% 70% 30% 30%", "40% 60% 70% 30% / 40% 50% 60% 50%", "50%"]
+          scale: [1, 0.8, 1.3, 1]
         }}
         transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
       />

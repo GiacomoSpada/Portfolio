@@ -2,7 +2,7 @@ export const projectsData = [
   {
     id: 'emerald',
     title: 'EMERALD',
-    image: '/Gemini_Generated_Image_l7x53bl7x53bl7x5.png',
+    image: '/Gemini_Generated_Image_l7x53bl7x53bl7x5.jpg',
     summary: 'A privacy-first, on-premise behavioral AI health coaching system designed for adult patients with chronic conditions.',
     tags: ['RAG Pipeline', 'LLM', 'Python', 'Healthcare'],
     category: 'Engineering',
@@ -47,11 +47,11 @@ export const projectsData = [
         ]
       },
       visuals: [
-        { image: "/EmerladFlowOverview.png", caption: "The runtime request lifecycle: message safety triage (emergency & scope checks), profile and knowledge retrieval, prompt assembly, and memory updates on every turn." }
+        { image: "/EmerladFlowOverview.jpg", caption: "The runtime request lifecycle: message safety triage (emergency & scope checks), profile and knowledge retrieval, prompt assembly, and memory updates on every turn." }
       ],
       deeperArchitecture: {
         label: "Deeper Architecture",
-        image: "/EmeraldDeepArchitecture.png",
+        image: "/EmeraldDeepArchitecture.jpg",
         caption: "Full system architecture: the synthetic data generation pipeline (Data Factory), the five-phase training pipeline, and the live runtime engine underpinning EMERALD."
       },
       outcome: {
@@ -72,7 +72,7 @@ export const projectsData = [
   {
     id: 'nutrichat',
     title: 'NutriChat',
-    image: '/Gemini_Generated_Image_704lrx704lrx704l.png',
+    image: '/Gemini_Generated_Image_704lrx704lrx704l.jpg',
     summary: 'Redesigned a rigid nutrition questionnaire into a conversational experience to reduce cognitive load, improve engagement, and support honest self-reporting.',
     tags: ['UX/UI', 'AI', 'Healthcare', 'Research'],
     category: 'Product Design',
@@ -118,8 +118,8 @@ export const projectsData = [
         impact: "The questionnaire was optimized for data collection, not human interaction. This affects patients, research participants, clinicians, and researchers relying on self-reported data."
       },
       beforeAfter: {
-        before: { image: "/Screenshot 2025-11-25 at 16.39.24.png", caption: "“I’m not sure what counts as a big or small portion.” “There are too many questions on one page.”" },
-        after: { image: "/Screenshot 2025-11-25 at 16.33.44.png", caption: "Conversational format with targeted clarification." }
+        before: { image: "/Screenshot 2025-11-25 at 16.39.24.jpg", caption: "“I’m not sure what counts as a big or small portion.” “There are too many questions on one page.”" },
+        after: { image: "/Screenshot 2025-11-25 at 16.33.44.jpg", caption: "Conversational format with targeted clarification." }
       },
       users: {
         goals: ["Complete the assessment efficiently", "Feel safe and not judged", "Understand questions without extra effort"],
@@ -139,7 +139,7 @@ export const projectsData = [
           { title: "Autonomy Testing", description: "Tested autonomy by letting users choose the conversational tone vs. placebo system-assigned tone. Tone adapted the experience without altering the data." }
         ],
         diagram: {
-          image: "/ConversationalLogic.png",
+          image: "/ConversationalLogic.jpg",
           caption: "Conversation logic: Personalized/System-Adaptive → tone selection → Nudged/Gamified branching, mapping directly to the 2×2 factorial study design."
         },
         progressionTable: {
@@ -192,7 +192,7 @@ export const projectsData = [
   {
     id: 'purchaseorder',
     title: 'Purchase Order Approval Automation',
-    image: '/Frame 1.png',
+    image: '/Frame 1.jpg',
     summary: 'Redesigned a slow, failure-prone purchase order approval process by embedding one-click approvals into Microsoft Teams, cutting approval time from up to a week down to minutes.',
     tags: ['Enterprise', 'B2B', 'Automation', 'Microsoft 365'],
     category: 'Enterprise Design',
@@ -230,7 +230,7 @@ export const projectsData = [
         { image: "/Screenshot 2026-01-14 at 14.59.56.png", caption: "Purchase Order in Microsoft Teams" },
         { image: "/Screenshot 2026-01-14 at 15.00.15.png", caption: "Request Approval in Teams (automatically syncs with D365)" },
         { image: "/Screenshot 2026-01-14 at 15.00.37.png", caption: "Purchase Order Approved in Teams (requester gets notified)" },
-        { image: "/FigJam.png", caption: "Process Flow Diagram" }
+        { image: "/FigJam.jpg", caption: "Process Flow Diagram" }
       ],
       outcome: {
         metrics: [
@@ -252,7 +252,7 @@ export const projectsData = [
   {
     id: 'plantmonitor',
     title: 'Smart Plant Monitor',
-    image: '/Gemini_Generated_Image_j4naodj4naodj4na.png',
+    image: '/Gemini_Generated_Image_j4naodj4naodj4na.jpg',
     summary: 'Designed and built a modular IoT system that makes plant health data understandable and actionable, from small apartments to scalable agricultural use cases.',
     tags: ['IoT', 'Hardware', 'UX/UI', 'System Design'],
     category: 'Product Design',
