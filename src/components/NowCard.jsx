@@ -1,209 +1,163 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
+import { motion } from 'framer-motion';
+import { Target, PenTool, Code2, Users, X, MoreHorizontal } from 'lucide-react';
 
-const PAGES = [
-  [
-    { id: 'building', label: 'Building', value: 'EMERALD AI' },
-    { id: 'exploring', label: 'Exploring', value: 'Advanced RAG' }
-  ],
-  [
-    { id: 'reading', label: 'Reading', value: 'System Design' },
-    { id: 'location', label: 'Location', value: 'Enschede, NL' }
-  ]
+const MODAL_TRANSITION_MS = 220;
+
+const SKILLS = [
+  { id: 'product', icon: Target, label: 'Product' },
+  { id: 'design', icon: PenTool, label: 'Design' },
+  { id: 'build', icon: Code2, label: 'Build' },
+  { id: 'lead', icon: Users, label: 'Lead' }
 ];
 
-export default function NowCard() {
-  const [isTablet, setIsTablet] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(0);
+const SKILL_DETAILS = [
+  {
+    name: 'Product',
+    description: "Turning ambiguous problems into clear, buildable direction, from early user research through to defining what actually needs to exist."
+  },
+  {
+    name: 'Design',
+    description: "Designing interfaces and flows that hold up under real use, not just in a mockup, validated through prototyping and usability testing, not guesswork."
+  },
+  {
+    name: 'Build',
+    description: "Full-stack execution across the whole product, including local LLM pipelines, RAG architecture, and the interfaces that sit on top of them."
+  },
+  {
+    name: 'Lead',
+    description: "Getting cross-functional stakeholders, engineers, executives, and end users, aligned and shipped, even under tight timelines and competing priorities."
+  }
+];
 
+function SkillsModal({ isOpen, onClose }) {
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 768px) and (max-width: 1024px)');
-    const handleResize = (e) => setIsTablet(e.matches);
-    
-    setIsTablet(mediaQuery.matches);
-    mediaQuery.addEventListener('change', handleResize);
-    
-    return () => mediaQuery.removeEventListener('change', handleResize);
+    if (!isOpen) return;
+    const handleKey = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [isOpen, onClose]);
+
+  return createPortal(
+    <motion.div
+      className="about-modal-backdrop"
+      onClick={onClose}
+      initial={false}
+      animate={{ opacity: isOpen ? 1 : 0 }}
+      transition={{ duration: MODAL_TRANSITION_MS / 1000 }}
+      style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
+    >
+      <motion.div
+        className="about-modal skills-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-label="What I Do Best"
+        onClick={(e) => e.stopPropagation()}
+        initial={false}
+        animate={{ opacity: isOpen ? 1 : 0, scale: isOpen ? 1 : 0.95 }}
+        transition={{ duration: MODAL_TRANSITION_MS / 1000, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <button
+          onClick={onClose}
+          className="about-modal-close"
+          aria-label="Close"
+        >
+          <X size={20} />
+        </button>
+
+        <div className="about-modal-scroll">
+          <span className="card__label">What I Do Best</span>
+
+          <div className="skills-detail-list">
+            {SKILL_DETAILS.map((skill) => (
+              <div className="skills-detail-row" key={skill.name}>
+                <span className="skills-detail-name">{skill.name}</span>
+                <p className="skills-detail-desc text-body">{skill.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>,
+    document.body
+  );
+}
+
+export default function NowCard() {
+  const [mounted, setMounted] = useState(false);
+  const [open, setOpen] = useState(false);
+  const closeTimeoutRef = useRef(null);
+  const openFrameRef = useRef(null);
+
+  useEffect(() => () => {
+    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    if (openFrameRef.current) cancelAnimationFrame(openFrameRef.current);
   }, []);
 
-  const slideVariants = {
-    enter: (direction) => ({
-      x: direction > 0 ? '100%' : '-100%',
-      opacity: 0
-    }),
-    center: {
-      x: 0,
-      opacity: 1
-    },
-    exit: (direction) => ({
-      x: direction < 0 ? '100%' : '-100%',
-      opacity: 0
-    })
+  const openModal = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    setMounted(true);
+    openFrameRef.current = requestAnimationFrame(() => {
+      openFrameRef.current = requestAnimationFrame(() => setOpen(true));
+    });
   };
 
-  const paginate = (newDirection) => {
-    setDirection(newDirection);
-    let newIndex = currentIndex + newDirection;
-    if (newIndex < 0) newIndex = PAGES.length - 1;
-    if (newIndex >= PAGES.length) newIndex = 0;
-    setCurrentIndex(newIndex);
+  const closeModal = () => {
+    setOpen(false);
+    closeTimeoutRef.current = setTimeout(() => setMounted(false), MODAL_TRANSITION_MS);
   };
 
   const handleKeyDown = (e) => {
-    if (!isTablet) return;
-    if (e.key === 'ArrowLeft') paginate(-1);
-    if (e.key === 'ArrowRight') paginate(1);
-  };
-
-  const handleCardClick = (e) => {
-    if (!isTablet) return;
-    if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    if (clickX < rect.width / 2) {
-      paginate(-1);
-    } else {
-      paginate(1);
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openModal();
     }
   };
 
-  const handleDragEnd = (e, { offset }) => {
-    if (!isTablet) return;
-    const swipeThreshold = 50;
-    if (offset.x < -swipeThreshold) {
-      paginate(1);
-    } else if (offset.x > swipeThreshold) {
-      paginate(-1);
-    }
-  };
-
-  const currentPage = PAGES[currentIndex];
-
-  if (!isTablet) {
-    return (
-      <article className="card card--now card--orange-group" tabIndex="0" aria-label="What I'm doing now">
-        <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          <span className="card__label">Now</span>
-          <div className="now-status" style={{ marginTop: '2px' }}>
-            <span className="now-dot"></span>
-            <span className="now-status-text">Currently</span>
-          </div>
+  return (
+    <>
+      <article
+        className="card card--now card--orange-group"
+        tabIndex="0"
+        role="button"
+        aria-label="What I do best, view details"
+        onClick={openModal}
+        onKeyDown={handleKeyDown}
+        style={{ cursor: 'pointer' }}
+      >
+        <header>
+          <span className="card__label">What I Do Best</span>
         </header>
 
         <div className="now-items">
-          <div className="now-item">
-            <span className="now-item__label text-subtitle">Building</span>
-            <span className="now-item__value text-body" style={{ whiteSpace: 'nowrap' }}>EMERALD AI</span>
-          </div>
-          <div className="now-item">
-            <span className="now-item__label text-subtitle">Exploring</span>
-            <span className="now-item__value text-body" style={{ whiteSpace: 'nowrap' }}>Advanced RAG</span>
-          </div>
-          <div className="now-item">
-            <span className="now-item__label text-subtitle">Reading</span>
-            <span className="now-item__value text-body" style={{ whiteSpace: 'nowrap' }}>System Design</span>
-          </div>
-          <div className="now-item">
-            <span className="now-item__label text-subtitle">Location</span>
-            <span className="now-item__value text-body" style={{ whiteSpace: 'nowrap' }}>Enschede, NL</span>
-          </div>
+          {SKILLS.map((skill) => {
+            const Icon = skill.icon;
+            return (
+              <div className="now-item" key={skill.id}>
+                <Icon size={20} className="now-item__icon" />
+                <span className="now-item__label">{skill.label}</span>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="card__footer" style={{ justifyContent: 'flex-start' }}>
+          <MoreHorizontal size={22} className="card-more-dots" aria-hidden="true" />
         </div>
       </article>
-    );
-  }
 
-  return (
-    <article 
-      className="card card--now card--orange-group" 
-      tabIndex="0" 
-      aria-label="What I'm doing now"
-      style={{
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'stretch',
-        cursor: 'pointer'
-      }}
-      onKeyDown={handleKeyDown}
-      onClick={handleCardClick}
-    >
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', zIndex: 2 }}>
-        <span className="card__label">Now</span>
-        <div className="now-status" style={{ marginTop: '2px' }}>
-          <span className="now-dot"></span>
-          <span className="now-status-text">Currently</span>
-        </div>
-      </header>
-
-      {/* Content Layer */}
-      <div style={{ position: 'relative', flex: 1, width: '100%', overflow: 'hidden' }}>
-        <AnimatePresence initial={false} custom={direction}>
-          <motion.div
-            key={currentIndex}
-            custom={direction}
-            variants={slideVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{
-              x: { type: "tween", duration: 0.3, ease: "easeInOut" },
-              opacity: { duration: 0.2 }
-            }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={1}
-            onDragEnd={handleDragEnd}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              cursor: 'grab',
-              touchAction: 'pan-y'
-            }}
-            whileTap={{ cursor: 'grabbing' }}
-          >
-            <div className="now-items" style={{ gridTemplateColumns: 'repeat(2, 1fr)' }}>
-              {currentPage.map(item => (
-                <div className="now-item" key={item.id}>
-                  <span className="now-item__label text-subtitle">{item.label}</span>
-                  <span className="now-item__value text-body" style={{ whiteSpace: 'nowrap' }}>{item.value}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Dots Layer */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '6px', marginTop: '16px', zIndex: 2 }}>
-        {PAGES.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={(e) => {
-              e.stopPropagation();
-              setDirection(idx > currentIndex ? 1 : -1);
-              setCurrentIndex(idx);
-            }}
-            style={{
-              width: '6px',
-              height: '6px',
-              borderRadius: '50%',
-              padding: 0,
-              background: currentIndex === idx ? 'var(--text-tertiary)' : 'var(--border-subtle)',
-              border: 'none',
-              cursor: 'pointer',
-              transition: 'background 0.2s ease'
-            }}
-            aria-label={`Go to page ${idx + 1}`}
-          />
-        ))}
-      </div>
-    </article>
+      {mounted && <SkillsModal isOpen={open} onClose={closeModal} />}
+    </>
   );
 }

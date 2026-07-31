@@ -1,31 +1,47 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Download } from 'lucide-react';
 
 const EXPERIENCES = [
   {
     id: 1,
-    role: "Research Engineer",
+    role: "Junior Scientist (AI Product Engineer)",
     company: "University of Twente",
-    date: "2024 – Present",
-    description: "Building EMERALD, an AI healthcare assistant with advanced RAG pipelines and safety guardrails.",
-    tech: ["Python", "LangChain"]
+    date: "May 2026 – Present",
+    description: "Architected EMERALD, a clinical AI health coach for chronic disease management, with a local RAG pipeline and an accessible mobile interface for elderly users.",
+    tech: ["Python", "RAG", "React"]
   },
   {
     id: 2,
-    role: "Product Engineer",
-    company: "Freelance",
-    date: "2022 – Present",
-    description: "Shipping digital products for healthcare & SaaS clients with a focus on intuitive UX.",
-    tech: ["React", "Node.js"]
+    role: "Student Assistant",
+    company: "University of Twente",
+    date: "Nov 2023 – Dec 2025",
+    description: "Ran a haptic feedback usability study and engineered a glucose-responsive AI feedback system's data pipeline and architecture.",
+    tech: ["Research", "AI Systems"]
   },
   {
     id: 3,
-    role: "Software Intern",
-    company: "Previous Role",
-    date: "2021",
-    description: "Built internal tooling to optimize workflows and contributed to core product features.",
-    tech: ["JavaScript", "HTML"]
+    role: "Product Prototyping Intern",
+    company: "RE-LION",
+    date: "Sep 2024 – Dec 2024",
+    description: "Built spatial tracking sensor testing protocols and delivered a feasibility assessment for VR sensor integration in defense/training scenarios.",
+    tech: ["Prototyping", "Hardware"]
+  },
+  {
+    id: 4,
+    role: "Junior Business Analyst",
+    company: "Venchi",
+    date: "Dec 2022 – Aug 2023",
+    description: "Automated enterprise approval workflows and streamlined internal tool UX across customer care platforms.",
+    tech: ["Power Automate", "Dynamics 365"]
+  },
+  {
+    id: 5,
+    role: "IT Technician",
+    company: "Provincia di Cuneo",
+    date: "Dec 2021 – Dec 2022",
+    description: "Managed enterprise hardware deployment and software infrastructure for a 300+ user organization.",
+    tech: ["IT Ops"]
   }
 ];
 
@@ -101,8 +117,19 @@ export default function ExperienceCard() {
       aria-label="Experience Carousel"
     >
       {/* Header Layer */}
-      <header style={{ zIndex: 2 }}>
-        <span className="card__label">Experience</span>
+      <header style={{ zIndex: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+        <span className="card__label" style={{ marginBottom: 0 }}>Experience</span>
+        <a
+          href="/cv.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="experience-download-btn"
+          aria-label="Download CV"
+          title="Download CV"
+        >
+          <Download size={14} strokeWidth={2} />
+        </a>
       </header>
 
       {/* Content Layer */}
@@ -148,7 +175,7 @@ export default function ExperienceCard() {
                 paddingRight: '4px' // Add small padding for scrollbar
               }}
             >
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginBottom: '6px', flexShrink: 0 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginBottom: '16px', flexShrink: 0 }}>
                 <h2 className="text-title" style={{ marginTop: 0, marginBottom: 0, textAlign: 'left' }}>{currentExperience.role}</h2>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
                   <span className="text-subtitle" style={{ color: 'var(--text-primary)' }}>{currentExperience.company}</span>

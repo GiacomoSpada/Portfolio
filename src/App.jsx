@@ -27,7 +27,7 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            style={{ display: 'flex', flexDirection: 'column', flex: 1, height: '100%' }}
+            style={{ display: 'flex', flexDirection: 'column', flex: 1, width: '100%', minWidth: 0, height: '100%' }}
           >
             <LayoutGroup>
               <motion.main

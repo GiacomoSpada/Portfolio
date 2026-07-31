@@ -5,14 +5,6 @@ import { useEffect, useRef } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import CaseStudyLayout from './CaseStudyLayout';
 
-const variants = {
-  enter: (direction) => ({ x: direction > 0 ? 300 : -300, opacity: 0 }),
-  center: { zIndex: 1, x: 0, opacity: 1 },
-  exit: (direction) => ({ zIndex: 0, x: direction < 0 ? 300 : -300, opacity: 0 })
-};
-const swipeConfidenceThreshold = 10000;
-const swipePower = (offset, velocity) => Math.abs(offset) * velocity;
-
 export default function ProjectsWorkspace({ initialProjectId, onClose }) {
   // 'grid' for Level 2, or project ID for Level 3
   const [activeProject, setActiveProject] = useState(initialProjectId || 'grid');
@@ -35,8 +27,6 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
     }
   }, [activeProject]);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(0);
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
 
   useEffect(() => {
@@ -44,22 +34,6 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  const paginate = (newDirection) => {
-    setDirection(newDirection);
-    setCurrentIndex((prev) => {
-      let next = prev + newDirection;
-      if (next < 0) next = projectsData.length - 1;
-      if (next >= projectsData.length) next = 0;
-      return next;
-    });
-  };
-
-  const handleDragEnd = (e, { offset, velocity }) => {
-    const swipe = swipePower(offset.x, velocity.x);
-    if (swipe < -swipeConfidenceThreshold) paginate(1);
-    else if (swipe > swipeConfidenceThreshold) paginate(-1);
-  };
 
   return (
     <motion.article
@@ -72,13 +46,13 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
           // LEVEL 2: Asymmetrical Gallery Grid
           <motion.div
             key="grid"
-            style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0, padding: '16px', background: 'var(--bg-surface-hover)' }}
+            style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0, padding: '16px', background: 'transparent' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={smoothTransition}
           >
-            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '8px' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '24px' }}>
               <button
                 className="nav-back-btn"
                 onClick={onClose}
@@ -89,124 +63,31 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
                 <ArrowLeft size={isMobile ? 24 : 16} />
               </button>
             </div>
-            {isMobile ? (
-              <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
-                <div style={{ flex: 1, position: 'relative', overflow: 'hidden', borderRadius: 'var(--radius)' }}>
-                  <AnimatePresence initial={false} custom={direction}>
-                    <motion.div
-                      key={currentIndex}
-                      custom={direction}
-                      variants={variants}
-                      initial="enter"
-                      animate="center"
-                      exit="exit"
-                      transition={{ x: { type: "spring", stiffness: 300, damping: 30 }, opacity: { duration: 0.2 } }}
-                      drag="x"
-                      dragConstraints={{ left: 0, right: 0 }}
-                      dragElastic={0.2}
-                      onDragEnd={handleDragEnd}
-                      style={{ position: 'absolute', inset: 0, touchAction: 'pan-y', display: 'flex', flexDirection: 'column' }}
-                    >
-                      {(() => {
-                        const project = projectsData[currentIndex];
-                        return (
-                          <motion.div
-                            className="gallery-project-card"
-                            onClick={() => setActiveProject(project.id)}
-                            whileTap={{ scale: 0.98 }}
-                            style={{ flex: 1, margin: 0 }}
-                          >
-                            <div className={`project-visual project-visual-${project.id}`}>
-                            </div>
-                            <div className="project-content">
-                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                                <div style={{ display: 'flex', gap: '8px', alignItems: 'baseline' }}>
-                                  <span className="card__label text-caption" style={{ marginBottom: 0 }}>{project.category}</span>
-                                  <span className="card__count text-caption">{project.year}</span>
-                                </div>
-                              </div>
-                              <h2 className="text-title" style={{ margin: '0 0 8px 0' }}>
-                                {project.title}
-                              </h2>
-                              <div style={{ flex: 1, marginBottom: '8px' }}>
-                                <p className="text-body" style={{ margin: 0, display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                  {project.summary}
-                                </p>
-                              </div>
-                              <div className="project-tags">
-                                {project.tags.slice(0, 3).map(t => (
-                                  <span key={t} className="tag-chip">{t}</span>
-                                ))}
-                              </div>
-                            </div>
-                          </motion.div>
-                        );
-                      })()}
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '16px' }}>
-                  {projectsData.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => {
-                        setDirection(idx > currentIndex ? 1 : -1);
-                        setCurrentIndex(idx);
-                      }}
-                      style={{
-                        width: '6px', height: '6px', borderRadius: '50%', padding: 0,
-                        background: currentIndex === idx ? 'var(--text-tertiary)' : 'var(--border-subtle)',
-                        border: 'none', cursor: 'pointer', transition: 'background 0.2s ease'
-                      }}
-                      aria-label={`Go to project ${idx + 1}`}
-                    />
-                  ))}
-                </div>
-              </div>
-            ) : (
-              <div className="workspace-gallery-grid" style={{ padding: 0, background: 'transparent', flex: 1, minHeight: 0 }}>
-                {projectsData.map((project) => {
-                  return (
-                    <div
-                      key={project.id}
-                      style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}
-                    >
-                      <motion.div
-                        className="gallery-project-card"
-                        onClick={() => setActiveProject(project.id)}
-                        whileHover={{ scale: 0.98 }}
-                        whileTap={{ scale: 0.95 }}
-                        style={{ flex: 1, margin: 0 }}
-                      >
-                        <div className={`project-visual project-visual-${project.id}`}>
-                        </div>
-                        <div className="project-content">
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                            <div style={{ display: 'flex', gap: '8px', alignItems: 'baseline' }}>
-                              <span className="card__label text-caption" style={{ marginBottom: 0 }}>{project.category}</span>
-                              <span className="card__count text-caption">{project.year}</span>
-                            </div>
-                          </div>
-                          <h2 className="text-title" style={{ margin: '0 0 8px 0', fontSize: '1.25rem' }}>
-                            {project.title}
-                          </h2>
-                          <div style={{ flex: 1, marginBottom: '8px' }}>
-                            <p className="text-body" style={{ margin: 0, display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                              {project.summary}
-                            </p>
-                          </div>
-                          <div className="project-tags">
-                            {project.tags.slice(0, 3).map(t => (
-                              <span key={t} className="tag-chip">{t}</span>
-                            ))}
-                          </div>
-                        </div>
-                      </motion.div>
+            <div className="workspace-gallery-grid" style={{ padding: 0, background: 'transparent', flex: 1, minHeight: 0 }}>
+              {projectsData.map((project) => (
+                <div
+                  key={project.id}
+                  style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}
+                >
+                  <motion.div
+                    className="gallery-project-card"
+                    onClick={() => setActiveProject(project.id)}
+                    whileHover={{ scale: 0.98 }}
+                    whileTap={{ scale: 0.95 }}
+                    style={{ flex: 1, margin: 0 }}
+                  >
+                    <div className={`project-visual project-visual-${project.id}`}>
+                      {project.image && <img src={project.image} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
                     </div>
-                  );
-                })}
-              </div>
-            )}
+                    <div className="project-content">
+                      <h2 className="text-title" style={{ margin: 0 }}>
+                        {project.title}
+                      </h2>
+                    </div>
+                  </motion.div>
+                </div>
+              ))}
+            </div>
           </motion.div>
         ) : (
           // LEVEL 3: Split View
@@ -313,6 +194,7 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
                   <h3 className="workspace-sidebar-title">Sections</h3>
                   {selectedProjectData?.caseStudy && [
                     { id: 'context', title: 'Context' },
+                    { id: 'methodology', title: 'Methodology' },
                     { id: 'problem', title: 'Problem Framing' },
                     { id: 'beforeAfter', title: 'Before & After' },
                     { id: 'users', title: 'User Needs' },

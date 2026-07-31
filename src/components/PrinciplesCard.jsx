@@ -1,33 +1,41 @@
 import React from 'react';
+import { useTheme } from '../contexts/ThemeContext';
 
 export default function PrinciplesCard() {
+  const { theme } = useTheme();
+  const f1Logo = theme === 'dark' ? '/f_logo_icon_248908_black.png' : '/f_logo_icon_248908.png';
+
   return (
-    <article 
-      className="card card--principles card--orange-group" 
-      tabIndex="0" 
-      aria-label="How I build"
-      style={{ padding: 'var(--padding-card)', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', height: '100%', overflow: 'hidden' }}
+    <article
+      className="card card--principles card--orange-group"
+      tabIndex="0"
+      aria-label="Outside work"
+      style={{ justifyContent: 'flex-start', height: '100%' }}
     >
-      <header 
-        className="card__label" 
-        style={{ position: 'sticky', top: 0, zIndex: 10, width: '100%', marginBottom: '1rem', paddingTop: '4px', paddingBottom: '8px', backgroundColor: 'var(--surface-philosophy)', flexShrink: 0 }}
+      <header
+        className="card__label"
+        style={{ width: '100%', marginBottom: '1rem', flexShrink: 0 }}
       >
-        How I Build
+        Outside Work
       </header>
-      <ul className="principles-list text-body" style={{ flex: 1, overflowY: 'auto', paddingRight: '8px', margin: 0, listStyle: 'none' }}>
-        <li style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '12px' }}>
-          <span style={{ color: 'var(--accent-primary)', marginRight: '8px', fontWeight: 'bold' }}>•</span>
-          <span>Ship early, iterate with data</span>
-        </li>
-        <li style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '12px' }}>
-          <span style={{ color: 'var(--accent-primary)', marginRight: '8px', fontWeight: 'bold' }}>•</span>
-          <span>Design is how it works, not how it looks</span>
-        </li>
-        <li style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '12px' }}>
-          <span style={{ color: 'var(--accent-primary)', marginRight: '8px', fontWeight: 'bold' }}>•</span>
-          <span>Remove before you add</span>
-        </li>
-      </ul>
+      <div className="outside-work-icons">
+        <a href="https://strava.app.link/tHr19Xodc5b" target="_blank" rel="noopener noreferrer" title="Strava" aria-label="Strava">
+          <img src="/strava_icon_130820.svg" alt="Strava" className="outside-work-icon" />
+        </a>
+        <a
+          href="https://www.formula1.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Formula 1"
+          aria-label="Formula 1"
+          className="outside-work-icon outside-work-icon-badge"
+        >
+          <img src={f1Logo} alt="Formula 1" className="outside-work-icon-badge-img" />
+        </a>
+        <a href="https://www.polarsteps.com" target="_blank" rel="noopener noreferrer" title="Polarsteps" aria-label="Polarsteps">
+          <img src="/polarsteps.jpeg" alt="Polarsteps" className="outside-work-icon outside-work-icon-rounded" />
+        </a>
+      </div>
     </article>
   );
 }
