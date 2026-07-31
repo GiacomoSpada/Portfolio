@@ -406,7 +406,7 @@ body {
 .bento-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  grid-template-rows: 1.15fr 1.15fr 0.85fr 0.85fr;
+  grid-template-rows: repeat(4, 1fr);
   gap: var(--gap-grid);
   width: 100%;
   min-width: 0;
@@ -1252,7 +1252,7 @@ body:has(.workspace-active) {
   }
 
   .bento-grid {
-    grid-template-rows: minmax(0, 1.15fr) minmax(0, 1.15fr) minmax(0, 0.85fr) minmax(0, 0.85fr);
+    grid-template-rows: repeat(4, minmax(0, 1fr));
     min-height: 0;
   }
 
