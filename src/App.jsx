@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, LayoutGroup, AnimatePresence } from 'framer-motion';
+import { Analytics } from '@vercel/analytics/react';
 import ProjectCard from './components/ProjectCard';
 import AboutCard from './components/AboutCard';
 import ExperienceCard from './components/ExperienceCard';
@@ -18,6 +19,7 @@ export default function App() {
   return (
     <div className="page-container" style={{ position: 'relative' }}>
       <AmbientBackground />
+      <Analytics />
       <AnimatePresence mode="wait">
         {!hasEntered ? (
           <SplashScreen key="splash" onEnter={() => setHasEntered(true)} />
