@@ -30,9 +30,10 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    const mq = window.matchMedia('(max-width: 767px)');
+    const handleChange = (e) => setIsMobile(e.matches);
+    mq.addEventListener('change', handleChange);
+    return () => mq.removeEventListener('change', handleChange);
   }, []);
 
   return (

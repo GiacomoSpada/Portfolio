@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(
+    typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false
+  );
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handler = (e) => setReduced(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+  return reduced;
+}
+
 export default function AmbientBackground() {
+  const reducedMotion = usePrefersReducedMotion();
+
   return (
     <div
       className="ambient-background"
@@ -24,19 +39,20 @@ export default function AmbientBackground() {
           maxWidth: '650px',
           maxHeight: '650px',
           background: 'radial-gradient(circle at 30% 30%, var(--accent-primary) 0%, #FF8533 40%, transparent 80%)',
-          filter: 'blur(110px)',
+          filter: 'blur(70px)',
           opacity: 0.35,
           mixBlendMode: 'screen',
-          borderRadius: '50%'
+          borderRadius: '50%',
+          willChange: 'transform'
         }}
-        animate={{
+        animate={reducedMotion ? undefined : {
           x: ["-10vw", "25vw", "-15vw", "-10vw"],
           y: ["-5vh", "20vh", "-15vh", "-5vh"],
           scale: [1, 1.25, 0.85, 1]
         }}
         transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
       />
-      
+
       {/* Orb 2: Warm Amber */}
       <motion.div
         style={{
@@ -48,12 +64,13 @@ export default function AmbientBackground() {
           maxWidth: '700px',
           maxHeight: '700px',
           background: 'radial-gradient(circle at 70% 60%, #D97706 0%, #F59E0B 50%, transparent 85%)',
-          filter: 'blur(130px)',
+          filter: 'blur(80px)',
           opacity: 0.28,
           mixBlendMode: 'screen',
-          borderRadius: '50%'
+          borderRadius: '50%',
+          willChange: 'transform'
         }}
-        animate={{
+        animate={reducedMotion ? undefined : {
           x: ["15vw", "-25vw", "10vw", "15vw"],
           y: ["10vh", "-20vh", "25vh", "10vh"],
           scale: [1, 0.8, 1.3, 1]
@@ -72,12 +89,13 @@ export default function AmbientBackground() {
           maxWidth: '750px',
           maxHeight: '750px',
           background: 'radial-gradient(circle at 50% 50%, #2563EB 0%, #1E3A8A 60%, transparent 90%)',
-          filter: 'blur(140px)',
+          filter: 'blur(90px)',
           opacity: 0.22,
           mixBlendMode: 'screen',
-          borderRadius: '50%'
+          borderRadius: '50%',
+          willChange: 'transform'
         }}
-        animate={{
+        animate={reducedMotion ? undefined : {
           x: ["-20vw", "15vw", "-25vw", "-20vw"],
           y: ["15vh", "-10vh", "20vh", "15vh"],
           scale: [1, 1.35, 0.9, 1],

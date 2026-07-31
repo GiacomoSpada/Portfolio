@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { motion, LayoutGroup, AnimatePresence } from 'framer-motion';
 import ProjectCard from './components/ProjectCard';
 import AboutCard from './components/AboutCard';
@@ -6,9 +6,12 @@ import ExperienceCard from './components/ExperienceCard';
 import NowCard from './components/NowCard';
 import PrinciplesCard from './components/PrinciplesCard';
 import ContactDock from './components/ContactDock';
-import ProjectsWorkspace from './components/ProjectsWorkspace';
 import SplashScreen from './components/SplashScreen';
 import AmbientBackground from './components/AmbientBackground';
+
+// Case-study content (project copy + images) is only needed once the user
+// opens the Projects workspace, so it's split out of the initial bundle.
+const ProjectsWorkspace = lazy(() => import('./components/ProjectsWorkspace'));
 
 export default function App() {
   const [hasEntered, setHasEntered] = useState(false);
@@ -48,10 +51,12 @@ export default function App() {
 
                 <AnimatePresence mode="popLayout">
                   {viewState !== 'home' && (
-                    <ProjectsWorkspace
-                      initialProjectId="grid"
-                      onClose={() => setViewState('home')}
-                    />
+                    <Suspense fallback={null}>
+                      <ProjectsWorkspace
+                        initialProjectId="grid"
+                        onClose={() => setViewState('home')}
+                      />
+                    </Suspense>
                   )}
                 </AnimatePresence>
               </motion.main>
