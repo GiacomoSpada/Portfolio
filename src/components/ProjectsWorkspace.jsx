@@ -68,6 +68,7 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
               {projectsData.map((project) => (
                 <div
                   key={project.id}
+                  className="gallery-grid-item"
                   style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}
                 >
                   <motion.div
