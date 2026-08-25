@@ -533,6 +533,7 @@ body:has(.workspace-active) {
 @media (max-width: 767px) {
   .workspace-gallery-grid {
     grid-template-columns: 1fr;
+    grid-template-rows: none;
     grid-auto-rows: minmax(240px, auto);
     overflow-y: auto;
     gap: 16px;
