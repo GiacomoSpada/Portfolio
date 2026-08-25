@@ -40,6 +40,7 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
     <motion.article
       layoutId="projects-workspace-container"
       className="card projects-workspace"
+      exit={{ opacity: 0 }}
       transition={smoothTransition}
     >
       <AnimatePresence mode="wait">
