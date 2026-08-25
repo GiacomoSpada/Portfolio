@@ -56,6 +56,42 @@ function BarChart({ title, unit, items }) {
   );
 }
 
+function ImageRow({ images, caption, onImageClick }) {
+  if (!images || images.length === 0) return null;
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      <div style={{ display: 'flex', flexWrap: 'nowrap', gap: '12px', alignItems: 'flex-start', justifyContent: 'center' }}>
+        {images.map((src, j) => (
+          <img
+            key={j}
+            src={src}
+            alt={caption}
+            loading="lazy"
+            decoding="async"
+            onClick={() => onImageClick(src, caption)}
+            style={{
+              flex: '1 1 0',
+              minWidth: 0,
+              width: '100%',
+              height: 'auto',
+              maxHeight: 'clamp(200px, 38vw, 420px)',
+              objectFit: 'contain',
+              borderRadius: 'var(--radius-card)',
+              border: '1px solid var(--border-subtle)',
+              cursor: 'zoom-in'
+            }}
+          />
+        ))}
+      </div>
+      {caption && (
+        <p className="text-caption" style={{ color: 'var(--text-secondary)', textAlign: 'center', textTransform: 'none', fontWeight: 400, letterSpacing: 'normal', margin: 0 }}>
+          {caption}
+        </p>
+      )}
+    </div>
+  );
+}
+
 function Lightbox({ src, alt, onClose }) {
   if (!src) return null;
   return (
@@ -170,7 +206,7 @@ export default function CaseStudyLayout({ data }) {
       {/* 2b. Methodology */}
       {methodology && (
         <section id="section-methodology" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-          <h3 className="text-title" style={{ margin: 0 }}>Methodology</h3>
+          <h3 className="text-title" style={{ margin: 0 }}>{methodology.title || 'Methodology'}</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
             {methodology.description && (
               <p className="text-body" style={{ margin: 0 }}>{methodology.description}</p>
@@ -232,30 +268,51 @@ export default function CaseStudyLayout({ data }) {
       {beforeAfter && (beforeAfter.before || beforeAfter.after) && (
         <section id="section-beforeAfter" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           <h3 className="text-title" style={{ margin: 0 }}>Before & After</h3>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '32px' }}>
-            {beforeAfter.before && (
-              <div style={{ flex: '1 1 300px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div
-                  onClick={() => beforeAfter.before.image && setLightbox({ src: beforeAfter.before.image, alt: beforeAfter.before.caption })}
-                  style={{ aspectRatio: '16/9', background: 'var(--bg-surface-hover)', borderRadius: 'var(--radius-card)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-subtle)', overflow: 'hidden', cursor: beforeAfter.before.image ? 'zoom-in' : 'default' }}
-                >
-                  {beforeAfter.before.image ? <img src={beforeAfter.before.image} alt="Before" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'contain' }} /> : <span className="text-caption">No Image</span>}
+          {(beforeAfter.before?.groups || beforeAfter.after?.groups) ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '56px' }}>
+              {beforeAfter.before?.groups && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+                  <h4 className="text-subtitle" style={{ margin: 0, color: 'var(--accent-primary)' }}>Before</h4>
+                  {beforeAfter.before.groups.map((g, i) => (
+                    <ImageRow key={i} images={g.images || (g.image ? [g.image] : [])} caption={g.caption} onImageClick={(src, alt) => setLightbox({ src, alt })} />
+                  ))}
                 </div>
-                <span className="text-caption" style={imageCaptionStyle}>Before: {beforeAfter.before.caption}</span>
-              </div>
-            )}
-            {beforeAfter.after && (
-              <div style={{ flex: '1 1 300px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <div
-                  onClick={() => beforeAfter.after.image && setLightbox({ src: beforeAfter.after.image, alt: beforeAfter.after.caption })}
-                  style={{ aspectRatio: '16/9', background: 'var(--bg-surface-hover)', borderRadius: 'var(--radius-card)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-subtle)', overflow: 'hidden', cursor: beforeAfter.after.image ? 'zoom-in' : 'default' }}
-                >
-                  {beforeAfter.after.image ? <img src={beforeAfter.after.image} alt="After" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'contain' }} /> : <span className="text-caption">No Image</span>}
+              )}
+              {beforeAfter.after?.groups && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+                  <h4 className="text-subtitle" style={{ margin: 0, color: 'var(--accent-primary)' }}>After</h4>
+                  {beforeAfter.after.groups.map((g, i) => (
+                    <ImageRow key={i} images={g.images || (g.image ? [g.image] : [])} caption={g.caption} onImageClick={(src, alt) => setLightbox({ src, alt })} />
+                  ))}
                 </div>
-                <span className="text-caption" style={imageCaptionStyle}>After: {beforeAfter.after.caption}</span>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '32px' }}>
+              {beforeAfter.before && (
+                <div style={{ flex: '1 1 300px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div
+                    onClick={() => beforeAfter.before.image && setLightbox({ src: beforeAfter.before.image, alt: beforeAfter.before.caption })}
+                    style={{ aspectRatio: '16/9', background: 'var(--bg-surface-hover)', borderRadius: 'var(--radius-card)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-subtle)', overflow: 'hidden', cursor: beforeAfter.before.image ? 'zoom-in' : 'default' }}
+                  >
+                    {beforeAfter.before.image ? <img src={beforeAfter.before.image} alt="Before" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'contain' }} /> : <span className="text-caption">No Image</span>}
+                  </div>
+                  <span className="text-caption" style={imageCaptionStyle}>Before: {beforeAfter.before.caption}</span>
+                </div>
+              )}
+              {beforeAfter.after && (
+                <div style={{ flex: '1 1 300px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div
+                    onClick={() => beforeAfter.after.image && setLightbox({ src: beforeAfter.after.image, alt: beforeAfter.after.caption })}
+                    style={{ aspectRatio: '16/9', background: 'var(--bg-surface-hover)', borderRadius: 'var(--radius-card)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--border-subtle)', overflow: 'hidden', cursor: beforeAfter.after.image ? 'zoom-in' : 'default' }}
+                  >
+                    {beforeAfter.after.image ? <img src={beforeAfter.after.image} alt="After" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'contain' }} /> : <span className="text-caption">No Image</span>}
+                  </div>
+                  <span className="text-caption" style={imageCaptionStyle}>After: {beforeAfter.after.caption}</span>
+                </div>
+              )}
+            </div>
+          )}
         </section>
       )}
 
@@ -353,17 +410,21 @@ export default function CaseStudyLayout({ data }) {
         <section id="section-visuals" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           <h3 className="text-title" style={{ margin: 0 }}>Visuals</h3>
           {visuals && visuals.length > 0 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '56px' }}>
               {visuals.map((v, i) => (
-                <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  <div
-                    onClick={() => v.image && setLightbox({ src: v.image, alt: v.caption })}
-                    style={{ width: '100%', aspectRatio: '16/9', background: 'var(--bg-surface-hover)', borderRadius: 'var(--radius-card)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', border: '1px solid var(--border-subtle)', cursor: v.image ? 'zoom-in' : 'default' }}
-                  >
-                    {v.image ? <img src={v.image} alt={v.caption} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'contain' }} /> : <span className="text-caption">No Image Available</span>}
+                Array.isArray(v.images) ? (
+                  <ImageRow key={i} images={v.images} caption={v.caption} onImageClick={(src, alt) => setLightbox({ src, alt })} />
+                ) : (
+                  <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                    <div
+                      onClick={() => v.image && setLightbox({ src: v.image, alt: v.caption })}
+                      style={{ width: '100%', aspectRatio: '16/9', background: 'var(--bg-surface-hover)', borderRadius: 'var(--radius-card)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', border: '1px solid var(--border-subtle)', cursor: v.image ? 'zoom-in' : 'default' }}
+                    >
+                      {v.image ? <img src={v.image} alt={v.caption} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'contain' }} /> : <span className="text-caption">No Image Available</span>}
+                    </div>
+                    {v.caption && <p className="text-caption" style={imageCaptionStyle}>{v.caption}</p>}
                   </div>
-                  {v.caption && <p className="text-caption" style={imageCaptionStyle}>{v.caption}</p>}
-                </div>
+                )
               ))}
             </div>
           )}

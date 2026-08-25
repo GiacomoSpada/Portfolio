@@ -5,12 +5,12 @@ import { X, MoreHorizontal } from 'lucide-react';
 
 const MODAL_TRANSITION_MS = 220;
 
-const INTRO_TEXT = "Half engineer, half designer, fully allergic to good ideas that never ship. Currently working as an AI Product Engineer at the University of Twente.";
+const INTRO_TEXT = "Half builder, half designer, fully allergic to good ideas that never ship. Currently working as an AI Product Engineer at the University of Twente.";
 
 const DETAIL_PARAGRAPHS = [
-  "Based in the Netherlands, Italian by background, currently plotting my next move. Studied Interaction Technology at the University of Twente.",
-  "Outside of building, I'm a bit of a car and motorsport enthusiast, always into interior design and style, and I probably spend more time than I'd admit thinking about ETF allocations and what to wear for the day.",
-  "I build because I want to create the next thing for people, not just ship features, but make something someone actually reaches for."
+  "Based in the Netherlands, Italian by background. I have studied Interaction Technology at the University of Twente.",
+  "Outside of work, I'm a bit of a car and motorsport enthusiast, always into interior design and style, and I probably spend more time than I'd admit thinking about ETF allocations and what to wear for the day.",
+  "I build and design because I want to create the next thing for people, not just ship features, but make something someone actually reaches for."
 ];
 
 function AboutModal({ isOpen, onClose }) {

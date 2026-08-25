@@ -1,14 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Stethoscope, MessageCircle, Home, Wallet, CheckCircle, Sprout } from 'lucide-react';
+import { ArrowRight, Stethoscope, MessageCircle, Home, CheckCircle } from 'lucide-react';
 
 const projectIcons = [
   { icon: Stethoscope, name: 'EMERALD' },
   { icon: MessageCircle, name: 'NutriChat' },
   { icon: Home, name: 'Student House Ledger' },
-  { icon: Wallet, name: 'MONEY' },
-  { icon: CheckCircle, name: 'Purchase Order Automation' },
-  { icon: Sprout, name: 'Smart Plant Monitor' }
+  { icon: CheckCircle, name: 'Purchase Order Automation' }
 ];
 
 const marqueeIcons = [...projectIcons, ...projectIcons];

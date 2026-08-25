@@ -250,114 +250,78 @@ export const projectsData = [
     }
   },
   {
-    id: 'plantmonitor',
-    title: 'Smart Plant Monitor',
-    image: '/Gemini_Generated_Image_j4naodj4naodj4na.jpg',
-    summary: 'Designed and built a modular IoT system that makes plant health data understandable and actionable, from small apartments to scalable agricultural use cases.',
-    tags: ['IoT', 'Hardware', 'UX/UI', 'System Design'],
-    category: 'Product Design',
-    year: '2025',
-    caseStudy: {
-      introduction: {
-        summary: "Designed and built a modular IoT system that makes plant health data understandable and actionable, from small apartments to scalable agricultural use cases.",
-        metadata: { role: "UX / Product Designer", context: "Personal project", timeline: "~3–4 weeks", team: "Solo" },
-        credibilityTag: "A modular plant-monitoring system that bridges raw sensor data and human decision-making, designed to scale beyond a single use case."
-      },
-      context: {
-        description: "Initially designed for urban apartments but architected to be sensor-agnostic and scalable, making it applicable to greenhouses, small-scale agriculture, and research setups. Plants fail due to lack of interpretable feedback, not lack of data.",
-        constraints: ["Low-cost, modular hardware", "Must support multiple sensor types", "Designed for future expansion", "Limited physical interface on-device (RGB LED only)"]
-      },
-      problem: {
-        howMightWe: "How might we design a modular plant-monitoring system that translates environmental data into clear, actionable feedback across different scales and contexts?",
-        observations: ["Environmental data is collected but not translated into decisions", "Systems are often tightly coupled to a single use case", "Scaling usually breaks usability rather than improving it"],
-        impact: "Dashboards show values, not meaning. Systems are built for engineers, not end users, leading to slow or unclear feedback loops."
-      },
-      beforeAfter: {
-        before: { image: "", caption: "Current solutions: Dashboards show values, not meaning, overwhelming users with raw data." },
-        after: { image: "", caption: "Smart Plant Monitor: Focuses on trends and states, translating environmental data into actionable feedback." }
-      },
-      users: {
-        goals: ["Understand plant conditions quickly", "Act at the right moment", "Scale monitoring without increasing cognitive load"],
-        painPoints: ["Context-switching between sensors and apps", "Difficulty interpreting thresholds", "Systems that don’t adapt as needs grow"]
-      },
-      insights: [
-        { reframe: "The real challenge wasn't sensing, it was interpretation at scale.", explanation: "As the number of plants or sensors increases, raw data becomes overwhelming and manual checking impossible. Feedback must become more abstract, not more detailed." },
-        { reframe: "Sensors can change, but meaning stays consistent.", explanation: "This insight shaped the modular architecture." }
-      ],
-      solution: {
-        steps: [
-          { title: "Modular Architecture", description: "Built a system with interchangeable sensors (soil, light, temp, humidity), local interpretation logic, and a backend API." },
-          { title: "Adaptive Feedback", description: "Sensors act as inputs, and feedback adapts to scale: LED for immediate local feedback, Dashboard for reflective comparative insights." },
-          { title: "Data Translation", description: "Device interprets data locally into plant states, sends to a centralized API, and frontend visualizes trends and insights." }
-        ]
-      },
-      visuals: [],
-      outcome: {
-        metrics: [
-          { label: "Usability", value: "High" },
-          { label: "Cognitive Load", value: "Reduced" }
-        ],
-        description: "Successfully validated with real-world testing. Threshold logic matched intuitive expectations, and the architecture supported adding new sensors without redesign. Created a working, extensible foundation suitable for both domestic and professional use."
-      },
-      reflection: {
-        lessons: [
-          "Scalability is a UX problem, not just a technical one.",
-          "Modular systems demand clearer abstractions.",
-          "Good feedback reduces the need for constant attention.",
-          "What I'd improve next: Multi-plant comparison views, role-based dashboards (home vs grower), and predictive insights based on trends.",
-          "Trade-offs: Chose generalizability over hyper-optimization, kept UI minimal to preserve clarity at scale, and accepted technical simplicity to protect UX integrity."
-        ]
-      }
-    }
-  },
-  {
     id: 'titsystem',
     title: 'Student House Ledger System',
+    image: '/HouseLedgerSystemthumbnail.jpg',
     summary: 'A full-stack web application that automates household expense splitting and daily dinner rosters using dynamic, conditional logic.',
     tags: ['Next.js', 'Supabase', 'Full-stack', 'UX'],
     category: 'Engineering',
     year: '2025',
     caseStudy: {
       introduction: {
-        summary: "A full-stack web application that automates household expense splitting and daily dinner rosters using dynamic, conditional logic.",
-        metadata: { role: "Lead Developer / Product Designer", context: "Co-living Household Management", timeline: "Ongoing (Live)", team: "Individual Contributor" },
+        summary: "TIT House System — a production-grade app that automates shared expense splitting and dinner tracking for a co-living household, rebuilt from a bloated, confusing predecessor into something new roommates could use without explanation.",
+        metadata: { role: "Lead Developer / Product Designer", context: "Co-living household management", timeline: "Ongoing (Live)", team: "Individual Contributor" },
         credibilityTag: "Real users, production rollout, resolving daily expense friction in a live household."
       },
       context: {
-        description: "Co-living environments (shared houses, student housing) where shared expenses (groceries, pantry items) are constant, but tracking them fairly is tedious.",
+        description: "The house already had an app before this one — but every time someone new joined, they needed a walkthrough. Most of its features went unused; only a couple actually mattered day-to-day.",
         constraints: [
-          "Frictionless UX: Roommates won't use it if it takes longer than sending a WhatsApp message.",
-          "Complex Edge Cases: The system had to mathematically handle vacations, guests, permanent opt-outs, and new roommates moving in mid-lease.",
-          "Performance: Required instant, real-time feedback (optimistic UI) so users feel confident their inputs were registered."
+          "Feature Discipline: Had to simplify aggressively while keeping every feature that was actually used.",
+          "Autonomous Use: Had to work without supervision or repeated explanation.",
+          "Real Edge Cases: Had to correctly handle vacations, guests, and new roommates joining mid-lease.",
+          "Built to Scale: Needed to be built with an eye toward scaling to other houses on campus, not just this one."
         ]
       },
+      methodology: {
+        title: "Security Hardening",
+        description: "A later review pass surfaced three real issues, each fixed before they mattered: a missing authorization check that would have let any user record a fake settlement on someone else's behalf, hardcoded demo credentials sitting in a production code path, and a CSV export vulnerable to formula injection. Finding and closing these wasn't part of the original build, it came from going back and actually trying to break the thing after it was already working."
+      },
       problem: {
-        howMightWe: "How might we create a zero-friction system that automatically tracks and splits household expenses based on dynamic, daily participation rather than static division?",
+        howMightWe: "How might we simplify a cluttered household tool down to only what people actually use, so a new roommate can understand it without being taught — while keeping the underlying logic robust enough to handle real edge cases and, eventually, scale to other houses?",
         observations: [
-          "Roommates were using chaotic WhatsApp groups to announce dinners and disjointed apps (like Splitwise) or spreadsheets to settle debts, requiring constant manual math.",
-          "Everyone living in a shared house is affected, particularly those who end up doing the administrative work of splitting receipts.",
-          "Standard expense-splitting apps don't account for physical presence. They divide evenly by default, which is unfair to new roommates inheriting old debts, or people on vacation paying for toilet paper they didn't use."
+          "New roommates had to be walked through the existing app every single time, for a small set of features they'd actually use — the rest of the interface was dead weight nobody touched.",
+          "Every new person joining the house is affected, along with whoever kept having to explain the app to them.",
+          "The old app was built to have every possible feature, not to have only the ones people needed — so onboarding never got easier no matter how many times someone explained it."
         ],
         impact: "It prevents roommate arguments over money, eliminates the need for complex, easily broken spreadsheets, and builds a transparent, fair system."
       },
       beforeAfter: {
-        before: { image: "", caption: "Frustrating spreadsheets requiring manual updates, arguments over who owes what, and constantly texting to figure out who is home for dinner." },
-        after: { image: "", caption: "Automated daily rosters, one-tap sign-ups, and an algorithmic ledger that instantly calculates fair, fraction-based debts." }
+        before: {
+          groups: [
+            {
+              images: ["/dashboardmobile.jpg", "/insertexpensemobile.jpg", "/loginmobile.jpg"],
+              caption: "The previous house app — functional, but cluttered enough that every new roommate needed a walkthrough."
+            }
+          ]
+        },
+        after: {
+          groups: [
+            { images: ["/dashboard sketch.jpg", "/Full Dashboard MobileFinalDesign.png"], caption: "Dashboard — early sketch (left) to shipped design (right)." },
+            { images: ["/debtssketch.jpg", "/Debts Mobile-FinalDesign.png"], caption: "Debts — early sketch (left) to shipped design (right)." },
+            { images: ["/insertexpensesketch.jpg", "/Ledger Entry MobileFinalDesign.png"], caption: "Ledger entry — early sketch (left) to shipped design (right)." },
+            { images: ["/ledgersketch.jpg", "/Ledger MobileFinalDesign.png"], caption: "Ledger — early sketch (left) to shipped design (right)." },
+            { images: ["/loginsketch.jpg", "/Login MobileFinalDesign.png"], caption: "Login — early sketch (left) to shipped design (right)." },
+            { images: ["/profilesketch.jpg", "/Profile MobileFinalDesign.png"], caption: "Profile — early sketch (left) to shipped design (right)." },
+            { images: ["/Registration MobileFinalDesign.png"], caption: "Registration — the finished, shipped product." }
+          ]
+        }
       },
       users: {
-        goals: ["Know exactly who is cooking/eating tonight", "Quickly log a grocery receipt", "See exact debt balances at a glance"],
-        painPoints: ["Doing math for complex edge cases (e.g., 'I had a guest, but roommate B was on vacation, and roommate C moved in yesterday')", "Forgetting to log expenses", "Feeling like the split is unfair"]
+        goals: ["Understand the app without being taught", "Know who's cooking/eating tonight", "Log a receipt in seconds", "See fair debt balances instantly"],
+        painPoints: ["Repeated onboarding overhead", "Feature clutter", "Unfair splits during vacations, guests, or new move-ins"]
       },
       insights: [
-        { reframe: "Expense splitting isn't just division, it's conditional logic based on physical presence and category.", explanation: "To build a truly fair system, we couldn't just divide costs by the number of housemates. We had to separate the rules into 'Dinner Logic' (based on daily RSVPs) and 'Pantry Logic' (based on active residency), while globally tracking who was currently out of town." }
+        { reframe: "The core problem wasn't the math — it was comprehension.", explanation: "A tool that requires a human to explain it every time isn't actually usable, no matter how powerful its logic is underneath. Simplifying down to only the features people actually used mattered more than adding capability." },
+        { reframe: "Expense splitting itself isn't just division — it's conditional logic based on presence, category, and time.", explanation: "Which is why the underlying system still needed real rigor (Dinner Logic, Pantry Logic, the Newcomer Rule) even after the interface was stripped down." }
       ],
       solution: {
         steps: [
-          { title: "The Roster", description: "Users set a 'Standard Week' default schedule or manually toggle their daily RSVPs." },
-          { title: "The Purchase", description: "A housemate buys groceries and logs the receipt as either a 'Dinner' or 'Common' expense." },
-          { title: "The Engine", description: "The system queries active profiles, checks 'Vacation Mode' statuses, applies the 'Newcomer Rule' (historical exclusion), and calculates the precise fractional debt for every participant." },
-          { title: "Why it addressed the problem", description: "It automated the edge cases. No one has to remember to exclude the roommate on vacation or calculate guest multipliers, the system does it silently." },
-          { title: "Key design decisions", description: "Utilized Next.js (App Router) for speed and modern routing. Implemented Supabase (PostgreSQL) for robust database relationships, authentication, and Row Level Security. Engineered a 'Smart Sync' approach with optimistic UI updates, ensuring that toggling a dinner RSVP feels instantaneous even on poor connections." }
+          { title: "Stripping the Interface", description: "Removed everything that required explanation, keeping only the features that were actually used day-to-day." },
+          { title: "Dinner Logic", description: "Split among whoever signed up that day, auto-excluding anyone marked 'Away' unless they explicitly opt back in." },
+          { title: "Pantry Logic", description: "Common expenses split evenly across active members, with automatic vacation exemption and a permanent opt-out toggle." },
+          { title: "The Newcomer Rule", description: "Expenses are checked against each member's join date, so new roommates never inherit historical debt." },
+          { title: "Onboarding", description: "A QR code invite link (found under House Invite in Profile settings) lets a new roommate join in seconds, no explanation required." },
+          { title: "Key design decisions", description: "Built on Next.js (App Router) and Supabase (PostgreSQL, auth, Row Level Security), with a custom 'Smart Sync' layer for optimistic, real-time UI updates. Designed with scalability in mind — if validated over time in this house, the same system could extend to other houses on campus." }
         ]
       },
       visuals: [],
@@ -365,70 +329,13 @@ export const projectsData = [
         metrics: [
           { label: "Shared Expenses Managed", value: "100%" }
         ],
-        description: "Complete elimination of manual expense math and the social friction that comes with collecting money from roommates. High adoption in internal tools is only possible when the app's UX is drastically faster and easier than the 'hacky' solution it's replacing."
+        description: "In daily use managing 100% of shared expenses, with the onboarding friction that plagued the old app eliminated — new roommates no longer need a walkthrough. The Newcomer Rule and vacation logic removed the two most common sources of dispute."
       },
       reflection: {
         lessons: [
-          "Managing complex state and building optimistic UI updates (Smart Sync) is technically challenging but absolutely essential for a premium, native-feeling user experience.",
-          "I would love to integrate OCR receipt scanning in the future to further reduce the friction of logging large grocery hauls.",
-          "I chose to build a responsive progressive web app (PWA) rather than a native mobile application. This ensured rapid development and cross-platform compatibility for all roommates, though it meant sacrificing native push notifications."
-        ]
-      }
-    }
-  },
-  {
-    id: 'money',
-    title: 'MONEY',
-    image: '/Thumbnail.png',
-    summary: 'A mobile finance app UI/UX exploration, designed end-to-end from onboarding to daily use, built to practice interaction and visual design in Figma.',
-    tags: ['Fintech', 'Mobile app', 'UX/UI'],
-    category: 'Product Design',
-    year: '2022',
-    caseStudy: {
-      introduction: {
-        summary: "A mobile finance app UI/UX exploration, designed end-to-end from onboarding to daily use, built to practice interaction and visual design in Figma.",
-        metadata: { role: "UX/UI Designer", context: "Personal design exercise", timeline: "1 week", team: "Solo" },
-        credibilityTag: ""
-      },
-      context: {
-        description: "Personal finance apps often bury simple tasks under dense data and cluttered charts. Designed within standard iOS/Android UI conventions, balancing high information density (balances, transactions, cards) against a calm, low-anxiety visual feel.",
-        constraints: []
-      },
-      problem: {
-        howMightWe: "How might we design a mobile finance experience that feels calm and simple, without hiding the information users actually need?",
-        observations: [
-          "Financial apps tend to present raw data (spreadsheet-style transaction lists, dense charts) without helping users feel in control.",
-          "The goal was a flow where checking your finances feels manageable, not stressful."
-        ],
-        impact: ""
-      },
-      beforeAfter: {
-        before: { image: "", caption: "Dense, list-heavy transaction views typical of most finance apps." },
-        after: { image: "", caption: "High-level overview cards (balance, spending by category) with detail available on drill-down, full flow from cards to transactions (detailed) to transfer to confirmation." }
-      },
-      users: {
-        goals: ["Everyday users managing personal budgets", "Needing quick balance checks, easy transfers, and category-level spending visibility"],
-        painPoints: ["Feeling like they're reading a spreadsheet"]
-      },
-      insights: [
-        { reframe: "Progressive disclosure reduces financial anxiety.", explanation: "Surfacing a simple balance and category breakdown up front, with detailed transactions one tap away, makes the app feel manageable rather than overwhelming." }
-      ],
-      solution: {
-        steps: [
-          { title: "Designed the complete flow in Figma", description: "Onboarding (3 screens), sign-up/sign-in with inline validation, OTP verification, profile creation, homepage (balance overview + spend chart), cards, transactions (summary and detailed), transfer, confirmation, notifications, profile." },
-          { title: "Prototyped for click-through functionality", description: "Tested the flow end-to-end." }
-        ]
-      },
-      visuals: [],
-      outcome: {
-        metrics: [],
-        description: "A complete, prototyped mobile finance flow covering the full user journey from onboarding to transaction management, used as a design practice project to sharpen UI systems thinking (color, hierarchy, component consistency) across a real end-to-end flow."
-      },
-      reflection: {
-        lessons: [
-          "Designing for financial data means every simplification has to preserve trust, even a 'clean' card needs to feel accurate, not vague.",
-          "The flow was built for practice rather than tested with real users, next step would be usability testing to see if progressive disclosure actually reduces anxiety for real users, not just in theory.",
-          "Prioritized visual polish and flow completeness over user validation, since this was a self-directed design exercise rather than a shipped product."
+          "The hardest part of this rebuild wasn't the splitting logic, it was deciding what to remove — comprehension problems are often solved by subtraction, not addition. Going back to actively try to break my own app after it was 'done' surfaced real security gaps I wouldn't have found otherwise.",
+          "What I'd improve next: receipt scanning for full financial transparency, and offline support so the app keeps working with no connection.",
+          "Trade-offs: chose a responsive PWA over native for faster development and cross-platform reach, at the cost of native push notifications and, for now, offline support."
         ]
       }
     }

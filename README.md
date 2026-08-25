@@ -1,4 +1,4 @@
-# Jack Spada — Product Engineer Portfolio
+# Jack Spada - Product Engineer Portfolio
 
 An interactive, dynamic portfolio built to showcase projects, experience, and current status through a sleek, highly animated Bento Grid layout.
 
