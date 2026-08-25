@@ -368,6 +368,9 @@ export default function CaseStudyLayout({ data }) {
       {solution && solution.steps && (
         <section id="section-solution" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           <h3 className="text-title" style={{ margin: 0 }}>Implementation</h3>
+          {solution.summary && (
+            <p className="text-body" style={{ margin: 0 }}>{solution.summary}</p>
+          )}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {solution.steps.map((step, i) => (
               <div key={i} style={{ display: 'flex', gap: '24px', alignItems: 'stretch' }}>

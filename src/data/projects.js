@@ -3,68 +3,76 @@ export const projectsData = [
     id: 'emerald',
     title: 'EMERALD',
     image: '/Gemini_Generated_Image_l7x53bl7x53bl7x5.jpg',
-    summary: 'A privacy-first, on-premise behavioral AI health coaching system designed for adult patients with chronic conditions.',
-    tags: ['RAG Pipeline', 'LLM', 'Python', 'Healthcare'],
+    summary: 'A privacy-first, on-premise AI health coach for chronic disease patients, built to prove that AI coaching can be both empathetic and reliably bounded.',
+    tags: ['RAG Pipeline', 'LLM', 'Safety Layer', 'On-Premise', 'Python', 'Healthcare'],
     category: 'Engineering',
     year: '2026/2027',
     caseStudy: {
       introduction: {
         status: "🚧 In Active Development",
-        summary: "A privacy-first, on-premise behavioral AI health coaching system designed for adult patients with chronic conditions.",
-        metadata: { role: "Lead Developer / Product Designer", context: "Clinical Healthcare / Chronic Disease Management (OA, T2D, CVD)", timeline: "Ongoing: Targeting TRL 5", team: "Individual Contributor" },
-        credibilityTag: "Architecture built and running end-to-end, designed to prioritize patient privacy through local hosting and anonymization, targeting TRL 5 clinical validation."
+        summary: "A privacy-first, on-premise AI health coach for chronic disease patients, built to prove that AI coaching can be both empathetic and reliably bounded.",
+        metadata: { role: "Product Owner / Lead Developer", context: "Clinical Healthcare, Chronic Disease Management (OA, T2D, CVD)", timeline: "1 year, currently in development", team: "Solo execution, guided by 2 academic supervisors, within a wider (non-active) research consortium" },
+        credibilityTag: "Designing a product that has to say no as often as it says yes, and making that feel like care, not a wall."
       },
       context: {
-        description: "Private, self-hosted environments designed to keep sensitive user data strictly local and anonymized. Chronic conditions require continuous behavioral coaching and lifestyle direction, but standard cloud-based AI systems present privacy concerns and lack deterministic longitudinal memory.",
+        description: "Patients managing chronic conditions need continuous behavioral coaching between doctor visits, but clinicians don't have the bandwidth, and a generic AI chatbot is both a privacy risk and a liability risk the moment it starts sounding like it's giving medical advice. The product had to run entirely on institutional infrastructure, no third-party APIs, no patient data leaving the organisation, and stay strictly within lifestyle coaching under MDR: never diagnosing, never prescribing.",
         constraints: [
-          "Privacy First: Zero external API calls or outbound telemetry to ensure data remains completely local and anonymized.",
-          "Safety Guardrails: Focused exclusively on lifestyle coaching, with strict boundaries to avoid any diagnosing or prescribing, prioritizing user safety.",
-          "Performance & Hardware: Required 100% local, full-precision inference."
+          "No third-party AI services, all inference runs on institutional hardware, patient data never leaves it",
+          "Strict scope boundary, lifestyle coaching only, hard line against anything resembling diagnosis or treatment",
+          "One-year build, solo execution, with light-touch academic supervision rather than a full product team"
         ]
+      },
+      methodology: {
+        title: "Managing Scope on a 1-Year Solo Build",
+        description: "With one year, no dedicated product team, and supervision that's more advisory than hands-on, most of the real work has been deciding what not to build yet. Early on I cut anything that wasn't essential to proving the core safety-first thesis, no multi-condition personalization in v1, no clinician dashboard yet, no integrations. The consortium around this project is large but not actively steering day-to-day decisions, which means most product calls, what ships in v1, what gets deferred, where the line on \"safe enough\" actually sits, have been mine to make and defend to the two supervisors directly involved."
       },
       problem: {
-        howMightWe: "How might we build a highly capable, locally-hosted AI health coach that maintains longitudinal patient memory and strict safety guardrails without ever transmitting data externally?",
+        howMightWe: "How do we build an AI health coach that's warm and genuinely helpful, while being structurally incapable of crossing into medical advice, without the safety layer making the product feel like talking to a liability disclaimer?",
         observations: [
-          "Existing AI tools rely heavily on cloud APIs (introducing privacy risks) and generic prompts (creating hallucination risks and a lack of clinical adherence).",
-          "Adult patients managing chronic conditions (like Type 2 Diabetes or Osteoarthritis) and the healthcare systems exploring tools for their continuous care are affected.",
-          "Cloud-based LLMs pose risks of exposing sensitive data and suffer from 'goldfish memory' over long-term treatment. They also lack strict semantic routing to prevent off-label, dangerous medical advice."
-        ]
+          "What I observed: patients need consistent support, but AI health coaches tend to fail in one of two directions, over-restrict and they feel cold and useless, under-restrict and they risk giving dangerous advice. The interesting product problem sits in between: making strict feel like caring.",
+          "Who's affected: chronic disease patients who need support between visits, and the healthcare systems that would carry the liability if the AI got something wrong.",
+          "Why existing tools fail: they're built as general-purpose chatbots first, safety-patched second, which means the safety layer is always fighting the product experience instead of being part of it."
+        ],
+        impact: ""
       },
       users: {
-        goals: ["Patients need personalized behavioral coaching and empathy", "Providers need to ensure safe and thoroughly documented interactions."],
-        painPoints: ["Forgetting previous conversations", "Receiving generic or potentially unsafe advice from standard AI", "Concerns about sensitive health data being exposed to third parties."]
+        goals: [
+          "Patients want personalized coaching that feels human, without being made to feel judged or unsafe.",
+          "Providers need confidence that the tool can't wander into clinical territory it has no business in."
+        ],
+        painPoints: [
+          "Both groups need to trust the system before they'll actually use it."
+        ]
       },
       insights: [
-        { reframe: "Safe AI isn't just about text generation, it's about semantic routing, deterministic memory, and strict adherence to behavioral change techniques (BCTs).", explanation: "To build a truly safe system, we couldn't just rely on a raw LLM. We had to engineer a multi-intent 'Traffic Cop' router to immediately quarantine unsafe or emergency requests, and a Pydantic-based 'GoldenProfile' to track patient state deterministically over time." }
+        { reframe: "Safety and warmth aren't in tension if you separate what the AI is allowed to say from how it says it.", explanation: "Rather than trying to make one model be careful and empathetic at the same time, I split the system: a fast layer decides what's safe to respond to at all, and only then does the conversational layer get to be warm. The product decision, where exactly to draw that line, and how invisible to make it to the user, mattered more than any model choice underneath it." }
       ],
       solution: {
         steps: [
-          { title: "Semantic Routing", description: "A local Llama 3.2 3B 'TrafficCop' instantly categorizes user intent (Safe, Emergency, Out-of-Bounds) with sub-2s latency." },
-          { title: "Memory & Retrieval", description: "The system uses ChromaDB and BAAI/bge-base for strict knowledge retrieval (k=5), alongside an asynchronous profile extractor to maintain a longitudinal 'GoldenProfile' of the anonymized patient." },
-          { title: "Safe Generation", description: "A local Llama 3.1 8B Instruct model generates coaching responses based solely on the retrieved context and the patient's state." },
-          { title: "Why it addressed the problem", description: "By running entirely locally and utilizing anonymized profiles, it mitigated the privacy risks of cloud APIs while programmatically enforcing safety guardrails and maintaining long-term conversational context." },
-          { title: "Key design decisions", description: "Utilized Ollama with Llama 3.1 8B Instruct for zero-quantization, local inference. Implemented FastAPI for robust backend orchestration and ChromaDB for persistent vector storage. Engineered a Next.js (App Router) frontend for a chat UI featuring true token-streaming simulation." }
+          { title: "Safety & Scope Screening", description: "Every message is screened for safety and scope before it ever reaches the conversational AI." },
+          { title: "Patient Memory Layer", description: "A separate memory layer keeps track of each patient's context over time, all running on institutional infrastructure." },
+          { title: "Hard-Coded Safety Boundaries", description: "The highest-stakes boundaries, crisis detection, medication advice, aren't enforced by instructing the model. They're enforced in code the model can't override, because testing showed instruction-based rules weren't reliable enough to trust." }
         ]
       },
       visuals: [
-        { image: "/EmerladFlowOverview.jpg", caption: "The runtime request lifecycle: message safety triage (emergency & scope checks), profile and knowledge retrieval, prompt assembly, and memory updates on every turn." }
+        { image: "/EmerladFlowOverview.jpg", caption: "Runtime request lifecycle diagram: message safety triage → retrieval → response → memory update." }
       ],
       deeperArchitecture: {
-        label: "Deeper Architecture",
+        label: "Technical sight: routing architecture, memory system, and model stack",
         image: "/EmeraldDeepArchitecture.jpg",
-        caption: "Full system architecture: the synthetic data generation pipeline (Data Factory), the five-phase training pipeline, and the live runtime engine underpinning EMERALD."
+        caption: "Full system architecture: data pipeline, training phases, and runtime engine, for technical reviewers who want the deeper detail."
       },
       outcome: {
         metrics: [
           { label: "Status", value: "In Validation" }
         ],
-        description: "Core architecture is built and running end-to-end: TrafficCop routing, RAG retrieval, and GoldenProfile memory are implemented. Currently in the safety validation phase, testing against emergency detection, out-of-scope refusal, and hallucination resistance, targeting TRL 5 clinical validation."
+        description: "Core architecture is built and running end-to-end, and is currently in safety validation with real clinicians testing it unscripted. One decision from that process is representative: early on, medication questions were answered by the conversational model, so refusals would sound natural rather than canned. In testing it produced correct-sounding but genuinely unsafe output, reasoning about medication risks, and in one case actual dosing guidance. Getting the right answer by luck isn't a safe boundary, so I reverted it: medication questions now return a fixed response the model never touches. Less elegant, unambiguously safer, and the trade-off I'd defend to any clinician in the room."
       },
       reflection: {
         lessons: [
-          "Engineering a deterministic 'Semantic Traffic Cop' and managing asynchronous state extraction are technically demanding but absolutely necessary to tame non-deterministic LLMs in high-stakes environments.",
-          "I would love to expand the synthetic bootstrapping pipeline to cover more esoteric edge cases and further optimize VRAM allocation for concurrent sessions.",
-          "I chose to mandate local, full-precision inference over cloud APIs. This required significant upfront hardware investment and optimization, but it was a deliberate trade-off to ensure maximum data privacy and system control."
+          "What I learned: on safety-critical boundaries, instructing a model to behave has a ceiling. When it genuinely matters, you don't write a better instruction, you remove the model's ability to get it wrong. Nearly every serious issue we found came from something being left to the model's judgment that should have been enforced in code.",
+          "What I'd improve: expand edge-case coverage in safety testing, the most valuable failures were found by humans talking to it naturally, not by test scripts, and build lighter-weight tooling so supervisors can review decisions without going deep into the technical layer.",
+          "Trade-offs: chose on-premise inference over cloud APIs, accepting a real hardware and performance cost, because for this product the privacy guarantee wasn't negotiable."
         ]
       }
     }
@@ -72,7 +80,7 @@ export const projectsData = [
   {
     id: 'nutrichat',
     title: 'NutriChat',
-    image: '/Gemini_Generated_Image_704lrx704lrx704l.jpg',
+    image: '/Nutrichatthumbnail.jpg',
     summary: 'Redesigned a rigid nutrition questionnaire into a conversational experience to reduce cognitive load, improve engagement, and support honest self-reporting.',
     tags: ['UX/UI', 'AI', 'Healthcare', 'Research'],
     category: 'Product Design',
@@ -199,7 +207,7 @@ export const projectsData = [
     year: '2023',
     caseStudy: {
       introduction: {
-        summary: "Redesigned a slow, failure-prone purchase order approval process by embedding one-click approvals into Microsoft Teams, reducing delays and missed approvals across the company.",
+        summary: "Redesigned a slow, failure-prone purchase order approval process by embedding one-click approvals into Microsoft Teams, cutting approval time from up to a week down to minutes.",
         metadata: { role: "Business Analyst (IT)", context: "Full-time work project", timeline: "1 month", team: "Solo execution, cross-functional stakeholders" },
         credibilityTag: "Company-wide process, real users, production rollout."
       },
@@ -253,23 +261,23 @@ export const projectsData = [
     id: 'titsystem',
     title: 'Student House Ledger System',
     image: '/HouseLedgerSystemthumbnail.jpg',
-    summary: 'A full-stack web application that automates household expense splitting and daily dinner rosters using dynamic, conditional logic.',
-    tags: ['Next.js', 'Supabase', 'Full-stack', 'UX'],
+    summary: 'A full stack web application that automates household expense splitting and daily dinner rosters, rebuilt from a bloated, confusing predecessor into something new roommates could use without explanation.',
+    tags: ['Next.js', 'Supabase', 'Full stack', 'UX'],
     category: 'Engineering',
     year: '2025',
     caseStudy: {
       introduction: {
-        summary: "TIT House System — a production-grade app that automates shared expense splitting and dinner tracking for a co-living household, rebuilt from a bloated, confusing predecessor into something new roommates could use without explanation.",
-        metadata: { role: "Lead Developer / Product Designer", context: "Co-living household management", timeline: "Ongoing (Live)", team: "Individual Contributor" },
-        credibilityTag: "Real users, production rollout, resolving daily expense friction in a live household."
+        summary: "A full stack web application that automates household expense splitting and daily dinner rosters, rebuilt from a bloated, confusing predecessor into something new roommates could use without explanation.",
+        metadata: { role: "Product Designer and Engineer", context: "Co living Household Management", timeline: "Ongoing (Live)", team: "Individual Contributor" },
+        credibilityTag: "Real users, production rollout, resolving daily expense friction and trust friction in a live household."
       },
       context: {
-        description: "The house already had an app before this one — but every time someone new joined, they needed a walkthrough. Most of its features went unused; only a couple actually mattered day-to-day.",
+        description: "The house already had an app before this one, but every time someone new joined, they needed a walkthrough. Most of its features went unused; only a couple actually mattered day to day. On top of that, nobody understood how the splitting logic worked behind the scenes, so amounts constantly got questioned. Shared expenses are constant in co living environments, but tracking them fairly means nothing if people do not trust or understand the number they are being asked to pay.",
         constraints: [
-          "Feature Discipline: Had to simplify aggressively while keeping every feature that was actually used.",
-          "Autonomous Use: Had to work without supervision or repeated explanation.",
-          "Real Edge Cases: Had to correctly handle vacations, guests, and new roommates joining mid-lease.",
-          "Built to Scale: Needed to be built with an eye toward scaling to other houses on campus, not just this one."
+          "Frictionless UX: roommates would not use it if it took longer than sending a WhatsApp message, and had to be simple enough that new roommates could use it without explanation.",
+          "Complex edge cases: the system had to mathematically handle vacations, guests, permanent opt outs, and new roommates moving in mid lease, transparently.",
+          "Performance: required instant, real time feedback so users feel confident their inputs were registered.",
+          "Scalability: designed with an eye toward extending the same system to other houses on campus, if validated over time."
         ]
       },
       methodology: {
@@ -277,13 +285,13 @@ export const projectsData = [
         description: "A later review pass surfaced three real issues, each fixed before they mattered: a missing authorization check that would have let any user record a fake settlement on someone else's behalf, hardcoded demo credentials sitting in a production code path, and a CSV export vulnerable to formula injection. Finding and closing these wasn't part of the original build, it came from going back and actually trying to break the thing after it was already working."
       },
       problem: {
-        howMightWe: "How might we simplify a cluttered household tool down to only what people actually use, so a new roommate can understand it without being taught — while keeping the underlying logic robust enough to handle real edge cases and, eventually, scale to other houses?",
+        howMightWe: "How might we simplify a cluttered household tool down to only what people actually use, and make the splitting logic visible enough that people trust their bill, while automatically tracking expenses based on dynamic daily participation rather than static division?",
         observations: [
-          "New roommates had to be walked through the existing app every single time, for a small set of features they'd actually use — the rest of the interface was dead weight nobody touched.",
-          "Every new person joining the house is affected, along with whoever kept having to explain the app to them.",
-          "The old app was built to have every possible feature, not to have only the ones people needed — so onboarding never got easier no matter how many times someone explained it."
+          "What I observed: new roommates had to be walked through the existing app every single time, for a small set of features they would actually use. Beyond onboarding, there was a constant undercurrent of complaints about why someone owed a specific amount, because the reasoning behind a split was invisible.",
+          "Who is affected: everyone living in the shared house, particularly whoever ended up fielding complaints about the numbers, and every new person joining who needed the app re explained to them.",
+          "Why the current solution failed: it had every possible feature rather than only the ones people needed, and it never showed its work, so disputes came up regardless of whether the math was actually correct."
         ],
-        impact: "It prevents roommate arguments over money, eliminates the need for complex, easily broken spreadsheets, and builds a transparent, fair system."
+        impact: ""
       },
       beforeAfter: {
         before: {
@@ -307,35 +315,33 @@ export const projectsData = [
         }
       },
       users: {
-        goals: ["Understand the app without being taught", "Know who's cooking/eating tonight", "Log a receipt in seconds", "See fair debt balances instantly"],
-        painPoints: ["Repeated onboarding overhead", "Feature clutter", "Unfair splits during vacations, guests, or new move-ins"]
+        goals: ["Understand the app without being taught", "See why they owe what they owe", "Know exactly who is cooking or eating tonight", "Quickly log a grocery receipt"],
+        painPoints: ["Repeated onboarding overhead for every new roommate", "Not being able to see how a split was calculated", "Doing math for complex edge cases (a guest, a roommate on vacation, and a new roommate all overlapping)"]
       },
       insights: [
-        { reframe: "The core problem wasn't the math — it was comprehension.", explanation: "A tool that requires a human to explain it every time isn't actually usable, no matter how powerful its logic is underneath. Simplifying down to only the features people actually used mattered more than adding capability." },
-        { reframe: "Expense splitting itself isn't just division — it's conditional logic based on presence, category, and time.", explanation: "Which is why the underlying system still needed real rigor (Dinner Logic, Pantry Logic, the Newcomer Rule) even after the interface was stripped down." }
+        { reframe: "The core problem was not the math, it was comprehension and trust.", explanation: "A tool that requires a human to explain it every time is not actually usable, and a split people cannot inspect will always feel unfair even when it is correct. Simplifying down to only the features people used, and surfacing the reasoning behind each split, mattered more than adding capability." },
+        { reframe: "Expense splitting itself is not just division, it is conditional logic based on physical presence and category.", explanation: "Rules had to be separated into Dinner Logic and Pantry Logic, while globally tracking who was currently out of town." }
       ],
       solution: {
+        summary: "Stripped the interface down to only the features people actually used, and made splits inspectable rather than a black box: the ledger shows exactly who was included in each expense, with a Manual Edit badge whenever someone overrode the default split, so a disputed amount can be checked in a couple of taps instead of a conversation.",
         steps: [
-          { title: "Stripping the Interface", description: "Removed everything that required explanation, keeping only the features that were actually used day-to-day." },
-          { title: "Dinner Logic", description: "Split among whoever signed up that day, auto-excluding anyone marked 'Away' unless they explicitly opt back in." },
-          { title: "Pantry Logic", description: "Common expenses split evenly across active members, with automatic vacation exemption and a permanent opt-out toggle." },
-          { title: "The Newcomer Rule", description: "Expenses are checked against each member's join date, so new roommates never inherit historical debt." },
+          { title: "The Roster", description: "Users set a Standard Week default schedule or manually toggle their daily RSVPs." },
+          { title: "The Purchase", description: "A housemate buys groceries and logs the receipt as either a Dinner or Common expense." },
+          { title: "The Engine", description: "The system checks Vacation Mode statuses, applies the Newcomer Rule (historical exclusion), and calculates the fractional debt for every participant, with the reasoning visible in the ledger." },
+          { title: "Instant Feel", description: "RSVP toggles update immediately through optimistic UI, updating the local view before the server confirms, with rollback if it fails. Separately, a realtime Supabase subscription (Smart Sync) refetches data in the background whenever anyone else's changes come in, so every roommate's screen stays current without a manual refresh." },
           { title: "Onboarding", description: "A QR code invite link (found under House Invite in Profile settings) lets a new roommate join in seconds, no explanation required." },
-          { title: "Key design decisions", description: "Built on Next.js (App Router) and Supabase (PostgreSQL, auth, Row Level Security), with a custom 'Smart Sync' layer for optimistic, real-time UI updates. Designed with scalability in mind — if validated over time in this house, the same system could extend to other houses on campus." }
+          { title: "Key Design Decisions", description: "Next.js (App Router) for routing, Supabase (PostgreSQL) for database relationships, authentication, and Row Level Security, Tailwind for a responsive layout that adapts down to a mobile bottom nav." }
         ]
       },
       visuals: [],
       outcome: {
-        metrics: [
-          { label: "Shared Expenses Managed", value: "100%" }
-        ],
-        description: "In daily use managing 100% of shared expenses, with the onboarding friction that plagued the old app eliminated — new roommates no longer need a walkthrough. The Newcomer Rule and vacation logic removed the two most common sources of dispute."
+        description: "The app replaced spreadsheets and WhatsApp coordination as the household's only system for managing shared expenses. Onboarding a new roommate now takes a scanned QR code instead of a walkthrough, and a disputed amount can be checked against the ledger directly instead of becoming a conversation."
       },
       reflection: {
         lessons: [
-          "The hardest part of this rebuild wasn't the splitting logic, it was deciding what to remove — comprehension problems are often solved by subtraction, not addition. Going back to actively try to break my own app after it was 'done' surfaced real security gaps I wouldn't have found otherwise.",
-          "What I'd improve next: receipt scanning for full financial transparency, and offline support so the app keeps working with no connection.",
-          "Trade-offs: chose a responsive PWA over native for faster development and cross-platform reach, at the cost of native push notifications and, for now, offline support."
+          "What I learned: the hardest part of the rebuild was not the splitting logic, it was deciding what to remove, and making the remaining logic visible enough that people could trust it without needing it explained. Going back to actively try to break my own app after it was \"done\" surfaced real security gaps I would not have found otherwise.",
+          "What I would improve: integrate OCR receipt scanning to reduce the friction of logging large grocery hauls, and add offline support so the app keeps working with no connection.",
+          "Trade offs: built as a responsive web app rather than a native mobile app, which meant faster development and cross platform reach for all roommates, at the cost of native push notifications and (for now) offline support."
         ]
       }
     }
