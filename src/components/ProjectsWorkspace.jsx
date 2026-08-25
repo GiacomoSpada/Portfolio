@@ -38,10 +38,11 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
 
   return (
     <motion.article
-      layoutId="projects-workspace-container"
       className="card projects-workspace"
-      exit={{ opacity: 0 }}
-      transition={smoothTransition}
+      initial={{ opacity: 0, scale: 0.97 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.97 }}
+      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
     >
       <AnimatePresence mode="wait">
         {activeProject === 'grid' ? (
