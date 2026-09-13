@@ -4,7 +4,7 @@ export const projectsData = [
     title: 'EMERALD',
     image: '/Gemini_Generated_Image_l7x53bl7x53bl7x5.jpg',
     summary: 'A privacy-first, on-premise AI health coach for chronic disease patients, built to prove that AI coaching can be both empathetic and reliably bounded.',
-    tags: ['RAG Pipeline', 'LLM', 'Safety Layer', 'On-Premise', 'Python', 'Healthcare'],
+    tags: ['RAG Pipeline', 'LLM', 'Vector Database', 'Embeddings', 'Safety Layer', 'On-Premise', 'Python', 'Healthcare'],
     category: 'Engineering',
     year: '2026/2027',
     caseStudy: {
@@ -15,7 +15,7 @@ export const projectsData = [
         credibilityTag: "Designing a product that has to say no as often as it says yes, and making that feel like care, not a wall."
       },
       context: {
-        description: "Patients managing chronic conditions need continuous behavioral coaching between doctor visits, but clinicians don't have the bandwidth, and a generic AI chatbot is both a privacy risk and a liability risk the moment it starts sounding like it's giving medical advice. The product had to run entirely on institutional infrastructure, no third-party APIs, no patient data leaving the organisation, and stay strictly within lifestyle coaching under MDR: never diagnosing, never prescribing.",
+        description: "Patients managing chronic conditions need continuous behavioral coaching between doctor visits, but clinicians don't have the bandwidth, and a generic AI chatbot is both a privacy risk and a liability risk the moment it starts sounding like it's giving medical advice. The product had to run entirely on institutional infrastructure, no third-party APIs, no patient data leaving the organisation, and stay strictly within lifestyle coaching under MDR (the EU's medical device regulation): never diagnosing, never prescribing.",
         constraints: [
           "No third-party AI services, all inference runs on institutional hardware, patient data never leaves it",
           "Strict scope boundary, lifestyle coaching only, hard line against anything resembling diagnosis or treatment",
@@ -24,12 +24,12 @@ export const projectsData = [
       },
       methodology: {
         title: "Managing Scope on a 1-Year Solo Build",
-        description: "With one year, no dedicated product team, and supervision that's more advisory than hands-on, most of the real work has been deciding what not to build yet. Early on I cut anything that wasn't essential to proving the core safety-first thesis, no multi-condition personalization in v1, no clinician dashboard yet, no integrations. The consortium around this project is large but not actively steering day-to-day decisions, which means most product calls, what ships in v1, what gets deferred, where the line on \"safe enough\" actually sits, have been mine to make and defend to the two supervisors directly involved."
+        description: "With one year, no dedicated product team, and supervision that's more advisory than hands-on, most of the real work has been deciding what not to build yet. Early on I cut anything that wasn't essential to proving the core safety-first thesis, no personalization for multiple conditions in v1, no clinician dashboard yet, no integrations. The consortium around this project is large but not actively steering day-to-day decisions, which means most product calls, what ships in v1, what gets deferred, where the line on \"safe enough\" actually sits, have been mine to make and defend to the two supervisors directly involved."
       },
       problem: {
         howMightWe: "How do we build an AI health coach that's warm and genuinely helpful, while being structurally incapable of crossing into medical advice, without the safety layer making the product feel like talking to a liability disclaimer?",
         observations: [
-          "What I observed: patients need consistent support, but AI health coaches tend to fail in one of two directions, over-restrict and they feel cold and useless, under-restrict and they risk giving dangerous advice. The interesting product problem sits in between: making strict feel like caring.",
+          "What I observed: patients need consistent support, but AI health coaches tend to fail in one of two directions, too strict and they feel cold and useless, too lax and they risk giving dangerous advice. The interesting product problem sits in between: making strict feel like caring.",
           "Who's affected: chronic disease patients who need support between visits, and the healthcare systems that would carry the liability if the AI got something wrong.",
           "Why existing tools fail: they're built as general-purpose chatbots first, safety-patched second, which means the safety layer is always fighting the product experience instead of being part of it."
         ],
@@ -58,20 +58,20 @@ export const projectsData = [
         { image: "/EmerladFlowOverview.jpg", caption: "Runtime request lifecycle diagram: message safety triage → retrieval → response → memory update." }
       ],
       deeperArchitecture: {
-        label: "Technical sight: routing architecture, memory system, and model stack",
+        label: "Technical deep dive: routing architecture, memory system, and model stack",
         image: "/EmeraldDeepArchitecture.jpg",
-        caption: "Full system architecture: data pipeline, training phases, and runtime engine, for technical reviewers who want the deeper detail."
+        caption: "Full system architecture: data pipeline, training phases, and runtime engine, including the embeddings and vector database behind retrieval, for technical reviewers who want the deeper detail."
       },
       outcome: {
         metrics: [
           { label: "Status", value: "In Validation" }
         ],
-        description: "Core architecture is built and running end-to-end, and is currently in safety validation with real clinicians testing it unscripted. One decision from that process is representative: early on, medication questions were answered by the conversational model, so refusals would sound natural rather than canned. In testing it produced correct-sounding but genuinely unsafe output, reasoning about medication risks, and in one case actual dosing guidance. Getting the right answer by luck isn't a safe boundary, so I reverted it: medication questions now return a fixed response the model never touches. Less elegant, unambiguously safer, and the trade-off I'd defend to any clinician in the room."
+        description: "Core architecture is built and running end-to-end, and is currently in safety validation with real clinicians testing it unscripted. One decision from that process is representative: early on, medication questions were answered by the conversational model, so refusals would sound natural rather than canned. In testing it produced answers that sounded right but were actually unsafe, reasoning about medication risks, and in one case actual dosing guidance. Getting the right answer by luck isn't a safe boundary, so I reverted it: medication questions now return a fixed response the model never touches. Less elegant, unambiguously safer, and the trade-off I'd defend to any clinician in the room."
       },
       reflection: {
         lessons: [
           "What I learned: on safety-critical boundaries, instructing a model to behave has a ceiling. When it genuinely matters, you don't write a better instruction, you remove the model's ability to get it wrong. Nearly every serious issue we found came from something being left to the model's judgment that should have been enforced in code.",
-          "What I'd improve: expand edge-case coverage in safety testing, the most valuable failures were found by humans talking to it naturally, not by test scripts, and build lighter-weight tooling so supervisors can review decisions without going deep into the technical layer.",
+          "What I'd improve: expand edge-case coverage in safety testing, the most valuable failures were found by humans talking to it naturally, not by test scripts, and build simpler tooling so supervisors can review decisions without going deep into the technical layer.",
           "Trade-offs: chose on-premise inference over cloud APIs, accepting a real hardware and performance cost, because for this product the privacy guarantee wasn't negotiable."
         ]
       }
@@ -93,7 +93,7 @@ export const projectsData = [
       },
       context: {
         description: "Dietary self-assessment tools are used in healthcare and research, where users are asked to report eating habits accurately. Nutrition data is widely used for prevention and intervention, but existing tools often cause fatigue, confusion, and drop-off, leading to low-quality data.",
-        constraints: ["Existing validated questionnaire (Nutri+) could not be altered semantically", "Limited participant pool and study duration", "No custom model training (used off-the-shelf LLMs)", "Ethical constraints: no judgment, no health advice"],
+        constraints: ["Existing validated questionnaire (Nutri+) could not be altered semantically", "Limited participant pool and study duration", "No custom model training, used existing AI models", "Ethical constraints: no judgment, no health advice"],
         comparisonTable: {
           title: "Existing Solutions Comparison",
           headers: ["System", "Approach", "Gap"],
@@ -182,7 +182,7 @@ export const projectsData = [
           { label: "RQ2: Strategy Comparison", value: "No difference", detail: "Gamification vs. Nudging: p>0.215 (engagement), p>0.241 (usability)" },
           { label: "RQ4: Behavioral Correlation", value: "None found", detail: "Response time, message length, completion time: p>0.28" }
         ],
-        description: "A 14% improvement in usability/engagement (UES score 2.82 → 3.22 vs. Nutri+, d=0.76) with a CUQ usability score of 70.6/100. Gamification and nudging performed equivalently, no strategy outperformed the other. No behavioral metric significantly predicted engagement or usability, meaning high interaction time doesn't equal high satisfaction. Users completing the overall assessment felt supported, not evaluated, without compromising data validity."
+        description: "A 14% improvement in usability/engagement (UES score 2.82 → 3.22 vs. Nutri+, d=0.76) with a Chatbot Usability Questionnaire (CUQ) score of 70.6/100. Gamification and nudging performed equivalently, no strategy outperformed the other. No behavioral metric significantly predicted engagement or usability, meaning high interaction time doesn't equal high satisfaction. Users completing the overall assessment felt supported, not evaluated, without compromising data validity."
       },
       reflection: {
         lessons: [
@@ -202,7 +202,7 @@ export const projectsData = [
     title: 'Purchase Order Approval Automation',
     image: '/Frame 1.jpg',
     summary: 'Redesigned a slow, failure-prone purchase order approval process by embedding one-click approvals into Microsoft Teams, cutting approval time from up to a week down to minutes.',
-    tags: ['Enterprise', 'B2B', 'Automation', 'Microsoft 365'],
+    tags: ['Enterprise', 'B2B', 'Automation', 'Power Automate', 'Microsoft 365'],
     category: 'Enterprise Design',
     year: '2023',
     caseStudy: {
