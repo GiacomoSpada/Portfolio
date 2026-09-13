@@ -333,7 +333,28 @@ export const projectsData = [
           { title: "Key Design Decisions", description: "Next.js (App Router) for routing, Supabase (PostgreSQL) for database relationships, authentication, and Row Level Security, Tailwind for a responsive layout that adapts down to a mobile bottom nav." }
         ]
       },
-      visuals: [],
+      visuals: [
+        {
+          caption: "Screenshots of the old app: the clutter that prompted the rebuild.",
+          images: ["/IMG_0478.PNG", "/IMG_0479.PNG"]
+        },
+        {
+          caption: "Full Dashboard: early sketch alongside the shipped mobile screen.",
+          images: ["/dashboard sketch.jpg", "/Full Dashboard MobileFinalDesign.png"]
+        },
+        {
+          caption: "Ledger: early sketch alongside the shipped mobile screen.",
+          images: ["/ledgersketch.jpg", "/Ledger MobileFinalDesign.png"]
+        },
+        {
+          caption: "Debts: early sketch alongside the shipped mobile screen.",
+          images: ["/debtssketch.jpg", "/Debts Mobile-FinalDesign.png"]
+        },
+        {
+          caption: "Profile: early sketch alongside the shipped mobile screen.",
+          images: ["/profilesketch.jpg", "/Profile MobileFinalDesign.png"]
+        }
+      ],
       outcome: {
         description: "The app replaced spreadsheets and WhatsApp coordination as the household's only system for managing shared expenses. Onboarding a new roommate now takes a scanned QR code instead of a walkthrough, and a disputed amount can be checked against the ledger directly instead of becoming a conversation."
       },
