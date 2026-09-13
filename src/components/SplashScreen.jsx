@@ -27,7 +27,8 @@ export default function SplashScreen({ onEnter }) {
           position: 'absolute',
           bottom: '24px',
           left: '32px',
-          fontFamily: 'monospace, sans-serif'
+          fontFamily: 'monospace, sans-serif',
+          color: 'var(--text-primary)'
         }}
       >
         STATUS: ONLINE
@@ -42,7 +43,8 @@ export default function SplashScreen({ onEnter }) {
           position: 'absolute',
           bottom: '24px',
           right: '32px',
-          fontFamily: 'monospace, sans-serif'
+          fontFamily: 'monospace, sans-serif',
+          color: 'var(--text-primary)'
         }}
       >
         LOC: THE NETHERLANDS
