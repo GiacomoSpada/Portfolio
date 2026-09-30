@@ -4,58 +4,63 @@ export const projectsData = [
     title: 'EMERALD',
     image: '/Gemini_Generated_Image_l7x53bl7x53bl7x5.jpg',
     summary: 'A privacy-first, on-premise AI health coach for chronic disease patients, built to prove that AI coaching can be both empathetic and reliably bounded.',
-    tags: ['RAG Pipeline', 'LLM', 'Vector Database', 'Embeddings', 'Safety Layer', 'On-Premise', 'Python', 'Healthcare'],
+    tags: ['RAG Pipeline', 'LLM', 'Vector Database', 'Embeddings', 'Safety Layer', 'Behaviour Change', 'Evaluation', 'On-Premise', 'Python', 'Healthcare'],
     category: 'Engineering',
     year: '2026/2027',
     caseStudy: {
       introduction: {
         status: "🚧 In Active Development",
         summary: "A privacy-first, on-premise AI health coach for chronic disease patients, built to prove that AI coaching can be both empathetic and reliably bounded.",
-        metadata: { role: "Product Owner / Lead Developer", context: "Clinical Healthcare, Chronic Disease Management (OA, T2D, CVD)", timeline: "1 year, currently in development", team: "Solo execution, guided by 2 academic supervisors, within a wider (non-active) research consortium" },
-        credibilityTag: "Designing a product that has to say no as often as it says yes, and making that feel like care, not a wall."
+        metadata: { role: "Product Owner / Lead Developer", context: "Clinical healthcare, chronic disease management (OA, T2D, CVD)", timeline: "1 year, currently in development", team: "Solo execution, guided by two academic supervisors, within a wider research consortium" },
+        credibilityTag: "Designing a product that has to say no as often as it says yes, and making that feel like care rather than a wall."
       },
       context: {
-        description: "Patients managing chronic conditions need continuous behavioral coaching between doctor visits, but clinicians don't have the bandwidth, and a generic AI chatbot is both a privacy risk and a liability risk the moment it starts sounding like it's giving medical advice. The product had to run entirely on institutional infrastructure, no third-party APIs, no patient data leaving the organisation, and stay strictly within lifestyle coaching under MDR (the EU's medical device regulation): never diagnosing, never prescribing.",
+        description: "Patients managing a chronic condition need continuous behavioural support between appointments. Clinicians do not have the capacity to provide it, and a general-purpose chatbot is both a privacy risk and a liability risk the moment it starts to sound like medical advice. EMERALD therefore had to run entirely on institutional infrastructure: no third-party AI services and no patient data leaving the organisation. It also had to stay strictly within lifestyle coaching under the EU Medical Device Regulation, which means it never diagnoses and never prescribes.",
         constraints: [
-          "No third-party AI services, all inference runs on institutional hardware, patient data never leaves it",
-          "Strict scope boundary, lifestyle coaching only, hard line against anything resembling diagnosis or treatment",
-          "One-year build, solo execution, with light-touch academic supervision rather than a full product team"
+          "No third-party AI services: every AI model runs on the institution's own servers, and patient data never leaves them.",
+          "A strict scope boundary: lifestyle coaching only, with a hard line against anything resembling diagnosis or treatment.",
+          "A one-year, solo build, with advisory academic supervision rather than a product team."
         ]
       },
       methodology: {
-        title: "Managing Scope on a 1-Year Solo Build",
-        description: "With one year, no dedicated product team, and supervision that's more advisory than hands-on, most of the real work has been deciding what not to build yet. Early on I cut anything that wasn't essential to proving the core safety-first thesis, no personalization for multiple conditions in v1, no clinician dashboard yet, no integrations. The consortium around this project is large but not actively steering day-to-day decisions, which means most product calls, what ships in v1, what gets deferred, where the line on \"safe enough\" actually sits, have been mine to make and defend to the two supervisors directly involved."
+        title: "Managing Scope on a One-Year Solo Build",
+        description: "With one year and no dedicated team, much of the work has been deciding what not to build yet. I deferred everything that did not serve the core safety-first thesis: no clinician dashboard, no external integrations, and one condition per patient. The consortium is large but does not steer day-to-day decisions. As a result, what ships, what is deferred and where the line on \"safe enough\" sits have been my calls, made and defended with the two supervisors directly involved."
       },
       problem: {
-        howMightWe: "How do we build an AI health coach that's warm and genuinely helpful, while being structurally incapable of crossing into medical advice, without the safety layer making the product feel like talking to a liability disclaimer?",
+        howMightWe: "How do we build an AI health coach that is warm and genuinely helpful, yet structurally incapable of crossing into medical advice, without the safety layer making the product feel like a liability disclaimer?",
         observations: [
-          "What I observed: patients need consistent support, but AI health coaches tend to fail in one of two directions, too strict and they feel cold and useless, too lax and they risk giving dangerous advice. The interesting product problem sits in between: making strict feel like caring.",
-          "Who's affected: chronic disease patients who need support between visits, and the healthcare systems that would carry the liability if the AI got something wrong.",
-          "Why existing tools fail: they're built as general-purpose chatbots first, safety-patched second, which means the safety layer is always fighting the product experience instead of being part of it."
+          "AI health coaches tend to fail in one of two directions. Too strict, and they feel cold and unhelpful. Too permissive, and they risk giving dangerous advice. The product problem sits between the two: making a firm boundary feel like care.",
+          "Who is affected: patients who need support between visits, and the healthcare organisations that would carry the liability if the system got something wrong.",
+          "Why existing tools fail: they are built as general-purpose chatbots first and made safe afterwards, so the safety layer works against the product experience instead of being part of it."
         ],
         impact: ""
       },
       users: {
         goals: [
-          "Patients want personalized coaching that feels human, without being made to feel judged or unsafe.",
-          "Providers need confidence that the tool can't wander into clinical territory it has no business in."
+          "Patients want personalised coaching that feels human, without feeling judged or unsafe.",
+          "Clinicians need confidence that the tool will not move into clinical territory."
         ],
         painPoints: [
-          "Both groups need to trust the system before they'll actually use it."
+          "Both need to trust the system before they will use it."
         ]
       },
       insights: [
-        { reframe: "Safety and warmth aren't in tension if you separate what the AI is allowed to say from how it says it.", explanation: "Rather than trying to make one model be careful and empathetic at the same time, I split the system: a fast layer decides what's safe to respond to at all, and only then does the conversational layer get to be warm. The product decision, where exactly to draw that line, and how invisible to make it to the user, mattered more than any model choice underneath it." }
+        { reframe: "Safety and warmth do not conflict once you separate what the system is allowed to say from how it says it.", explanation: "Rather than asking one model to be careful and empathetic at the same time, I split the system. A first layer decides whether a message may be answered at all, and only then does the conversational layer respond. Where that line is drawn, and how visible it is to the user, has mattered more than the choice of model underneath." }
       ],
       solution: {
+        title: "How It Works",
+        summary: "EMERALD is a web app connected to a server that does the work. It is built entirely from open-source components and needs no cloud services or internet connection to reason. Everything runs on a single GPU server, so it can be installed on a hospital's own infrastructure and keep all patient data on site. Today every model runs on a GPU server at the university. The main one is Llama 3.1, a mid-sized open model that is small enough to run in-house and capable enough to hold a natural conversation. When a patient sends a message, it goes through the following steps.",
         steps: [
-          { title: "Safety & Scope Screening", description: "Every message is screened for safety and scope before it ever reaches the conversational AI." },
-          { title: "Patient Memory Layer", description: "A separate memory layer keeps track of each patient's context over time, all running on institutional infrastructure." },
-          { title: "Hard-Coded Safety Boundaries", description: "The highest-stakes boundaries, crisis detection, medication advice, aren't enforced by instructing the model. They're enforced in code the model can't override, because testing showed instruction-based rules weren't reliable enough to trust." }
+          { title: "Safety check first", description: "Before the coach sees the message, the system checks whether it describes an emergency, asks about medication or a diagnosis, or is something the coach can help with. The most critical checks, such as crisis language or chest pain happening right now, are fixed rules written in code. Only when none of them applies does an AI classifier make the finer distinctions. Emergencies receive a fixed message telling the patient to call 112, and medication questions receive a fixed referral to their doctor. Neither ever reaches the conversational model, because testing showed that instructing the model to refuse was not reliable enough." },
+          { title: "Finding the right guidance", description: "At the same time, the system searches a knowledge base of around 230 rules I compiled from NHS, CDC, WHO and Dutch clinical guidelines. The search matches on meaning rather than exact words, so \"I can't walk far because of my knee\" still finds the rules on low-impact exercise. Only rules for the patient's own condition are considered, and weak matches are dropped, so the coach is not handed irrelevant guidance. If a patient asks for something specific that no guideline covers, EMERALD refers them to their doctor instead of improvising an answer." },
+          { title: "Choosing how to coach", description: "Early clinician feedback was that the coach informed but did not lead anywhere. The system now chooses one coaching technique per reply, based on where the patient is: agreeing on a small goal, turning it into a concrete plan (when, where, how often), helping with an obstacle, or reviewing how things went. The techniques come from the established Behaviour Change Technique Taxonomy used in health psychology. The choice is made by fixed rules rather than left to the AI, and the same technique is not repeated back to back." },
+          { title: "Remembering the patient", description: "Each patient has a profile with their condition, medications, preferences, obstacles, and current goal and plan. After each message, the AI suggests what to update, and fixed rules decide what is accepted: a goal is saved only when the patient has actually agreed to it, a plan only when it says when it will happen, and a medication is never removed by accident. The profile is what lets a returning patient be asked how their goal went, rather than starting over." },
+          { title: "Writing the reply", description: "Only now does the conversational model write its answer. It receives the safety rules, the relevant guidelines, the patient's profile, the last few messages and the chosen coaching technique. The reply streams to the patient as it is written, through a final filter that catches malformed output." },
+          { title: "Testing every part", description: "I built a test suite that checks each step on its own: that emergencies and medication questions are always handled correctly, that the right guideline is found, that the patient's information is remembered accurately, and that answers hold up against 219 answers approved by clinicians. While testing, the system records which safety decision, guidelines and coaching technique it used on every turn, so a failure can be traced to the step that caused it. Answers are graded by a larger AI model that also runs in-house, and its grading is checked against human judgement before it is trusted. Results are compared with the previous run, so a change that makes any part worse is caught before it ships." }
         ]
       },
       visuals: [
-        { image: "/EmerladFlowOverview.jpg", caption: "Runtime request lifecycle diagram: message safety triage → retrieval → response → memory update." }
+        { image: "/EmerladFlowOverview.jpg", caption: "Runtime request lifecycle: safety check → guideline search → coaching technique → reply → profile update." }
       ],
       deeperArchitecture: {
         label: "Technical deep dive: routing architecture, memory system, and model stack",
@@ -64,15 +69,21 @@ export const projectsData = [
       },
       outcome: {
         metrics: [
-          { label: "Status", value: "In Validation" }
+          { label: "Status", value: "In Validation", detail: "Controlled environment. Next: validation in a clinical setting." }
         ],
-        description: "Core architecture is built and running end-to-end, and is currently in safety validation with real clinicians testing it unscripted. One decision from that process is representative: early on, medication questions were answered by the conversational model, so refusals would sound natural rather than canned. In testing it produced answers that sounded right but were actually unsafe, reasoning about medication risks, and in one case actual dosing guidance. Getting the right answer by luck isn't a safe boundary, so I reverted it: medication questions now return a fixed response the model never touches. Less elegant, unambiguously safer, and the trade-off I'd defend to any clinician in the room."
+        description: [
+          "The system runs end to end and is currently tested in a controlled setting on university infrastructure, including unscripted sessions with clinicians. In September 2026 it was demonstrated live to the research consortium, covering routine coaching, an emergency handled with the fixed 112 message, a medication question declined while the medication was still recorded in the patient's profile, and a goal agreed and saved by the end of the session.",
+          "One decision from the safety work is representative. Medication questions were initially answered by the conversational model, so that refusals would sound natural rather than scripted. In testing, it produced answers that sounded correct but were unsafe: it reasoned about medication risks and, in one case, gave dosing guidance. A correct answer reached by chance is not a safety boundary, so I reverted it. Medication questions now return a fixed response the model never touches. It is less elegant, unambiguously safer, and a trade-off I would defend to any clinician.",
+          "The test suite has since become the basis for product decisions. Its first full run identified the next priorities, most notably how often the right guideline is found and how long the replies are, and replaced subjective impressions with measurable targets."
+        ]
       },
       reflection: {
+        title: "Next Steps",
         lessons: [
-          "What I learned: on safety-critical boundaries, instructing a model to behave has a ceiling. When it genuinely matters, you don't write a better instruction, you remove the model's ability to get it wrong. Nearly every serious issue we found came from something being left to the model's judgment that should have been enforced in code.",
-          "What I'd improve: expand edge-case coverage in safety testing, the most valuable failures were found by humans talking to it naturally, not by test scripts, and build simpler tooling so supervisors can review decisions without going deep into the technical layer.",
-          "Trade-offs: chose on-premise inference over cloud APIs, accepting a real hardware and performance cost, because for this product the privacy guarantee wasn't negotiable."
+          "Testing in a relevant environment: the next milestone is to validate EMERALD in a real clinical setting, such as a hospital, running locally on the hospital's own infrastructure so that no patient data leaves the organisation.",
+          "Multi-user support: accounts and a proper database, so many patients can use the system at the same time.",
+          "Concurrent conversations: a faster model server that handles many conversations in parallel.",
+          "Benchmarking: a formal comparison against general-purpose chatbots."
         ]
       }
     }

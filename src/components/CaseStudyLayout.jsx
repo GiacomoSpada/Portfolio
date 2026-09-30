@@ -367,7 +367,7 @@ export default function CaseStudyLayout({ data }) {
       {/* 7. Solution */}
       {solution && solution.steps && (
         <section id="section-solution" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-          <h3 className="text-title" style={{ margin: 0 }}>Implementation</h3>
+          <h3 className="text-title" style={{ margin: 0 }}>{solution.title || 'Implementation'}</h3>
           {solution.summary && (
             <p className="text-body" style={{ margin: 0 }}>{solution.summary}</p>
           )}
@@ -467,7 +467,11 @@ export default function CaseStudyLayout({ data }) {
           <h3 className="text-title" style={{ margin: 0 }}>Outcome & Impact</h3>
           {outcome.chart && <BarChart {...outcome.chart} />}
           {outcome.description && (
-            <p className="text-body" style={{ margin: 0 }}>{outcome.description}</p>
+            Array.isArray(outcome.description)
+              ? outcome.description.map((para, i) => (
+                <p key={i} className="text-body" style={{ margin: 0 }}>{para}</p>
+              ))
+              : <p className="text-body" style={{ margin: 0 }}>{outcome.description}</p>
           )}
           {outcome.metrics && outcome.metrics.length > 0 && (
             <div className="outcome-metrics-grid">
@@ -487,7 +491,7 @@ export default function CaseStudyLayout({ data }) {
       {reflection && reflection.lessons && (
         <section id="section-reflection">
           <div style={{ background: 'var(--surface-philosophy)', border: '1px solid var(--border-philosophy)', padding: '40px', borderRadius: 'var(--radius-card)', display: 'flex', flexDirection: 'column', gap: '32px' }}>
-            <h3 className="text-title" style={{ margin: 0, color: 'var(--text-primary)' }}>Lessons Learned</h3>
+            <h3 className="text-title" style={{ margin: 0, color: 'var(--text-primary)' }}>{reflection.title || 'Lessons Learned'}</h3>
             <ul style={{ margin: 0, paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
               {reflection.lessons.map((lesson, i) => (
                 <li key={i} className="text-body" style={{ color: 'var(--text-primary)' }}>{lesson}</li>

@@ -215,7 +215,7 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
                         document.getElementById(`section-${section.id}`)?.scrollIntoView({ behavior: 'smooth' });
                       }}
                     >
-                      {section.title}
+                      {selectedProjectData.caseStudy[section.id]?.title || section.title}
                     </div>
                   ))}
                 </div>
