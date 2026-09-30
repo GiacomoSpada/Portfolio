@@ -4,12 +4,29 @@ import { projectsData } from '../data/projects';
 import { useEffect, useRef } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import CaseStudyLayout from './CaseStudyLayout';
+import { navigate } from '../router';
 
-export default function ProjectsWorkspace({ initialProjectId, onClose }) {
-  // 'grid' for Level 2, or project ID for Level 3
-  const [activeProject, setActiveProject] = useState(initialProjectId || 'grid');
+const DEFAULT_TITLE = typeof document !== 'undefined' ? document.title : '';
+
+export default function ProjectsWorkspace({ projectSlug, onClose }) {
+  // 'grid' for Level 2, or project ID for Level 3, driven by the URL
+  const selectedProjectData = projectsData.find(p => p.slug === projectSlug);
+  const activeProject = selectedProjectData ? selectedProjectData.id : 'grid';
+  const setActiveProject = (id) => {
+    const project = projectsData.find(p => p.id === id);
+    navigate(project ? `/projects/${project.slug}` : '/projects');
+  };
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const selectedProjectData = projectsData.find(p => p.id === activeProject);
+
+  // An unknown slug falls back to the grid with a clean URL.
+  useEffect(() => {
+    if (projectSlug && !selectedProjectData) navigate('/projects', { replace: true });
+  }, [projectSlug, selectedProjectData]);
+
+  useEffect(() => {
+    document.title = selectedProjectData ? `${selectedProjectData.title} | Giacomo Spada` : `Projects | Giacomo Spada`;
+    return () => { document.title = DEFAULT_TITLE; };
+  }, [selectedProjectData]);
   const smoothTransition = {
     layout: {
       type: 'tween',

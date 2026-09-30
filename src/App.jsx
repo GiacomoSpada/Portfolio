@@ -8,15 +8,18 @@ import PrinciplesCard from './components/PrinciplesCard';
 import ContactDock from './components/ContactDock';
 import SplashScreen from './components/SplashScreen';
 import AmbientBackground from './components/AmbientBackground';
+import { usePath, navigate } from './router';
 
 // Case-study content (project copy + images) is only needed once the user
 // opens the Projects workspace, so it's split out of the initial bundle.
 const ProjectsWorkspace = lazy(() => import('./components/ProjectsWorkspace'));
 
 export default function App() {
-  const [hasEntered, setHasEntered] = useState(false);
-  // 'home' | 'workspace'
-  const [viewState, setViewState] = useState('home');
+  const path = usePath();
+  const inWorkspace = path === '/projects' || path.startsWith('/projects/');
+  const projectSlug = inWorkspace ? path.split('/')[2] || null : null;
+  // Deep links to a case study skip the splash screen.
+  const [hasEntered, setHasEntered] = useState(() => inWorkspace);
 
   return (
     <div className="page-container" style={{ position: 'relative' }}>
@@ -34,11 +37,11 @@ export default function App() {
           >
             <LayoutGroup>
               <motion.main
-                className={`bento-grid ${viewState !== 'home' ? 'workspace-active' : ''}`}
+                className={`bento-grid ${inWorkspace ? 'workspace-active' : ''}`}
                 id="bentoGrid"
               >
-                {viewState === 'home' ? (
-                  <ProjectCard onClick={() => setViewState('workspace')} />
+                {!inWorkspace ? (
+                  <ProjectCard onClick={() => navigate('/projects')} />
                 ) : (
                   <div style={{ gridColumn: '1 / 5', gridRow: '1 / 3' }} />
                 )}
@@ -50,11 +53,11 @@ export default function App() {
                 <ContactDock />
 
                 <AnimatePresence mode="popLayout">
-                  {viewState !== 'home' && (
+                  {inWorkspace && (
                     <Suspense fallback={null}>
                       <ProjectsWorkspace
-                        initialProjectId="grid"
-                        onClose={() => setViewState('home')}
+                        projectSlug={projectSlug}
+                        onClose={() => navigate('/')}
                       />
                     </Suspense>
                   )}

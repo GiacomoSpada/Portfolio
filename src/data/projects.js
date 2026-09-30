@@ -1,6 +1,7 @@
 export const projectsData = [
   {
     id: 'emerald',
+    slug: 'emerald',
     title: 'EMERALD',
     image: '/Gemini_Generated_Image_l7x53bl7x53bl7x5.jpg',
     summary: 'A privacy-first, on-premise AI health coach for chronic disease patients, built to prove that AI coaching can be both empathetic and reliably bounded.',
@@ -97,6 +98,7 @@ export const projectsData = [
   },
   {
     id: 'nutrichat',
+    slug: 'nutrichat',
     title: 'NutriChat',
     image: '/Nutrichatthumbnail.jpg',
     summary: 'Redesigned a rigid nutrition questionnaire into a conversational experience to reduce cognitive load, improve engagement, and support honest self-reporting.',
@@ -217,6 +219,7 @@ export const projectsData = [
   },
   {
     id: 'purchaseorder',
+    slug: 'purchase-order-automation',
     title: 'Purchase Order Approval Automation',
     image: '/Frame 1.jpg',
     summary: 'Redesigned a slow, failure-prone purchase order approval process by embedding one-click approvals into Microsoft Teams, cutting approval time from up to a week down to minutes.',
@@ -277,6 +280,7 @@ export const projectsData = [
   },
   {
     id: 'titsystem',
+    slug: 'house-ledger-system',
     title: 'Student House Ledger System',
     image: '/HouseLedgerSystemthumbnail.jpg',
     summary: 'A full stack web application that automates household expense splitting and daily dinner rosters, rebuilt from a bloated, confusing predecessor into something new roommates could use without explanation.',
