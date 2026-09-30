@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 function DataTable({ title, headers, rows }) {
   if (!headers || !rows) return null;
@@ -83,6 +83,75 @@ function ImageRow({ images, caption, onImageClick }) {
           />
         ))}
       </div>
+      {caption && (
+        <p className="text-caption" style={{ color: 'var(--text-secondary)', textAlign: 'center', textTransform: 'none', fontWeight: 400, letterSpacing: 'normal', margin: 0 }}>
+          {caption}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function LazyVideo({ src, poster, caption }) {
+  const wrapperRef = useRef(null);
+  const videoRef = useRef(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    }
+  }, []);
+
+  // Only fetch the file once it is close to view, and stop decoding once it leaves.
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      setShouldLoad(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = videoRef.current;
+          if (entry.isIntersecting) {
+            setShouldLoad(true);
+            if (video && !reducedMotion) video.play().catch(() => {});
+          } else if (video) {
+            video.pause();
+          }
+        });
+      },
+      { rootMargin: '200px 0px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [reducedMotion]);
+
+  return (
+    <div ref={wrapperRef} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <video
+        ref={videoRef}
+        {...(shouldLoad ? { src } : {})}
+        poster={poster}
+        muted
+        loop
+        playsInline
+        autoPlay={!reducedMotion}
+        controls={reducedMotion}
+        preload="none"
+        aria-label={caption}
+        style={{
+          width: '100%',
+          height: 'auto',
+          display: 'block',
+          borderRadius: 'var(--radius-card)',
+          border: '1px solid var(--border-subtle)',
+          background: 'var(--bg-surface-hover)'
+        }}
+      />
       {caption && (
         <p className="text-caption" style={{ color: 'var(--text-secondary)', textAlign: 'center', textTransform: 'none', fontWeight: 400, letterSpacing: 'normal', margin: 0 }}>
           {caption}
@@ -370,6 +439,13 @@ export default function CaseStudyLayout({ data }) {
           <h3 className="text-title" style={{ margin: 0 }}>{solution.title || 'Implementation'}</h3>
           {solution.summary && (
             <p className="text-body" style={{ margin: 0 }}>{solution.summary}</p>
+          )}
+          {solution.video && (
+            <LazyVideo
+              src={solution.video.src}
+              poster={solution.video.poster}
+              caption={solution.video.caption}
+            />
           )}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {solution.steps.map((step, i) => (

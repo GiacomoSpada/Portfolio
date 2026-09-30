@@ -52,6 +52,11 @@ export const projectsData = [
       solution: {
         title: "How It Works",
         summary: "EMERALD is a web app backed by a server built entirely from open-source components, with no cloud services and no internet connection needed to reason. Everything runs on a single GPU server, currently at the university, so a hospital could install it on its own infrastructure and keep all patient data on site. The main model is Llama 3.1: small enough to run in-house, capable enough to hold a natural conversation. Every message a patient sends goes through the following steps.",
+        video: {
+          src: "/emerald-demo.mp4",
+          poster: "/emerald-demo-poster.jpg",
+          caption: "Onboarding and a first coaching exchange, recorded from the running system."
+        },
         steps: [
           { title: "Safety check first", description: "Before the coach sees a message, the system checks whether it is an emergency, a medication or diagnosis question, or something it can help with. The critical checks, like crisis language or chest pain right now, are fixed rules in code; an AI classifier only makes the finer distinctions. Emergencies return a fixed message to call 112 and medication questions a fixed referral to the doctor, neither of which ever reaches the conversational model, because instructing the model to refuse proved unreliable." },
           { title: "Finding the right guidance", description: "In parallel, the system searches around 230 rules I compiled from NHS, CDC, WHO and Dutch clinical guidelines. It matches on meaning rather than exact words, so \"I can't walk far because of my knee\" still finds the low-impact exercise rules. Only rules for the patient's condition count, and weak matches are dropped. If nothing covers the question, EMERALD refers the patient to their doctor rather than improvising." },
