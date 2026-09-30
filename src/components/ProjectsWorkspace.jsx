@@ -254,14 +254,10 @@ export default function ProjectsWorkspace({ initialProjectId, onClose }) {
 
                 <h2
                   className="text-display"
-                  style={{ marginBottom: '16px' }}
+                  style={{ marginBottom: '32px' }}
                 >
                   {selectedProjectData?.title}
                 </h2>
-
-                <p className="text-body" style={{ marginBottom: '32px', maxWidth: '600px' }}>
-                  {selectedProjectData?.summary}
-                </p>
 
                 <div className="project-tags" style={{ marginBottom: '48px' }}>
                   {selectedProjectData?.tags?.map(t => (
