@@ -382,7 +382,7 @@ html {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--bg-canvas);
   color: var(--text-primary);
   min-height: 100vh;
