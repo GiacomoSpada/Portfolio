@@ -460,7 +460,15 @@ export default function CaseStudyLayout({ data }) {
                 </div>
                 <div style={{ paddingBottom: i < solution.steps.length - 1 ? '32px' : '0', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   <h4 className="text-subtitle" style={{ margin: 0 }}>{step.title}</h4>
-                  <p className="text-body" style={{ margin: 0 }}>{step.description}</p>
+                  {step.points ? (
+                    <ul style={{ margin: 0, paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      {step.points.map((point, j) => (
+                        <li key={j} className="text-body">{point}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-body" style={{ margin: 0 }}>{step.description}</p>
+                  )}
                 </div>
               </div>
             ))}
