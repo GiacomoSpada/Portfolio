@@ -18,6 +18,16 @@ export default function ProjectsWorkspace({ projectSlug, onClose }) {
   };
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Real links (keyboard, Cmd/Ctrl-click, middle-click) that stay in-app on a plain click.
+  const projectLinkProps = (project) => ({
+    href: `/projects/${project.slug}`,
+    onClick: (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      e.preventDefault();
+      setActiveProject(project.id);
+    }
+  });
+
   // An unknown slug falls back to the grid with a clean URL.
   useEffect(() => {
     if (projectSlug && !selectedProjectData) navigate('/projects', { replace: true });
@@ -90,9 +100,9 @@ export default function ProjectsWorkspace({ projectSlug, onClose }) {
                   className="gallery-grid-item"
                   style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%' }}
                 >
-                  <motion.div
+                  <motion.a
                     className="gallery-project-card"
-                    onClick={() => setActiveProject(project.id)}
+                    {...projectLinkProps(project)}
                     whileHover={{ scale: 0.98 }}
                     whileTap={{ scale: 0.95 }}
                     style={{ flex: 1, margin: 0 }}
@@ -105,7 +115,7 @@ export default function ProjectsWorkspace({ projectSlug, onClose }) {
                         {project.title}
                       </h2>
                     </div>
-                  </motion.div>
+                  </motion.a>
                 </div>
               ))}
             </div>
@@ -137,7 +147,7 @@ export default function ProjectsWorkspace({ projectSlug, onClose }) {
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
-                    <span style={{ color: 'var(--accent-primary)', fontFamily: 'monospace', fontSize: '0.75rem' }}>PROJECT //</span>
+                    <span style={{ color: 'var(--accent-primary)', fontFamily: 'monospace', fontSize: '0.75rem', whiteSpace: 'nowrap', flexShrink: 0 }}>PROJECT //</span>
                     <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       {selectedProjectData?.title || "Select Project"}
                     </span>
@@ -201,13 +211,14 @@ export default function ProjectsWorkspace({ projectSlug, onClose }) {
                 <div className="workspace-sidebar-nav">
                   <h3 className="workspace-sidebar-title">Projects</h3>
                   {projectsData.map(project => (
-                    <div
+                    <a
                       key={project.id}
                       className={`workspace-sidebar-item ${project.id === activeProject ? 'active' : ''}`}
-                      onClick={() => setActiveProject(project.id)}
+                      aria-current={project.id === activeProject ? 'page' : undefined}
+                      {...projectLinkProps(project)}
                     >
                       {project.title}
-                    </div>
+                    </a>
                   ))}
                 </div>
 
@@ -225,7 +236,8 @@ export default function ProjectsWorkspace({ projectSlug, onClose }) {
                     { id: 'outcome', title: 'Outcome & Impact' },
                     { id: 'reflection', title: 'Lessons Learned' }
                   ].filter(s => selectedProjectData.caseStudy[s.id]).map(section => (
-                    <div
+                    <button
+                      type="button"
                       key={section.id}
                       className="workspace-sidebar-item"
                       onClick={() => {
@@ -233,7 +245,7 @@ export default function ProjectsWorkspace({ projectSlug, onClose }) {
                       }}
                     >
                       {selectedProjectData.caseStudy[section.id]?.title || section.title}
-                    </div>
+                    </button>
                   ))}
                 </div>
               </motion.div>

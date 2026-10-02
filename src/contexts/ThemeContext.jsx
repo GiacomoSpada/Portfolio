@@ -17,6 +17,9 @@ export function ThemeProvider({ children }) {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     window.localStorage.setItem(STORAGE_KEY, theme);
+    // Mobile browser chrome (address bar) matches the page background.
+    document.querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', theme === 'light' ? '#F3EEE7' : '#0D0D0D');
   }, [theme]);
 
   useEffect(() => {

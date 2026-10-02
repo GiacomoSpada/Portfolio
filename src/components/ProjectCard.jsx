@@ -19,6 +19,12 @@ export default function ProjectCard({ onClick }) {
       transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
       className="card card--projects interactive card--showcase"
       onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick();
+        }
+      }}
       role="button"
       tabIndex="0"
       aria-label="View projects"
