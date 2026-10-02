@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
 import { projectsData } from '../data/projects';
 import { useEffect, useRef } from 'react';
 import { ArrowLeft } from 'lucide-react';
@@ -47,12 +47,20 @@ export default function ProjectsWorkspace({ projectSlug, onClose }) {
   };
 
   const contentRef = useRef(null);
+  // Reading progress through the open case study (0 to 1), updated without re-rendering.
+  const readProgress = useMotionValue(0);
+  const handleContentScroll = (e) => {
+    const el = e.currentTarget;
+    const max = el.scrollHeight - el.clientHeight;
+    readProgress.set(max > 0 ? el.scrollTop / max : 0);
+  };
 
   useEffect(() => {
     if (contentRef.current) {
       contentRef.current.scrollTop = 0;
     }
-  }, [activeProject]);
+    readProgress.set(0);
+  }, [activeProject, readProgress]);
 
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
 
@@ -103,8 +111,9 @@ export default function ProjectsWorkspace({ projectSlug, onClose }) {
                   <motion.a
                     className="gallery-project-card"
                     {...projectLinkProps(project)}
-                    whileHover={{ scale: 0.98 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ y: -4 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                     style={{ flex: 1, margin: 0 }}
                   >
                     <div className={`project-visual project-visual-${project.id}`}>
@@ -260,9 +269,11 @@ export default function ProjectsWorkspace({ projectSlug, onClose }) {
                 transition={{ duration: 0.25, ease: 'easeInOut' }}
                 className="workspace-content"
                 ref={contentRef}
+                onScroll={handleContentScroll}
               >
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', position: 'sticky', top: 0, zIndex: 100, background: 'var(--bg-surface)', padding: '24px 0 16px 0' }}>
+                  <motion.div className="read-progress" style={{ scaleX: readProgress }} aria-hidden="true" />
                   <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                     <span style={{ color: 'var(--accent-primary)', fontFamily: 'monospace', fontWeight: 600, fontSize: '0.875rem', lineHeight: 1, whiteSpace: 'nowrap' }}>
                       {selectedProjectData?.category?.toUpperCase()}

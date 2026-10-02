@@ -1,4 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { motion } from 'framer-motion';
+
+// Each case-study section eases in the first time it scrolls into view.
+const reveal = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 'some', margin: '0px 0px -8% 0px' },
+  transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+};
 
 function DataTable({ title, headers, rows }) {
   if (!headers || !rows) return null;
@@ -216,7 +225,7 @@ export default function CaseStudyLayout({ data }) {
       
       {/* 1. Introduction */}
       {introduction && (
-        <section style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        <motion.section {...reveal} style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           {introduction.status && (
             <span
               className="text-caption"
@@ -246,12 +255,12 @@ export default function CaseStudyLayout({ data }) {
               <span style={{ fontSize: '1rem' }}>✦</span> {introduction.credibilityTag}
             </div>
           )}
-        </section>
+        </motion.section>
       )}
 
       {/* 2. Context & Constraints */}
       {context && (
-        <section id="section-context" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        <motion.section {...reveal} id="section-context" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           <h3 className="text-title" style={{ margin: 0 }}>Context</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
             <p className="text-body" style={{ margin: 0 }}>
@@ -269,12 +278,12 @@ export default function CaseStudyLayout({ data }) {
             )}
             {context.comparisonTable && <DataTable {...context.comparisonTable} />}
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* 2b. Methodology */}
       {methodology && (
-        <section id="section-methodology" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        <motion.section {...reveal} id="section-methodology" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           <h3 className="text-title" style={{ margin: 0 }}>{methodology.title || 'Methodology'}</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
             {methodology.description && (
@@ -301,12 +310,12 @@ export default function CaseStudyLayout({ data }) {
               </div>
             )}
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* 3. Problem Framing */}
       {problem && (
-        <section id="section-problem" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        <motion.section {...reveal} id="section-problem" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           <div style={{ display: 'inline-flex', alignItems: 'flex-start', gap: '12px', padding: '16px 20px', background: 'var(--accent-soft)', color: 'var(--accent-primary)', borderRadius: 'var(--radius-card)', alignSelf: 'flex-start' }}>
             <span style={{ fontSize: '1.25rem', marginTop: '2px' }}>✦</span>
             <span className="text-body" style={{ fontWeight: 500, margin: 0, color: 'var(--accent-primary)' }}>
@@ -330,12 +339,12 @@ export default function CaseStudyLayout({ data }) {
               </p>
             )}
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* 4. Before/After */}
       {beforeAfter && (beforeAfter.before || beforeAfter.after) && (
-        <section id="section-beforeAfter" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        <motion.section {...reveal} id="section-beforeAfter" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           <h3 className="text-title" style={{ margin: 0 }}>Before & After</h3>
           {(beforeAfter.before?.groups || beforeAfter.after?.groups) ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '56px' }}>
@@ -382,12 +391,12 @@ export default function CaseStudyLayout({ data }) {
               )}
             </div>
           )}
-        </section>
+        </motion.section>
       )}
 
       {/* 5. User & Needs */}
       {users && (
-        <section id="section-users" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        <motion.section {...reveal} id="section-users" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           <h3 className="text-title" style={{ margin: 0 }}>User Needs</h3>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '32px' }}>
             {users.goals && (
@@ -411,12 +420,12 @@ export default function CaseStudyLayout({ data }) {
               </div>
             )}
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* 6. Key Insights */}
       {insights && insights.length > 0 && (
-        <section id="section-insights" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        <motion.section {...reveal} id="section-insights" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           <h3 className="text-title" style={{ margin: 0 }}>Key Insights</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
             {insights.map((insight, i) => (
@@ -430,12 +439,12 @@ export default function CaseStudyLayout({ data }) {
               </div>
             ))}
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* 7. Solution */}
       {solution && solution.steps && (
-        <section id="section-solution" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        <motion.section {...reveal} id="section-solution" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           <h3 className="text-title" style={{ margin: 0 }}>{solution.title || 'Implementation'}</h3>
           {solution.summary && (
             <p className="text-body" style={{ margin: 0 }}>{solution.summary}</p>
@@ -489,12 +498,12 @@ export default function CaseStudyLayout({ data }) {
               <DataTable {...solution.progressionTable} />
             </div>
           )}
-        </section>
+        </motion.section>
       )}
 
       {/* 8. Visuals/Screenshots */}
       {((visuals && visuals.length > 0) || deeperArchitecture) && (
-        <section id="section-visuals" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        <motion.section {...reveal} id="section-visuals" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           <h3 className="text-title" style={{ margin: 0 }}>Visuals</h3>
           {visuals && visuals.length > 0 && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '56px' }}>
@@ -542,12 +551,12 @@ export default function CaseStudyLayout({ data }) {
               )}
             </div>
           )}
-        </section>
+        </motion.section>
       )}
 
       {/* 9. Outcome & Impact */}
       {outcome && (
-        <section id="section-outcome" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        <motion.section {...reveal} id="section-outcome" style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
           <h3 className="text-title" style={{ margin: 0 }}>Outcome & Impact</h3>
           {outcome.chart && <BarChart {...outcome.chart} />}
           {outcome.description && (
@@ -568,12 +577,12 @@ export default function CaseStudyLayout({ data }) {
               ))}
             </div>
           )}
-        </section>
+        </motion.section>
       )}
 
       {/* 10. Reflection */}
       {reflection && reflection.lessons && (
-        <section id="section-reflection">
+        <motion.section {...reveal} id="section-reflection">
           <div style={{ background: 'var(--surface-philosophy)', border: '1px solid var(--border-philosophy)', padding: '40px', borderRadius: 'var(--radius-card)', display: 'flex', flexDirection: 'column', gap: '32px' }}>
             <h3 className="text-title" style={{ margin: 0, color: 'var(--text-primary)' }}>{reflection.title || 'Lessons Learned'}</h3>
             <ul style={{ margin: 0, paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -582,7 +591,7 @@ export default function CaseStudyLayout({ data }) {
               ))}
             </ul>
           </div>
-        </section>
+        </motion.section>
       )}
 
       <Lightbox src={lightbox?.src} alt={lightbox?.alt} onClose={() => setLightbox(null)} />

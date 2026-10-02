@@ -49,18 +49,26 @@ export default function ExperienceCard() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
+  // Short slide + crossfade: the outgoing slide fades quickly while the
+  // incoming one glides a few pixels into place, so two slides never sit
+  // side by side mid-transition.
   const slideVariants = {
     enter: (direction) => ({
-      x: direction > 0 ? '100%' : '-100%',
+      x: direction > 0 ? 32 : -32,
       opacity: 0
     }),
     center: {
       x: 0,
-      opacity: 1
+      opacity: 1,
+      transition: {
+        x: { type: 'spring', stiffness: 260, damping: 30 },
+        opacity: { duration: 0.3, delay: 0.08, ease: 'easeOut' }
+      }
     },
     exit: (direction) => ({
-      x: direction < 0 ? '100%' : '-100%',
-      opacity: 0
+      x: direction > 0 ? -32 : 32,
+      opacity: 0,
+      transition: { duration: 0.18, ease: [0.4, 0, 1, 1] }
     })
   };
 
@@ -128,7 +136,8 @@ export default function ExperienceCard() {
           aria-label="Download CV"
           title="Download CV"
         >
-          <Download size={14} strokeWidth={2} />
+          <Download size={13} strokeWidth={2.25} aria-hidden="true" />
+          <span>CV</span>
         </a>
       </header>
 
@@ -142,10 +151,6 @@ export default function ExperienceCard() {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{
-              x: { type: "tween", duration: 0.3, ease: "easeInOut" },
-              opacity: { duration: 0.2 }
-            }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={1}
@@ -179,7 +184,7 @@ export default function ExperienceCard() {
                 <h2 className="text-title" style={{ marginTop: 0, marginBottom: 0, textAlign: 'left' }}>{currentExperience.role}</h2>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
                   <span className="text-subtitle" style={{ color: 'var(--text-primary)' }}>{currentExperience.company}</span>
-                  <span className="text-subtitle" style={{ color: 'var(--border-muted)' }}>|</span>
+                  <span className="text-subtitle" style={{ color: 'var(--border-muted)' }} aria-hidden="true">|</span>
                   <span className="text-subtitle" style={{ color: 'var(--text-tertiary)' }}>{currentExperience.date}</span>
                 </div>
               </div>
