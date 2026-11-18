@@ -594,18 +594,20 @@ body:has(.workspace-active) {
 }
 
 .project-visual-emerald {
-  background: radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.15) 0%, transparent 60%),
-    radial-gradient(circle at 20% 80%, rgba(224, 30, 90, 0.1) 0%, transparent 50%);
+  /* Off-white in both themes so the logo keeps its original colours */
+  background: #FAF7F2;
 }
 
-.project-visual-emerald::after {
-  content: '';
+/* Animated logo, centred and sized to the cover's height */
+.project-visual-emerald img {
   position: absolute;
   inset: 0;
-  background-image:
-    radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px);
-  background-size: 20px 20px;
-  opacity: 0.5;
+  margin: auto;
+  width: auto !important;
+  height: 50% !important;
+  max-width: 50%;
+  aspect-ratio: 1;
+  object-fit: contain !important;
 }
 
 .project-visual-nutrichat {

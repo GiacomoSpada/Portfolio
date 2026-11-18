@@ -3,7 +3,7 @@ export const projectsData = [
     id: 'emerald',
     slug: 'emerald',
     title: 'EMERALD',
-    image: '/Gemini_Generated_Image_l7x53bl7x53bl7x5.jpg',
+    image: '/emerald-cover.svg',
     summary: "A private AI health coach for people with chronic conditions. It runs on the organisation's own servers and shows that AI coaching can be warm and still stay safely within limits.",
     tags: ['RAG Pipeline', 'LLM', 'Vector Database', 'Embeddings', 'Safety Layer', 'Behaviour Change', 'Evaluation', 'On-Premise', 'Python', 'Healthcare', 'Voice', 'Multilingual'],
     category: 'Engineering',

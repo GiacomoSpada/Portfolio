@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 110 110" role="img" aria-label="EMERALD">
+<!-- EMERALD's gem, after Gem.tsx in the EMERALD app: one 10s loop through the chat moods
+     idle (bob, blink, glance) > pop > thinking > happy > calm > idle. Stops for reduced motion. -->
+<style>
+.b,.m,.k{transform-box:fill-box;transform-origin:center}
+.r{transform-box:fill-box;transform-origin:center bottom}
+.b{animation:b 10s ease-in-out infinite}
+.m{animation:m 10s ease-in-out infinite}
+.k{animation:k 10s ease-in-out infinite}
+.r{animation:r 10s ease-in-out infinite}
+.n{animation:n 10s linear infinite}
+.h{opacity:0;animation:h 10s linear infinite}
+.c{opacity:0;animation:c 10s linear infinite}
+@keyframes b{
+0%,12.5%,25%{transform:translateY(0) rotate(0) scale(1)}
+6.25%,18.75%{transform:translateY(-2px) rotate(0) scale(1)}
+26.5%{transform:translateY(0) rotate(0) scale(1.14)}
+28%{transform:translateY(0) rotate(0) scale(.97)}
+29.5%,31%{transform:translateY(0) rotate(0) scale(1)}
+33%,52%{transform:translateY(0) rotate(-5deg) scale(1)}
+42%{transform:translateY(0) rotate(-8deg) scale(1)}
+54%,58%,61%,67%,89%,100%{transform:translateY(0) rotate(0) scale(1)}
+56%{transform:translateY(-6px) rotate(0) scale(1)}
+59.5%{transform:translateY(-2px) rotate(0) scale(1)}
+78%{transform:translateY(0) rotate(0) scale(1.025)}}
+@keyframes m{
+0%,9%,24.5%,25%,31%,54%,100%{transform:translate(0,0) scaleY(1)}
+12%,16%{transform:translate(3px,0) scaleY(1)}
+18%,22%{transform:translate(-3px,0) scaleY(1)}
+26.5%,28.5%{transform:translate(0,-14px) scaleY(1)}
+33%,52%{transform:translate(5px,-7px) scaleY(.85)}
+42%{transform:translate(8px,-9px) scaleY(.8)}}
+@keyframes k{
+0%,6.5%,8%,83.5%,85%,100%{transform:scaleY(1)}
+7.2%,84.2%{transform:scaleY(.1)}}
+@keyframes r{
+0%,31.5%,54%,100%{transform:scaleY(1)}
+33%,52%{transform:scaleY(.727)}}
+@keyframes n{0%,53.9%,95%,100%{opacity:1}54%,94.9%{opacity:0}}
+@keyframes h{0%,53.9%,67%,100%{opacity:0}54%,66.9%{opacity:1}}
+@keyframes c{0%,66.9%,95%,100%{opacity:0}67%,94.9%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.b,.m,.k,.r,.n,.h,.c{animation:none}}
+</style>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#34d399"/><stop offset="0.55" stop-color="#059669"/><stop offset="1" stop-color="#065f46"/></linearGradient></defs>
+<g class="b">
+<path d="M32 6 H68 Q74 6 78 10 L90 22 Q94 26 94 32 V68 Q94 74 90 78 L78 90 Q74 94 68 94 H32 Q26 94 22 90 L10 78 Q6 74 6 68 V32 Q6 26 10 22 L22 10 Q26 6 32 6 Z" fill="url(#g)"/>
+<ellipse cx="38" cy="24" rx="20" ry="8" fill="#fff" opacity="0.22"/>
+<g class="m"><g class="k" fill="#fff">
+<g class="n"><rect x="35" y="38" width="10" height="22" rx="5"/><rect class="r" x="55" y="38" width="10" height="22" rx="5"/></g>
+<g class="c"><rect x="35" y="44" width="10" height="14" rx="5"/><rect x="55" y="44" width="10" height="14" rx="5"/></g>
+</g></g>
+<g class="h" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round"><path d="M33 52 Q40 40 47 52"/><path d="M53 52 Q60 40 67 52"/></g>
+</g>
+</svg>
