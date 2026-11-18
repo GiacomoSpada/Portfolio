@@ -78,8 +78,7 @@ export const projectsData = [
       outcome: {
         metrics: [
           { label: "Status", value: "In Validation", detail: "Tested in a controlled setting. Next: user evaluation, then a real clinic." },
-          { label: "Emergencies caught", value: "177 of 177", detail: "Every emergency in the test set got the fixed 112 message." },
-          { label: "Reply speed", value: "About 2 seconds", detail: "Every reply starts in under 8 seconds." }
+          { label: "Reply speed", value: "About 2 seconds", detail: "Load-tested with 75 simulated patients chatting at once." }
         ],
         description: [
           "EMERALD works end to end. It has been tested by clinicians, test patients and simulated patients, and was shown live to the research consortium in September 2026. Since then it has added voice, Dutch, secure login for many patients at once, and an install package for hospitals.",
